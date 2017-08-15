@@ -1,0 +1,26 @@
+@CHARSET "ISO-8859-1";
+
+.div-item {
+	color: #ffffff;
+	background-color:#93713A ;
+	border-color: #357ebd;
+	white-space: normal;
+ 	height: 120;
+ 	font-size: large;
+    line-height: 1.5;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 1px 5px;
+    text-align: center;
+    margin: 5;
+}
+
+
+.div-item:hover, .div-item:focus, .div-item:active, .div-item.active, .open .dropdown-toggle.div-item {
+	color: #ffffff;
+	background-color: #A57F37;
+	border-color: #285e8e;
+}
+
+.ui-jqgrid table { border-collapse: separate; }
+.ui-jqgrid .ui-pg-input, .ui-jqgrid .ui-pg-selbox { width: auto }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body data-ng-init="onload()">
+
+
+<div class="row wrapper">
+
+  <div class="left-nav">
+    <div id="side-nav">
+     
+				<ul  id="nav" ng-if="role=='USER'")>
+					<li><a ui-sref=".profile">Profile</a></li>
+					<li><a ui-sref=".account"> My Account</a></li>
+					<li><a ui-sref=".downLine" >My DownLine</a></li>
+					<li><a ui-sref=".rewards" >My Rewards</a></li>
+					<li><a ui-sref=".workHistory" >My Work History </a></li>
+					<li><a ui-sref=".todayTask" >My Today Task </a></li>
+					<li><a ui-sref=".workPayOuts" >My Work PayOuts </a></li>
+					<li><a ui-sref=".binaryIncome" >My Binary Income </a></li>
+					<li><a ui-sref=".directReferralIncome" >My Direct Referral  Income </a></li>
+					<li><a ui-sref=".totalPayIncome" >My Total Income </a></li>
+				</ul>
+				
+				<ul  id="nav" ng-if="role=='ADMIN'">
+					
+					<li><a ui-sref=".link"> Add Link</a></li>
+				
+					
+					<li style="height:500PX;"><a ui-sref=".totatPayment" >Total Payment </a></li>
+					
+					
+				</ul>
+			</div>
+		</div>
+	
+
+	<div  ui-view class="col-sm-9">
+</div></div>
+</body>
+</html>

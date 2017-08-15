@@ -1,0 +1,138 @@
+<div class="widget ng-scope">
+            <div class="widget-header"> <i class="icon-user"></i>
+              <h3>My Account Details </h3>
+            </div>
+            <div class="widget-content">
+              <div class="body" >
+               <form  class="form-horizontal"  method="post" name="accountForm">
+                <fieldset>
+                 
+                  
+                  <div class="control-group">
+                  <div class="col-md-3">
+                    <label for="normal-field" class="control-label">Account Holder Name</label>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="form-group">
+                      <input type="text" ng-model="account.accountHolderName" name="acountHolderName" placeholder="Enter Account Holder Name Here"  class="form-control" ng-pattern="/^[A-z]+$/"   required >
+                    </div>
+                     
+                    <div class="errorText" ng-show="accountForm.$dirty">
+                    <span ng-show="accountForm.acountHolderName.$error.required">This is a required field</span>
+                     <span ng-show="accountForm.acountHolderName.$invalid">This field is invalid </span>        
+                              
+                    </div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                    <div class="control-group">
+                  <div class="col-md-3">
+                    <label for="normal-field" class="control-label">Bank Name</label>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="form-group">
+                      <input type="text" class="form-control" ng-model="account.bankName" id="bankName" name="bankName"placeholder="Enter Your Bank Name Here"  ng-pattern="/^[A-z]+$/" required >
+                    </div>
+                                   <div class="errorText" ng-show="accountForm.$dirty">
+                                      <span ng-show="accountForm.bankName.$error.required">This is a required field</span>
+                                     <span ng-show="accountForm.bankName.$invalid">This field is invalid </span> 
+                                  </div>
+                     
+                   
+                    </div>
+                  </div>
+                  
+                <!--   
+                  <div class="control-group">
+                  <div class="col-md-3">
+                    <label for="normal-field" class="control-label">Bank Name</label>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="form-group">
+                     
+                        <input type="text"  class="form-control" ng-model="accountForm.bankName" name="bankName" id="bankName" placeholder="Enter Your Bank Name Here" required>
+                        
+                      </div>
+                      <div class="errorText" ng-show="accountForm.$dirty">
+                                      <span ng-show="accountForm.bankName.$error.required">This is a required field</span>
+                                    
+                                  </div>
+                      
+                    </div>
+                  </div>
+                   -->
+                  
+                  
+                  
+                  
+                    <div class="control-group">
+                  <div class="col-md-3">
+                    <label for="normal-field" class="control-label">Bank Branch</label>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="form-group">
+                      <input type="text" class="form-control" ng-model="account.bankBranch" id ="bank_branch"name="bankBranch" placeholder="Enter Your Bank Branch Name Here"  required >
+                    </div>
+                                   <div class="errorText" ng-show="accountForm.$dirty">
+                                      <span ng-show="accountForm.bankBranch.$error.required">This is a required field</span>
+                                     <!--  <span ng-show="singUpForm.contact.$invalid">This field is invalid </span> -->
+                                  </div>
+                     
+                   
+                    </div>
+                  </div>
+                  
+                  
+                   <div class="control-group">
+                  <div class="col-md-3">
+                    <label for="normal-field" class="control-label">Account Number</label>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="form-group">
+                      <input type="text" class="form-control" type="text" ng-model="account.accountNumber" id="account_number"name="accountNumber" placeholder="Enter Your Account Number" ng-pattern="/[0-9]$/" required>
+                    </div>
+                        
+                                   <div class="errorText" ng-show="accountForm.$dirty">
+                                      <span ng-show="accountForm.accountNumber.$error.required">This is a required field</span>
+                                       <span ng-show="accountForm.accountNumber.$invalid">This field is invalid </span> 
+                                  </div>                      
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  
+                    
+                    <div class="control-group">
+                  <div class="col-md-3">
+                    <label for="normal-field" class="control-label">IFSC Code</label>
+                    </div>
+                    <div class="col-md-9">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Enter IFSC  Code " ng-model="account.ifscCode" name="ifscCode" required >
+                    </div>
+                         <div class="errorText" ng-show="accountForm.$dirty">
+                                      <span ng-show="account.ifscCode.$error.required">This is a required field</span>
+                                     <!--  <span ng-show="singUpForm.contact.$invalid">This field is invalid </span> -->
+                                  </div>                             
+                    </div>
+                  </div>
+                  
+                  
+              
+                
+                </fieldset>
+                <div class="form-actions">
+                  <div>
+                    <input type="submit" class="btn btn-primary"  value="Submit Account Details" ng-click="submitAccountDetatils()"/>
+                    <!-- <button class="btn btn-default" type="button">Cancel</button> -->
+                  </div>
+                </div>
+              </form>
+              
+              
+              </div></div></div>

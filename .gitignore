@@ -1,0 +1,5 @@
+target/classes/properties/application.properties
+.project
+.settings/.jsdtscope
+.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.wst.common.component
