@@ -1,13 +1,10 @@
-
-
-
 $( document ).ready(function() {
 	 $("#menuChildDiv").hide();
 	 
 	$("#menu").click(function(){
 		$("#menuChildDiv").toggle();
 	});
-	alert("Inready");
+//	alert("Inready");
 	
     $("#grid1b").jqGrid({
         colModel: [
