@@ -7,7 +7,7 @@ $( document ).ready(function() {
 	$("#menu").click(function(){
 		$("#menuChildDiv").toggle();
 	});
-	
+	alert("Inready");
 	
     $("#grid1b").jqGrid({
         colModel: [
