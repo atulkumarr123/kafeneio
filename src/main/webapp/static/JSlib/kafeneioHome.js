@@ -6,29 +6,26 @@ $( document ).ready(function() {
 	});
 //	alert("Inready");
 	
-    $("#grid1b").jqGrid({
+    $("#invoiceGrid").jqGrid({
         colModel: [
             { name: "name", label: "Client", width: 53 },
             { name: "invdate", label: "Date", width: 80, align: "center", sorttype: "date",
                 formatter: "date", formatoptions: { newformat: "d-M-Y" } },
-            { name: "amount", label: "Amount", width: 65, template: "number" },
-            { name: "tax", label: "Tax", width: 41, template: "number" },
+            { name: "amount", label: "Amount", width: 65, template: "number" }
+         /*   { name: "tax", label: "Tax", width: 41, template: "number" },
             { name: "total", label: "Total", width: 51, template: "number" },
-            { name: "closed", label: "Closed", width: 59, template: "booleanCheckbox", firstsortorder: "desc" }
+            { name: "closed", label: "Closed", width: 59, template: "booleanCheckbox", firstsortorder: "desc" }*/
         ],
         data: [
-            { id: "10",  invdate: "2015-10-01", name: "test",   amount: "" },
-            { id: "20",  invdate: "2015-09-01", name: "test2",  amount: "300.00", tax: "20.00", closed: false, total: "320.00" },
-            { id: "30",  invdate: "2015-09-01", name: "test3",  amount: "400.00", tax: "30.00", closed: false, total: "430.00" },
-            { id: "40",  invdate: "2015-10-04", name: "test4",  amount: "200.00", tax: "10.00", closed: true,  total: "210.00" },
-            { id: "50",  invdate: "2015-10-31", name: "test5",  amount: "300.00", tax: "20.00", closed: false, total: "320.00" },
-            { id: "60",  invdate: "2015-09-06", name: "test6",  amount: "400.00", tax: "30.00", closed: false,  total: "430.00" },
-            { id: "70",  invdate: "2015-10-04", name: "test7",  amount: "200.00", tax: "10.00", closed: true,  total: "210.00" },
-            { id: "80",  invdate: "2015-10-03", name: "test8",  amount: "300.00", tax: "20.00", closed: false, total: "320.00" },
-            { id: "90",  invdate: "2015-09-01", name: "test9",  amount: "400.00", tax: "30.00", closed: false, total: "430.00" },
-            { id: "100", invdate: "2015-09-08", name: "test10", amount: "500.00", tax: "30.00", closed: true,  total: "530.00" },
-            { id: "110", invdate: "2015-09-08", name: "test11", amount: "500.00", tax: "30.00", closed: false, total: "530.00" },
-            { id: "120", invdate: "2015-09-10", name: "test12", amount: "500.00", tax: "30.00", closed: false, total: "530.00" }
+            {  invdate: "2015-10-01", name: "test",   amount: "600.88" },
+            {  invdate: "2015-09-01", name: "test2",  amount: "300.00" },
+            {  invdate: "2015-09-01", name: "test3",  amount: "400.00"},
+            {  invdate: "2015-10-04", name: "test4",  amount: "200.00"},
+            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" },
+            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" },
+            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" },
+            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" }
+           
         ],
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
@@ -37,7 +34,7 @@ $( document ).ready(function() {
         sortname: "invdate",
         sortorder: "desc",
         caption: "#201",       
-        height: '70%',
+        height: 'auto',
     });
 	
 });
@@ -63,7 +60,7 @@ function writeDivsFromJson(data){
 	var html = '';
 	for (var i in data) {
 		var row = data[i];
-		html +='<div class="col-lg-2 div-item">'+row.foodItemDesc+'<br>'+ '\u20B9' +row.amount+'</div>';
+		html +='<div class="col-lg-2 div-item" onclick="addItem()">'+row.foodItemDesc+'<br>'+ '\u20B9' +row.amount+'</div>';
 	}
 	
 	/*<div class="row" style="margin-left: 5" id="firstRow">
@@ -75,4 +72,9 @@ function writeDivsFromJson(data){
 </div>*/
 	 //alert(html);
 	$('#itemsRow').html(html);
+}
+
+
+function addItem(){
+	 $("#invoiceGrid").jqGrid("addRowData", 9, {  invdate: "2015-10-31", name: "test5",  amount: "300.00" }, "last");
 }
