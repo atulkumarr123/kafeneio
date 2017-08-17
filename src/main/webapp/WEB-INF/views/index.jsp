@@ -84,7 +84,7 @@
 				</div>
 				
 				<div class="col-lg-4">
-					<table id="grid1b"></table>
+					<table id="invoiceGrid"></table>
 				</div>
 				
 				
