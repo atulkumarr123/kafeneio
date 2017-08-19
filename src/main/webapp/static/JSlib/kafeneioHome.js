@@ -8,23 +8,12 @@ $( document ).ready(function() {
 	
     $("#invoiceGrid").jqGrid({
         colModel: [
-            { name: "name", label: "Client", width: 53 },
-            { name: "invdate", label: "Date", width: 80, align: "center", sorttype: "date",
-                formatter: "date", formatoptions: { newformat: "d-M-Y" } },
-            { name: "amount", label: "Amount", width: 65, template: "number" }
-         /*   { name: "tax", label: "Tax", width: 41, template: "number" },
-            { name: "total", label: "Total", width: 51, template: "number" },
-            { name: "closed", label: "Closed", width: 59, template: "booleanCheckbox", firstsortorder: "desc" }*/
+            { name: "item", label: "Item", width: 140, align: "center" },
+            { name: "amount", label: "Amount", width: 100, template: "number" }
         ],
         data: [
-            {  invdate: "2015-10-01", name: "test",   amount: "600.88" },
-            {  invdate: "2015-09-01", name: "test2",  amount: "300.00" },
-            {  invdate: "2015-09-01", name: "test3",  amount: "400.00"},
-            {  invdate: "2015-10-04", name: "test4",  amount: "200.00"},
-            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" },
-            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" },
-            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" },
-            {  invdate: "2015-10-31", name: "test5",  amount: "300.00" }
+            {  name: "test",   amount: "600.88" },
+            {  name: "test2",  amount: "300.00" }
            
         ],
         guiStyle: "bootstrap",
@@ -60,7 +49,8 @@ function writeDivsFromJson(data){
 	var html = '';
 	for (var i in data) {
 		var row = data[i];
-		html +='<div class="col-lg-2 div-item" onclick="addItem()">'+row.foodItemDesc+'<br>'+ '\u20B9' +row.amount+'</div>';
+		html +='<div class="col-lg-2 div-item" onclick="addItem('+"'"+row.foodItemDesc+"'"+','+row.amount+')">'+row.foodItemDesc+'<br>'+ '\u20B9' +row.amount+'</div>';
+	//alert(row.foodItemDesc,row.amount);
 	}
 	
 	/*<div class="row" style="margin-left: 5" id="firstRow">
@@ -75,6 +65,7 @@ function writeDivsFromJson(data){
 }
 
 
-function addItem(){
-	 $("#invoiceGrid").jqGrid("addRowData", 9, {  invdate: "2015-10-31", name: "test5",  amount: "300.00" }, "last");
+function addItem(foodItemDesc,amount){
+	alert("add Item");
+	 $("#invoiceGrid").jqGrid("addRowData", 3, {  item:foodItemDesc ,  amount:amount  }, "last");
 }
