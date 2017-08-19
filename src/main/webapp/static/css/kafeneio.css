@@ -15,11 +15,20 @@
     margin: 5;
 }
 
+ .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+    }
 
 .div-item:hover, .div-item:focus, .div-item:active, .div-item.active, .open .dropdown-toggle.div-item {
 	color: #ffffff;
 	background-color: #A57F37;
 	border-color: #285e8e;
+}
+
+.ui-icon-circle-minus { 
+	-ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+  transform: scale(1.5);.
 }
 
 .ui-jqgrid table { border-collapse: separate; }

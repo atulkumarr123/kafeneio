@@ -11,7 +11,11 @@ $( document ).ready(function() {
         	{ name: "foodCode", label: "Code", width: 140, align: "center",hidden:true},
             { name: "item", label: "Item", width: 140, align: "center" },
             { name: "quantity", label: "Quantity", width: 80, align: "center" },
-            { name: "amount", label: "Amount", width: 80, template: "number"}
+            { name: "amount", label: "Amount", width: 80, template: "number"},
+            { name: 'decrease', label:"", width: 40, sortable: false, search: false, align: "center",
+            	  formatter:function(){
+            	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus' onclick='removeItem();'></span>"
+            	  }}
         ],
         data: [
            /* {  name: "test",   amount: "600.88" },
@@ -30,6 +34,9 @@ $( document ).ready(function() {
 	
 });
 
+function removeItem(){
+	
+}
 function getItems(foodCategory){
 	var ctx = $("#contextPath").val();
 	$.ajax({
@@ -59,37 +66,34 @@ function writeDivsFromJson(data){
 	//alert(row.foodItemDesc,row.amount);
 	}
 	
-	/*<div class="row" style="margin-left: 5" id="firstRow">
-	<div class="col-lg-2 div-item">Classic Coffee<br>$15.0</div>
-	<div class="col-lg-2 div-item">Classic Coffee</div>
-	<div class="col-lg-2 div-item">Classic Coffee</div>
-	<div class="col-lg-2 div-item">Classic Coffee</div>
-	<div class="col-lg-2 div-item">Classic Coffeedddddddddddddddddddd ddddddssdfs</div>
-</div>*/
-	 //alert(html);
+
 	$('#itemsRow').html(html);
 }
 
 
 function addItem(id,foodCode, foodItemDesc, amount){
 	//alert("add Item");
-	if(!increaseIfPresent(foodCode)){
+	if(!increaseIfPresent(foodCode,amount)){
 	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, item:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
 	}
 	
 
 
-function increaseIfPresent(foodCode){
+function increaseIfPresent(foodCode,amount){
 	//alert(foodCode);
 	var isPresent=false;
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	 $.each(allData, function(i, item){
 		 //alert(item.foodCode);
+		 
 		    if (item.foodCode == foodCode) {
 		    	isPresent=true;
 		    	var rowData = $("#invoiceGrid").jqGrid("getRowData", item.id);
 		    	rowData.quantity=parseInt(rowData.quantity)+1;
+		    	//alert(rowData.quantity);
+		    	rowData.amount=parseInt(amount)*parseInt(rowData.quantity);
+		    	//alert(amount);
 		    	$("#invoiceGrid").jqGrid("setRowData", item.id, rowData);
 		    }
 		  });
