@@ -86,7 +86,10 @@
 				</div>
 				
 				<div class="col-lg-4">
-					<table id="invoiceGrid"></table>
+					<table id="invoiceGrid"></table><br>
+						<div style="text-align: left;">
+							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
+					</div>
 				</div>
 				
 				

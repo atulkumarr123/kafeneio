@@ -27,7 +27,8 @@ $( document ).ready(function() {
            
         ],
        
-
+        footerrow: true,
+        userDataOnFooter : true,
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
         idPrefix: "gb1_",
@@ -38,7 +39,7 @@ $( document ).ready(function() {
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
             if (iCol >= firstButtonColumnIndex) {
-                alert("rowid="+rowid);
+                removeItem(rowid);
             }
         }
 
@@ -57,8 +58,20 @@ $( document ).ready(function() {
     firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
 });
 
-function removeItem(){
-	
+function removeItem(rowid){
+	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowid);
+	//alert(rowData.amount);
+	if(rowData.quantity!=1){	
+		rowData.amount=parseInt(rowData.amount)-(parseInt(rowData.amount)/parseInt(rowData.quantity));
+		rowData.quantity=parseInt(rowData.quantity)-1;
+		//alert(rowData.quantity);
+		//alert(amount);
+		$("#invoiceGrid").jqGrid("setRowData", rowid, rowData);
+	}
+	else{
+		$('#invoiceGrid').jqGrid('delRowData',rowid);
+	}
+	adjustTotal();
 }
 function getItems(foodCategory){
 	var ctx = $("#contextPath").val();
@@ -99,6 +112,7 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	if(!increaseIfPresent(foodCode,amount)){
 	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, item:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
+	adjustTotal();
 	}
 	
 
@@ -121,4 +135,36 @@ function increaseIfPresent(foodCode,amount){
 		    }
 		  });
 	 return isPresent;
+}
+
+function adjustTotal(){
+	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+	var quantity=0;
+	var amount=0;
+	$.each(allData, function(i, item){
+		var rowData = $("#invoiceGrid").jqGrid("getRowData", item.id);
+			quantity=parseInt(quantity)+parseInt(rowData.quantity);
+			amount=parseInt(amount)+parseInt(rowData.amount);
+	});
+	jQuery("#invoiceGrid").footerData('set',{item:'Total',quantity:quantity ,  amount:amount});
+	
+}
+
+function generateBill() {
+	var ctx = $("#contextPath").val();
+	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+	   $.ajax({
+	      type: "POST",
+	      contentType : 'application/json; charset=utf-8',
+	      dataType : 'json',
+	      url : ctx+"/generateBill",
+	      data: JSON.stringify(allData), // Note it is important
+	      success :function(result) {
+	       // do what ever you want with data
+	     },
+	   error:function(responseText) {
+			//	alert("error"+responseText);
+				$('#outputLabel').text("Error");
+	   }
+	  });
 }

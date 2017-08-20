@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,12 @@ public class BillingController {
 		Set<FoodItems> items = foodService.findFoodItems(category);
 		return items;
 	}
+	
+	@RequestMapping(value="/generateBill",method=RequestMethod.POST)
+	public String generateBill(@RequestBody String orderData)
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		return "Order saved Succesfuly!";
+	}
+	
 	
 }

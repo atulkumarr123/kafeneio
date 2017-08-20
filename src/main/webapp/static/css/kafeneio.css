@@ -33,3 +33,8 @@
 
 .ui-jqgrid table { border-collapse: separate; }
 .ui-jqgrid .ui-pg-input, .ui-jqgrid .ui-pg-selbox { width: auto }
+
+.ui-jqgrid .ui-jqgrid-labels th.ui-th-column {
+    background-color: #93713A;
+    background-image: none
+}
