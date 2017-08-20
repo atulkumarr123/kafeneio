@@ -5,7 +5,11 @@ $( document ).ready(function() {
 		$("#menuChildDiv").toggle();
 	});
 //	alert("Inready");
-	
+	 
+
+    // grid = $('#invoiceGrid'), firstButtonColumnIndex, buttonNames={};
+
+     
     $("#invoiceGrid").jqGrid({
         colModel: [
         	{ name: "foodCode", label: "Code", width: 140, align: "center",hidden:true},
@@ -14,7 +18,7 @@ $( document ).ready(function() {
             { name: "amount", label: "Amount", width: 80, template: "number"},
             { name: 'decrease', label:"", width: 40, sortable: false, search: false, align: "center",
             	  formatter:function(){
-            	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus' onclick='removeItem();'></span>"
+            	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
             	  }}
         ],
         data: [
@@ -22,6 +26,8 @@ $( document ).ready(function() {
             {  name: "test2",  amount: "300.00" }*/
            
         ],
+       
+
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
         idPrefix: "gb1_",
@@ -30,8 +36,25 @@ $( document ).ready(function() {
         sortorder: "desc",
         caption: "#201",       
         height: 'auto',
+        onCellSelect: function (rowid,iCol,cellcontent,e) {
+            if (iCol >= firstButtonColumnIndex) {
+                alert("rowid="+rowid);
+            }
+        }
+
     });
-	
+
+    grid = $("#invoiceGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+        var cm = grid.jqGrid('getGridParam','colModel');
+        for (var i=0,l=cm.length; i<l; i++) {
+            if (cm[i].name===columnName) {
+                return i; // return the index
+            }
+        }
+        return -1;
+    },
+    firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
 });
 
 function removeItem(){
