@@ -2,6 +2,7 @@ package com.kafeneio.configuration;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    return super.authenticationManagerBean();
 	  }
 	  
-	  @Inject
+	/*  @Inject
 	  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 	   // ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
 
@@ -79,12 +80,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	  }
 	 
-	 /*
+	 
 	   * (non-Javadoc)
 	   * 
 	   * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.
 	   * springframework.security.config.annotation.web.builders.HttpSecurity)
-	   */
+	   
 	  @Override
 	  protected void configure(HttpSecurity http) throws Exception {
 	    http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().csrf().disable().headers()
@@ -93,8 +94,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	         .antMatchers("signUp/").permitAll()
 	        
 	        .antMatchers("/protected/**").authenticated();
-	  }
+	  }*/
 	  
+	  @Autowired
+		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		  auth.inMemoryAuthentication().withUser("mkyong").password("123456").roles("USER");
+		  auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
+		  auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
+		}
+	  
+	   @Override
+	    protected void configure(HttpSecurity http) throws Exception {
+	      http.authorizeRequests()
+	        .antMatchers("/", "/home").permitAll()
+	        .antMatchers("/admin/**").access("hasRole('ADMIN')")
+	        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
+	        .and().formLogin()/*.loginPage("/login")*/
+	        .usernameParameter("ssoId").passwordParameter("password")
+	        .and().csrf()
+	        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
+	    }
+	   
 	  private JWTConfigurer securityConfigurerAdapter() {
 		    return new JWTConfigurer(tokenProvider);
 		  }
