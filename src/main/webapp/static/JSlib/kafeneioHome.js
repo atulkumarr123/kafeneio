@@ -13,7 +13,7 @@ $( document ).ready(function() {
     $("#invoiceGrid").jqGrid({
         colModel: [
         	{ name: "foodCode", label: "Code", width: 140, align: "center",hidden:true},
-            { name: "item", label: "Item", width: 140, align: "center" },
+            { name: "item", label: "Item", width: 140, align: "left" },
             { name: "quantity", label: "Quantity", width: 80, align: "center" },
             { name: "amount", label: "Amount", width: 80, template: "number"},
             { name: 'decrease', label:"", width: 40, sortable: false, search: false, align: "center",
@@ -31,7 +31,7 @@ $( document ).ready(function() {
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
         idPrefix: "gb1_",
-        rownumbers: true,
+        rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
         caption: "#201",       

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- 
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html  class="js">
 <head>
 <title>Kafeneio</title>
@@ -18,7 +18,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
-<script src = "static/JSlib/jquery-ui.js"></script>
 <script  src="static/JSlib/kafeneioHome.js"></script>
 </head>
 
@@ -36,7 +35,9 @@
 				<div>
 					<ul class=" nav navbar-nav">
 						<li><a href="home">Home</a></li>
+						<sec:authorize access="hasRole('ADMIN')">
 						<li><a href="#" id="menu">Menu</a></li>
+						</sec:authorize>
 						<li><a href="billingHome">Items</a></li>
 						<li><a href="aboutUs">About us</a></li>
 						<li><a href="plans">Plans</a></li>
@@ -46,8 +47,8 @@
 						<li><a href="contactUs">Contact us</a></li>
 					</ul>
 					<ul ng-if="name==null" class="nav navbar-nav navbar-right">
-						<li><a href="signUp"> Signup</a></li>
-						<li><a href="loginPage">Log In </a></li>
+						<li><a href="signUp">Sign Up</a></li>
+						<li><a href="login">Log In </a></li>
 					</ul>
 					
 				</div>
