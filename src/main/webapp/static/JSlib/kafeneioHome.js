@@ -13,7 +13,7 @@ $( document ).ready(function() {
     $("#invoiceGrid").jqGrid({
         colModel: [
         	{ name: "foodCode", label: "Code", width: 140, align: "center",hidden:true},
-            { name: "item", label: "Item", width: 140, align: "left" },
+            { name: "foodDesc", label: "Item", width: 140, align: "left" },
             { name: "quantity", label: "Quantity", width: 80, align: "center" },
             { name: "amount", label: "Amount", width: 80, template: "number"},
             { name: 'decrease', label:"", width: 40, sortable: false, search: false, align: "center",
@@ -110,7 +110,7 @@ function writeDivsFromJson(data){
 function addItem(id,foodCode, foodItemDesc, amount){
 	//alert("add Item");
 	if(!increaseIfPresent(foodCode,amount)){
-	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, item:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
+	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
 	adjustTotal();
 	}
@@ -146,22 +146,22 @@ function adjustTotal(){
 			quantity=parseInt(quantity)+parseInt(rowData.quantity);
 			amount=parseInt(amount)+parseInt(rowData.amount);
 	});
-	jQuery("#invoiceGrid").footerData('set',{item:'Total',quantity:quantity ,  amount:amount});
+	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});
 	
 }
 
 function generateBill() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
-	alert(JSON.stringify(allData));
+	//alert(JSON.stringify(allData));
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
 	      url : ctx+"/generateBill",
-	      data: JSON.stringify(allData), // Note it is important
+	      data: JSON.stringify(allData),
 	      success :function(result) {
-	      	alert(result);
+	      	alert(JSON.stringify(result));
 	     },
 	   error:function(responseText) {
 				alert("error"+responseText);
