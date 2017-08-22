@@ -13,13 +13,12 @@ import com.kafeneio.model.FoodItems;
 import com.kafeneio.repository.FoodRepository;
 
 @Service
-@Transactional
-public class FoodServiceImpl implements FoodService{
+public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	
 	
 	@Inject
 	FoodRepository foodRepository;
-
+	
 	@Override
 	public List<FoodCategory> findFoodCategory() {
 		List<FoodCategory> categories = foodRepository.findFoodCategory("Active");

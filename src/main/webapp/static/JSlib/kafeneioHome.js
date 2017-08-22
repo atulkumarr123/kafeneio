@@ -153,18 +153,24 @@ function adjustTotal(){
 function generateBill() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+	var order={};
+	order["orderNo"]="235";
+	order["amount"]="100";
+	order["creation_date"]="";
+	order["orderDetails"]=allData;
+	
 	//alert(JSON.stringify(allData));
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
 	      url : ctx+"/generateBill",
-	      data: JSON.stringify(allData),
+	      data: JSON.stringify(order),
 	      success :function(result) {
 	      	alert(JSON.stringify(result));
 	     },
 	   error:function(responseText) {
-				alert("error"+responseText);
+				//alert("error"+JSON.stringify(responseText));
 				$('#outputLabel').text("Error");
 	   }
 	  });

@@ -1,27 +1,22 @@
 package com.kafeneio.controller.billing;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kafeneio.DTO.AccountDTO;
-import com.kafeneio.controller.BaseRestController;
 import com.kafeneio.enums.ResponseKeyName;
 import com.kafeneio.exception.KafeneioException;
-import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
-import com.kafeneio.model.OrderDetails;
-import com.kafeneio.service.AccountService;
+import com.kafeneio.model.Order;
+import com.kafeneio.service.BillingService;
 import com.kafeneio.service.FoodService;
 
 @RestController
@@ -29,6 +24,9 @@ public class BillingController {
 	
 	@Inject
 	FoodService foodService;
+	
+	@Inject
+	BillingService billingService;
 	
 	
 	@RequestMapping(value="/food/{category}",method=RequestMethod.GET)
@@ -45,11 +43,10 @@ public class BillingController {
 	}*/
 	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
-	public List<OrderDetails> generateBill(@RequestBody List<OrderDetails> orders)
+	public ResponseEntity<Order> generateBill(@RequestBody Order order)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		return  orders;
+		billingService.saveOrder(order);
+		return new ResponseEntity<Order>(order, HttpStatus.OK);
+		
 	}
-	
-	
-	
 }
