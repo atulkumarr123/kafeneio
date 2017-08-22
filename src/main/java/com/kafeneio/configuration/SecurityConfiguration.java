@@ -111,8 +111,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
 	        .and().formLogin()/*.loginPage("/login")*/
 	        .usernameParameter("ssoId").passwordParameter("password")
-	        .and().csrf()
-	        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
+	        .and().csrf().disable()
+//	        .and().exceptionHandling().accessDeniedPage("/Access_Denied")
+	        ;
 	    }
 	   
 	  private JWTConfigurer securityConfigurerAdapter() {

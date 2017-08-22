@@ -28,7 +28,7 @@ public class BillingController {
 	}
 	
 	@RequestMapping(value="/generateBill",method=RequestMethod.POST)
-	public String generateBill(@RequestBody String orderData)
+	public String generateBill(@RequestBody String orders)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		return "Order saved Succesfuly!";
 	}

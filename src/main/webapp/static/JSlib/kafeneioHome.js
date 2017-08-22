@@ -153,6 +153,7 @@ function adjustTotal(){
 function generateBill() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+	alert(JSON.stringify(allData));
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
@@ -160,10 +161,10 @@ function generateBill() {
 	      url : ctx+"/generateBill",
 	      data: JSON.stringify(allData), // Note it is important
 	      success :function(result) {
-	       // do what ever you want with data
+	      	alert(result);
 	     },
 	   error:function(responseText) {
-			//	alert("error"+responseText);
+				alert("error"+responseText);
 				$('#outputLabel').text("Error");
 	   }
 	  });
