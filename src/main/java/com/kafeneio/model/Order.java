@@ -1,5 +1,6 @@
 package com.kafeneio.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,12 +24,12 @@ public class Order {
 		@Column(name="id" ,unique=true,nullable=false )
 		private Long id;
 		@Column(name="order_no")
-		private String orderNo;
+		private Long orderNo;
 		@Column(name="amount")
-		private String amount;
+		private Double amount;
 		
 		@Column(name="creation_date")
-		private String creation_date;
+		private Date creation_date;
 		
 
 		 @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -47,32 +48,32 @@ public class Order {
 		}
 
 
-		public String getOrderNo() {
+		public Long getOrderNo() {
 			return orderNo;
 		}
 
 
-		public void setOrderNo(String orderNo) {
+		public void setOrderNo(Long orderNo) {
 			this.orderNo = orderNo;
 		}
 
 
-		public String getAmount() {
+		public Double getAmount() {
 			return amount;
 		}
 
 
-		public void setAmount(String amount) {
+		public void setAmount(Double amount) {
 			this.amount = amount;
 		}
 
 
-		public String getCreation_date() {
+		public Date getCreation_date() {
 			return creation_date;
 		}
 
 
-		public void setCreation_date(String creation_date) {
+		public void setCreation_date(Date creation_date) {
 			this.creation_date = creation_date;
 		}
 

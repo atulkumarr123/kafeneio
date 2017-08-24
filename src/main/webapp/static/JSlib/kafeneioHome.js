@@ -154,9 +154,9 @@ function generateBill() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var order={};
-	order["orderNo"]="235";
-	order["amount"]="100";
-	order["creation_date"]="";
+	order["orderNo"]=null;
+	order["amount"]=null;
+	order["creation_date"]=null;
 	order["orderDetails"]=allData;
 	
 	//alert(JSON.stringify(allData));

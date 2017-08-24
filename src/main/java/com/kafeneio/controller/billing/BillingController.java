@@ -45,8 +45,14 @@ public class BillingController {
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
 	public ResponseEntity<Order> generateBill(@RequestBody Order order)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		billingService.saveOrder(order);
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
-		
+		ResponseEntity<Order> response = null;
+		boolean isSaved = billingService.saveOrder(order);
+		if(isSaved){
+			response = new ResponseEntity<Order>(order, HttpStatus.OK);
+		}
+		else{
+			response = new ResponseEntity<Order>(order, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return response;
 	}
 }
