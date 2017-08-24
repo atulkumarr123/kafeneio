@@ -90,12 +90,10 @@
 					<table id="invoiceGrid"></table><br>
 						<div style="text-align: left;">
 							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
-							<button class="btn btn-default" type="button" onclick="">Print</button>
-							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
+							<button class="btn btn-default" type="button" onclick="generateBill();">Save</button>
+							<button class="btn btn-default" type="button" onclick="">Cancel</button>
 					</div>
 				</div>
-				
-				
 			</div>
 
 <c:choose>

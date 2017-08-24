@@ -6,9 +6,7 @@ $( document ).ready(function() {
 	});
 //	alert("Inready");
 	 
-
     // grid = $('#invoiceGrid'), firstButtonColumnIndex, buttonNames={};
-
      
     $("#invoiceGrid").jqGrid({
         colModel: [
@@ -35,16 +33,14 @@ $( document ).ready(function() {
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
-        caption: "#201",       
+        caption: "",       
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
             if (iCol >= firstButtonColumnIndex) {
                 removeItem(rowid);
             }
         }
-
     });
-
     grid = $("#invoiceGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
         var cm = grid.jqGrid('getGridParam','colModel');
@@ -85,10 +81,10 @@ function getItems(foodCategory){
 		error:function(responseText) {
 		//	alert("error"+responseText);
 			$('#outputLabel').text("Error");
-		}
-			
+		}	
 	});
 }
+
 
 function writeDivsFromJson(data){
 	var html = '';
@@ -100,9 +96,7 @@ function writeDivsFromJson(data){
 			+"'"+row.foodItemDesc+"'"+','
 			+row.amount+')">'+row.foodItemDesc+'<br>'+ '\u20B9' +row.amount+'</div>';
 	//alert(row.foodItemDesc,row.amount);
-	}
-	
-
+	}	
 	$('#itemsRow').html(html);
 }
 
@@ -110,23 +104,32 @@ function writeDivsFromJson(data){
 function addItem(id,foodCode, foodItemDesc, amount){
 	//alert("add Item");
 	//var space = '&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp';
-	
-	$("#invoiceGrid").jqGrid('setCaption', '#508');
+	 
+	var ctx = $("#contextPath").val();
+	$.ajax({
+		url : ctx+"/MaxOrderNo",
+		success : function(responseText) {
+			//alert(JSON.stringify(responseText));
+			$("#invoiceGrid").jqGrid('setCaption',responseText);
+			//$('#outputLabel').text(JSON.stringify(responseText));
+		},
+		error:function(responseText) {
+			alert("error"+responseText);
+			$('#outputLabel').text("Error");
+		}
+	});
 	if(!increaseIfPresent(foodCode,amount)){
 	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
 	adjustTotal();
 	}
-	
-
 
 function increaseIfPresent(foodCode,amount){
 	//alert(foodCode);
 	var isPresent=false;
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	 $.each(allData, function(i, item){
-		 //alert(item.foodCode);
-		 
+		 //alert(item.foodCode);		 
 		    if (item.foodCode == foodCode) {
 		    	isPresent=true;
 		    	var rowData = $("#invoiceGrid").jqGrid("getRowData", item.id);
@@ -140,6 +143,7 @@ function increaseIfPresent(foodCode,amount){
 	 return isPresent;
 }
 
+
 function adjustTotal(){
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var quantity=0;
@@ -149,15 +153,16 @@ function adjustTotal(){
 			quantity=parseInt(quantity)+parseInt(rowData.quantity);
 			amount=parseInt(amount)+parseInt(rowData.amount);
 	});
-	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});
-	
+	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});	
 }
+
 
 function generateBill() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+	var orderNo = $("#invoiceGrid").jqGrid("getGridParam", "caption");
 	var order={};
-	order["orderNo"]=null;
+	order["orderNo"]=orderNo;
 	order["amount"]=null;
 	order["creation_date"]=null;
 	order["orderDetails"]=allData;

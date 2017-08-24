@@ -35,8 +35,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	}
 
 	private void populateOrder(Order order) {
-		Long orderNo = orderRepository.findOrderNo();
-		orderNo=(orderNo!=null)?(orderNo+1):1;
+		
 		double amount = 0;
 		Iterator<OrderDetails> itr = order.getOrderDetails().iterator();	
 		while(itr.hasNext()){
@@ -44,9 +43,15 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 			amount=amount+orderDetails.getAmount();
 		}
 		
-		order.setOrderNo(orderNo);
+		//order.setOrderNo(orderNo);
 		order.setCreation_date(new Date());
 		order.setAmount(amount);
 	}
 
+	public Long getOrderNo(){
+		Long orderNo = orderRepository.findOrderNo();
+		
+		orderNo=(orderNo!=null)?(orderNo+1):1;
+		return orderNo;
+	}
 }
