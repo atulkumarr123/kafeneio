@@ -49,7 +49,7 @@ public class WorkAssignmentServiceImpl implements WorkAssignmentService {
 		/* Select Data from Link table */
 		if (AppConstant.STP_TEN_STRING.getStringValue().equals(registrationModel.getPlanType())) {
 
-			limit = AppConstant.STP_TEN.getValue();
+//			limit = AppConstant.STP_TEN.getValue();
 
 		}
 

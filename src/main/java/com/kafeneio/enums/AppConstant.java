@@ -1,7 +1,9 @@
 package com.kafeneio.enums;
 
 public enum AppConstant {
-	STP_TEN(60),
+	
+	BASE_ORDER_NO(100),
+//	STP_TEN(60),
 	STP_TWENTY(20),
 	STP_FIFTY(50),
 	STP_HUNDREAD(100),
@@ -20,19 +22,19 @@ public enum AppConstant {
 	ROLE_TYPE_ADMIN("ADMIN"),
 	ROLE_TYPE_USER("USER"),
 	ADMIN_TAX(10),
-	TDS_TAX(2)
-	;
-	private  int value=0;
+	TDS_TAX(2);
+	
+	private  int intValue=0;
+	private  String stringValue=null;
+
     
-    
-	AppConstant(final int newValue) {
-        value = newValue;
+	AppConstant(final int intValue) {
+        this.intValue = intValue;
     }
-	private  String packType=null;
-	AppConstant(final String newpackType) {
-		packType = newpackType;
+	AppConstant(final String stringValue) {
+		this.stringValue = stringValue;
     }
-    public int getValue() { return value; }
     
-    public String getStringValue() { return packType; }
+	public int getValue() { return intValue; }
+    public String getStringValue() { return stringValue; }
 }

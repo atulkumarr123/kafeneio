@@ -49,7 +49,7 @@ public class BillingController {
 		}
 		return response;
 	}
-	@RequestMapping(value="/MaxOrderNo",method=RequestMethod.GET)
+	@RequestMapping(value="/maxOrderNo",method=RequestMethod.GET)
 	public Long getNextOrderNo()
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		Long maxOrderNo = billingService.getOrderNo();

@@ -2,13 +2,12 @@ package com.kafeneio.service;
 
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.kafeneio.model.FoodItems;
+import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderDetails;
 import com.kafeneio.repository.OrderRepository;
@@ -50,8 +49,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 
 	public Long getOrderNo(){
 		Long orderNo = orderRepository.findOrderNo();
-		
-		orderNo=(orderNo!=null)?(orderNo+1):1;
+		orderNo=(orderNo!=null)?(orderNo+1):ApplicationConstant.BASE_ORDER_NO;
 		return orderNo;
 	}
 }

@@ -33,7 +33,7 @@ $( document ).ready(function() {
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
-        caption: "",       
+        caption: "#",       
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
             if (iCol >= firstButtonColumnIndex) {
@@ -107,7 +107,7 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	 
 	var ctx = $("#contextPath").val();
 	$.ajax({
-		url : ctx+"/MaxOrderNo",
+		url : ctx+"/maxOrderNo",
 		success : function(responseText) {
 			//alert(JSON.stringify(responseText));
 			$("#invoiceGrid").jqGrid('setCaption',responseText);
