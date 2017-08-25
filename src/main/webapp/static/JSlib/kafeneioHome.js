@@ -2,6 +2,7 @@ $( document ).ready(function() {
 	 $("#menuChildDiv").hide();
 	 
 	$("#menu").click(function(){
+		reloadGrid();
 		$("#menuChildDiv").toggle();
 	});
 //	alert("Inready");
@@ -54,6 +55,14 @@ $( document ).ready(function() {
     firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
 });
 
+
+
+function reloadGrid(){
+	$("#invoiceGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	$("#invoiceGrid").jqGrid('setCaption','');
+	
+}
+
 function removeItem(rowid){
 	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowid);
 	//alert(rowData.amount);
@@ -104,7 +113,18 @@ function writeDivsFromJson(data){
 function addItem(id,foodCode, foodItemDesc, amount){
 	//alert("add Item");
 	//var space = '&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp';
-	 
+	var rowCount=jQuery('#invoiceGrid').jqGrid('getGridParam', 'reccount'); 
+	if(rowCount < 1){
+		setCaption();
+	}
+	if(!increaseIfPresent(foodCode,amount)){
+	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
+		}
+	adjustTotal();
+	}
+
+function setCaption(){
+	alert("going to set caption");
 	var ctx = $("#contextPath").val();
 	$.ajax({
 		url : ctx+"/maxOrderNo",
@@ -118,11 +138,7 @@ function addItem(id,foodCode, foodItemDesc, amount){
 			$('#outputLabel').text("Error");
 		}
 	});
-	if(!increaseIfPresent(foodCode,amount)){
-	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
-		}
-	adjustTotal();
-	}
+}
 
 function increaseIfPresent(foodCode,amount){
 	//alert(foodCode);
@@ -143,7 +159,6 @@ function increaseIfPresent(foodCode,amount){
 	 return isPresent;
 }
 
-
 function adjustTotal(){
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var quantity=0;
@@ -156,8 +171,10 @@ function adjustTotal(){
 	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});	
 }
 
-
 function generateBill() {
+	if(!validateOrder()){
+		return false;
+	}
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var orderNo = $("#invoiceGrid").jqGrid("getGridParam", "caption");
@@ -175,11 +192,29 @@ function generateBill() {
 	      url : ctx+"/generateBill",
 	      data: JSON.stringify(order),
 	      success :function(result) {
-	      	alert(JSON.stringify(result));
+	    	  alert("Order Saved Successfully");
+			  reloadGrid();
+	    	  //validateOrder();
+	    	  //alert(JSON.stringify(result));
 	     },
 	   error:function(responseText) {
 				//alert("error"+JSON.stringify(responseText));
 				$('#outputLabel').text("Error");
 	   }
 	  });
+	 
+}
+
+
+function validateOrder(){
+	var rowCount=jQuery('#invoiceGrid').jqGrid('getGridParam', 'reccount');
+	  
+	  if(rowCount!=0){
+		  //alert(isEmpty);    
+		  return true;
+	  }
+	  else{
+		  alert("Please Order");
+	  return false;
+	  }
 }

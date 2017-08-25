@@ -11,7 +11,7 @@ import com.kafeneio.model.Order;
 
 public interface OrderRepository  extends JpaRepository<Order, Long> {
 	
-	@Query(value="select MAX(orderNo) from Order")
+	@Query(value="select MAX(orderNo) from Order order where trunc(sysdate) = trunc(creationDate)")
 	Long findOrderNo();
 	
 }

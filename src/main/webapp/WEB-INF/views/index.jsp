@@ -13,14 +13,12 @@
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-
 <script src="static/js/app.js" /></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script  src="static/JSlib/kafeneioHome.js"></script>
 </head>
-
 <body>
 <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
 	<div>
@@ -90,8 +88,7 @@
 					<table id="invoiceGrid"></table><br>
 						<div style="text-align: left;">
 							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
-							<button class="btn btn-default" type="button" onclick="generateBill();">Save</button>
-							<button class="btn btn-default" type="button" onclick="">Cancel</button>
+							<button class="btn btn-default" type="button" onclick="reloadGrid()">Clear</button>
 					</div>
 				</div>
 			</div>

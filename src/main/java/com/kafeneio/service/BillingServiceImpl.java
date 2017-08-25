@@ -1,5 +1,4 @@
 package com.kafeneio.service;
-
 import java.util.Date;
 import java.util.Iterator;
 
@@ -43,7 +42,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 		}
 		
 		//order.setOrderNo(orderNo);
-		order.setCreation_date(new Date());
+		order.setCreationDate(new Date());
 		order.setAmount(amount);
 	}
 
