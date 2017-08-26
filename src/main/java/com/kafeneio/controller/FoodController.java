@@ -38,6 +38,4 @@ public class FoodController extends BaseRestController {
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		return "index2";
 	}
-	
-	
 }

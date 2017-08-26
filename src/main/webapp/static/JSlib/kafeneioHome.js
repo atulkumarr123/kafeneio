@@ -1,10 +1,13 @@
 $( document ).ready(function() {
 	 $("#menuChildDiv").hide();
 	 
+	 
 	$("#menu").click(function(){
 		reloadGrid();
 		$("#menuChildDiv").toggle();
 	});
+	
+	
 //	alert("Inready");
 	 
     // grid = $('#invoiceGrid'), firstButtonColumnIndex, buttonNames={};

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="static/css/bootstrap.css"></link>
 <link href="static/css/app.css" rel="stylesheet"></link>
-<link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
+<link href="static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src="static/js/app.js" /></script>
@@ -21,36 +21,8 @@
 </head>
 <body>
 <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
-	<div>
 	<div class="container">
-			<div class="top-navbar header b-b">
-				<!-- <a href="#home" class="navbar-brand"><span class="glyphicon-home"></span></a>
-				<button class="navbar navbar-toggle" data-toggle="collapse"
-					data-target=".navheadercollapse">
-					<span class=" icon-bar"></span> <span class=" icon-bar"></span> <span
-						class=" icon-bar"></span>
-				</button> -->
-				<div>
-					<ul class=" nav navbar-nav">
-						<li><a href="home">Home</a></li>
-						<sec:authorize access="hasRole('ADMIN')">
-						<li><a href="#" id="menu">Menu</a></li>
-						</sec:authorize>
-						<li><a href="billingHome">Items</a></li>
-						<li><a href="aboutUs">About us</a></li>
-						<li><a href="plans">Plans</a></li>
-						<li><a href="termsAndConditions">Terms and Conditions</a></li>
-						<li><a href="whyUs">Why us</a></li>
-						<li><a href="fAQ">FAQ</a></li>
-						<li><a href="contactUs">Contact us</a></li>
-					</ul>
-					<ul ng-if="name==null" class="nav navbar-nav navbar-right">
-						<li><a href="signUp">Sign Up</a></li>
-						<li><a href="login">Log In </a></li>
-					</ul>
-					
-				</div>
-			</div>
+				<%@include file = "menu.jsp" %>
 		</div>
 		<div class="container" id="menuChildDiv">
 		<div class="row">
@@ -79,11 +51,8 @@
 							</div>
 						</div>
 					</div>
-					
 					  <div class="row" style="margin-left: 5" id="itemsRow"></div>
-					
 				</div>
-				
 				<div class="col-lg-4">
 					<table id="invoiceGrid"></table><br>
 						<div style="text-align: left;">
