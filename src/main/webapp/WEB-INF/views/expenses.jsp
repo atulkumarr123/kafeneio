@@ -38,7 +38,7 @@
 
 									<label for="normal-field" class="control-label">Item
 										Description</label> <input type="text" name="itemDesc"
-										placeholder="Enter Your Item Here" class="form-control"
+										placeholder="" class="form-control"
 										id="itemDesc" required>
 								</div>
 
@@ -49,7 +49,7 @@
 
 									<label for="prepended-input" class="control-label">Amount</label>
 									<input type="text" class="form-control" name="amount"
-										id="amount" placeholder="Enter Amount Here" required>
+										id="amount" placeholder="" required>
 								</div>
 							</div>
 
@@ -59,8 +59,7 @@
 
 								<div class="col-md-10">
 									<label for="prepended-input" class="control-label">Remarks</label>
-									<textarea class="form-control" name="remarks" id="remarks">
-								</textarea>
+									<textarea class="form-control" name="remarks" id="remarks"></textarea>
 
 								</div>
 

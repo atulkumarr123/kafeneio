@@ -62,7 +62,7 @@
 				</div>
 			</div>
 
-<c:choose>
+<%-- <c:choose>
     <c:when test="${fileName=='foodCategory'}">
 	<jsp:include page="${fileName}.jsp" />  
     </c:when>    
@@ -85,7 +85,7 @@
     <c:otherwise>
       
     </c:otherwise>
-</c:choose>
+</c:choose> --%>
 
 
 

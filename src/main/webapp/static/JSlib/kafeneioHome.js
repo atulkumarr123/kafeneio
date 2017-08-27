@@ -127,7 +127,7 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	}
 
 function setCaption(){
-	alert("going to set caption");
+	//alert("going to set caption");
 	var ctx = $("#contextPath").val();
 	$.ajax({
 		url : ctx+"/maxOrderNo",
@@ -137,7 +137,7 @@ function setCaption(){
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
-			alert("error"+responseText);
+			alert("error"+JSON.stringify(responseText));
 			$('#outputLabel').text("Error");
 		}
 	});
