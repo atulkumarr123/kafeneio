@@ -1,9 +1,10 @@
+<input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="top-navbar header b-b">
 				<div>
 					<ul class=" nav navbar-nav">
 						<li><a href="home">Home</a></li>
 						<sec:authorize access="hasRole('ADMIN')">
-						<li><a href="#" id="menu">Menu</a></li>
+						<li><a href="${pageContext.request.contextPath}/" id="menu">Menu</a></li>
 						<li><a href="${pageContext.request.contextPath}/expenses" id="expenses">Expenses</a></li>
 						</sec:authorize>
 						<li><a href="billingHome">Items</a></li>

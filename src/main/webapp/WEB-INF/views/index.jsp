@@ -20,7 +20,7 @@
 <script  src="static/JSlib/kafeneioHome.js"></script>
 </head>
 <body>
-<input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
+
 	<div class="container">
 				<%@include file = "menu.jsp" %>
 		</div>

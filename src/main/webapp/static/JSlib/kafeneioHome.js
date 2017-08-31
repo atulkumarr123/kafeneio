@@ -1,15 +1,11 @@
 $( document ).ready(function() {
-	 $("#menuChildDiv").hide();
+	 //$("#menuChildDiv").hide();
 	 
 	 
-	$("#menu").click(function(){
-		reloadGrid();
-		$("#menuChildDiv").toggle();
-	});
-	
-	
-//	alert("Inready");
-	 
+	//$("#menu").click(function(){
+		//reloadGrid();
+		$("#menuChildDiv").show();
+	//});	 
     // grid = $('#invoiceGrid'), firstButtonColumnIndex, buttonNames={};
      
     $("#invoiceGrid").jqGrid({
@@ -24,8 +20,6 @@ $( document ).ready(function() {
             	  }}
         ],
         data: [
-           /* {  name: "test",   amount: "600.88" },
-            {  name: "test2",  amount: "300.00" }*/
            
         ],
        
@@ -63,9 +57,7 @@ $( document ).ready(function() {
 function reloadGrid(){
 	$("#invoiceGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 	$("#invoiceGrid").jqGrid('setCaption','');
-	
 }
-
 function removeItem(rowid){
 	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowid);
 	//alert(rowData.amount);
@@ -96,8 +88,6 @@ function getItems(foodCategory){
 		}	
 	});
 }
-
-
 function writeDivsFromJson(data){
 	var html = '';
 	for (var i in data) {
@@ -111,8 +101,6 @@ function writeDivsFromJson(data){
 	}	
 	$('#itemsRow').html(html);
 }
-
-
 function addItem(id,foodCode, foodItemDesc, amount){
 	//alert("add Item");
 	//var space = '&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp';
@@ -127,7 +115,7 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	}
 
 function setCaption(){
-	alert("going to set caption");
+	//alert("going to set caption");
 	var ctx = $("#contextPath").val();
 	$.ajax({
 		url : ctx+"/maxOrderNo",
