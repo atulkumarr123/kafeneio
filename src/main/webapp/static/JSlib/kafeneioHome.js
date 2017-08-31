@@ -125,7 +125,7 @@ function setCaption(){
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
-			alert("error"+responseText);
+			alert("error"+JSON.stringify(responseText));
 			$('#outputLabel').text("Error");
 		}
 	});
