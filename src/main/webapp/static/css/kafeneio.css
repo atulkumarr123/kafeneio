@@ -17,6 +17,7 @@
 
  .ui-jqgrid tr.jqgrow td {
         white-space: normal !important;
+        word-wrap:break-word;
     }
 
 .div-item:hover, .div-item:focus, .div-item:active, .div-item.active, .open .dropdown-toggle.div-item {
