@@ -21,7 +21,7 @@ public class Expenses {
 	@Column(name="amount")
 	private Double amount;
 	@Column(name="remarks")
-	private Double remarks;
+	private String remarks;
 	@Column(name="creationDate")
 	private Date creationDate;
 	
@@ -37,17 +37,17 @@ public class Expenses {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	public Double getRemarks() {
-		return remarks;
-	}
-	public void setRemarks(Double remarks) {
-		this.remarks = remarks;
-	}
 	public Date getCreationDate() {
 		return creationDate;
 	}
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 }

@@ -9,11 +9,11 @@ import com.kafeneio.model.Expenses;
 import com.kafeneio.repository.ExpensesRepository;
 
 @Service
-public class expensesServiceImpl extends BaseServiceImpl implements expensesService{
+public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesService{
 	@Inject
 	ExpensesRepository expensesRepository;
 //	@Override
-	public boolean saveExpense(Expenses expenses) {
+	public boolean saveExpense(List<Expenses> expenses) {
 			boolean isSaved;
 			try{
 				expensesRepository.save(expenses);

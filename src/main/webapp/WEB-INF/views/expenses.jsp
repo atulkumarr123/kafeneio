@@ -16,9 +16,7 @@
 	type="text/css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
-<link
-	href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
-	rel="stylesheet">
+<!-- <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"> -->
 <script src="static/js/app.js" /></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -38,7 +36,6 @@
 			<div class="col-lg-8">
 				<div class="widget-content">
 					<fieldset>
-						<div class="control-group">
 							<div class="form-group">
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
@@ -52,15 +49,26 @@
 										id="amount" placeholder="" required>
 								</div>
 							</div>
+						<div class="form-group">
+						<div class="col-md-6">
+							<label for="prepended-input" class="control-label">Date</label>
+							<div class='input-group date' id='datetimepicker3'>
+								<input type='text' class="form-control" /> <span
+									class="input-group-addon"><span
+									class="fa fa-calendar"></span> </span>
+							</div>
+							</div>
+							<div class="col-md-6">
+									<label for="prepended-input" class="control-label">Remarks</label>
+									<textarea class="form-control" name="remarks" id="remarks"></textarea>
+								</div>
 						</div>
-						<div class="control-group">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<div class="col-md-10">
 									<label for="prepended-input" class="control-label">Remarks</label>
 									<textarea class="form-control" name="remarks" id="remarks"></textarea>
 								</div>
-							</div>
-						</div>
+							</div> -->
 					</fieldset>
 					<div class="form-actions">
 						<div>
@@ -73,7 +81,7 @@
 				<table id="expensesGrid"></table>
 				<br>
 				<div style="text-align: left;">
-					<button class="btn btn-default" type="button" onclick="saveExpenses()">Save</button>
+					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
 					<button class="btn btn-default" type="button" onclick="">Clear</button>
 				</div>
 
