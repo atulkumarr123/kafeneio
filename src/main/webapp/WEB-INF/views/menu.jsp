@@ -6,6 +6,7 @@
 						<sec:authorize access="hasRole('ADMIN')">
 						<li><a href="${pageContext.request.contextPath}/" id="menu">Menu</a></li>
 						<li><a href="${pageContext.request.contextPath}/expenses" id="expenses">Expenses</a></li>
+						<li><a href="${pageContext.request.contextPath}/reports" id="reports">Reports</a></li>
 						</sec:authorize>
 						<li><a href="billingHome">Items</a></li>
 						<li><a href="aboutUs">About us</a></li>
