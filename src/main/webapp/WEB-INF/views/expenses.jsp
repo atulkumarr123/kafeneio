@@ -81,7 +81,7 @@
 				<table id="expensesGrid"></table>
 				<br>
 				<div style="text-align: left;">
-					<button class="btn btn-default" type="submit"  onclick="saveExpenses()">Save</button>
+					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
 					<button class="btn btn-default" type="button" onclick="">Clear</button>
 				</div>
 

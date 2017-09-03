@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Table(name="KAFENEIO_EXPENSES")
@@ -22,8 +24,12 @@ public class Expenses {
 	private Double amount;
 	@Column(name="remarks")
 	private String remarks;
-	@Column(name="creationDate")
-	private Date creationDate;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm a")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat
+    (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@Column(name="date")
+	private Date date;
 	
 	public Long getId() {
 		return id;
@@ -37,17 +43,18 @@ public class Expenses {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	public Date getCreationDate() {
-		return creationDate;
-	}
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+
 	public String getRemarks() {
 		return remarks;
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

@@ -3,6 +3,7 @@ $( document ).ready(function() {
         colModel: [
         	{ name: "item", label: "Item",  align: "center"},
             { name: "amount", label: "Amount",  align: "center" },
+            { name: "date", label: "Date",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
@@ -46,7 +47,8 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
     $('#datetimepicker3').datetimepicker({
-        //pick12HourFormat: false
+//        pick12HourFormat: false
+    	 format: 'DD-MM-YYYY'
     });
     $("#setMinDate").click(function () {
         $('#datetimepicker3').data("DateTimePicker").setMinDate(new Date("june 12, 2013"));
@@ -77,7 +79,8 @@ function addExpense(){
 	//alert(item);
 	var amount = $("#amount").val();
 	var remarks = $("#remarks").val();
-	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount , remarks:remarks}, "last");
+	var date = $("#datetimepicker3").find("input").val();
+	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,date:date, remarks:remarks}, "last");
 }
 
 
