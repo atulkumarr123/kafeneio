@@ -48,28 +48,24 @@ function addExpense(){
 	//alert(item);
 	var amount = $("#amount").val();
 	var remarks = $("#remarks").val();
-	 $("#expensesGrid").jqGrid("addRowData",null , { item : item, amount : amount , remarks:remarks}, "last");
-	}
+	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount , remarks:remarks}, "last");
+}
 
 
 function saveExpenses() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#expensesGrid").jqGrid("getGridParam", "data");
-	//alert(JSON.stringify(allData));
+	alert(JSON.stringify(allData));
 	/*var expense={};
 	expense["item"]=null;
 	expense["amount"]=null;
 	expense["remarks"]=null;*/
-	var order={};
-	order["orderNo"]=123;
-	order["amount"]=null;
-	order["creation_date"]=null;
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
 	      url : ctx+"/expenses",
-	      data: JSON.stringify(order),
+	      data: JSON.stringify(allData),
 	      success :function(result) {
 	    	  alert("Expenses Saved Successfully");
 	    	  //validateOrder();
@@ -77,9 +73,12 @@ function saveExpenses() {
 	     },
 	   error:function(responseText) {
 				alert("error"+JSON.stringify(responseText));
-				$('#outputLabel').text("Error");
 	   }
 	  });
 	 
+}
+
+function removeItem(rowid){
+	$('#expensesGrid').jqGrid('delRowData',rowid);
 }
 
