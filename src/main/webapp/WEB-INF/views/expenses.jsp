@@ -8,7 +8,7 @@
 <head>
 <title>Kafeneio</title>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
-<link rel="stylesheet" href="static/css/bootstrap/bootstrap.css"></link>
+<link rel="stylesheet" href="static/css/bootstrap.css"></link>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
 <link href="static/css/app.css" rel="stylesheet"></link>
@@ -81,7 +81,7 @@
 				<table id="expensesGrid"></table>
 				<br>
 				<div style="text-align: left;">
-					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
+					<button class="btn btn-default" type="submit"  onclick="saveExpenses()">Save</button>
 					<button class="btn btn-default" type="button" onclick="">Clear</button>
 				</div>
 
