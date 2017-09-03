@@ -8,5 +8,7 @@ package com.kafeneio.constants;
 public class ApplicationConstant {
 	
 	public static final int BASE_ORDER_NO = 100;
+	public static final String DATE_FORMAT = "dd-MM-yyyy";
+
 
 }

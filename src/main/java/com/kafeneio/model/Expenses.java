@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kafeneio.constants.ApplicationConstant;
 
 
 @Entity
@@ -24,10 +25,11 @@ public class Expenses {
 	private Double amount;
 	@Column(name="remarks")
 	private String remarks;
+	@Column(name="item")
+	private String item;
 //	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm a")
 //	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	@JsonFormat
-    (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
 	@Column(name="date")
 	private Date date;
 	
@@ -55,6 +57,12 @@ public class Expenses {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public String getItem() {
+		return item;
+	}
+	public void setItem(String item) {
+		this.item = item;
 	}
 	
 }

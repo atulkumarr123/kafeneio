@@ -12,7 +12,8 @@ import com.kafeneio.repository.ExpensesRepository;
 public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesService{
 	@Inject
 	ExpensesRepository expensesRepository;
-//	@Override
+	
+	@Override
 	public boolean saveExpense(List<Expenses> expenses) {
 			boolean isSaved;
 			try{
