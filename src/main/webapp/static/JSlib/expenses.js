@@ -3,6 +3,7 @@ $( document ).ready(function() {
         colModel: [
         	{ name: "item", label: "Item",  align: "center"},
             { name: "amount", label: "Amount",  align: "center" },
+            { name: "date", label: "Date",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
@@ -43,12 +44,43 @@ $( document ).ready(function() {
 });
 
 
+
+$( document ).ready(function() {
+    $('#datetimepicker3').datetimepicker({
+//        pick12HourFormat: false
+    	 format: 'DD-MM-YYYY'
+    });
+    $("#setMinDate").click(function () {
+        $('#datetimepicker3').data("DateTimePicker").setMinDate(new Date("june 12, 2013"));
+    });                                
+    $("#setMaxDate").click(function () {
+        $('#datetimepicker3').data("DateTimePicker").setMaxDate(new Date("july 4, 2013"));
+    });
+    $("#show").click(function () {
+        $('#datetimepicker3').data("DateTimePicker").show();
+    });
+    $("#disable").click(function () {
+        $('#datetimepicker3').data("DateTimePicker").disable();
+    });
+    $("#enable").click(function () {
+        $('#datetimepicker3').data("DateTimePicker").enable();
+    });
+    $("#setDate").click(function () {
+        $('#datetimepicker3').data("DateTimePicker").setDate("10/23/2013");
+    });
+    $("#getDate").click(function () {
+        alert($('#datetimepicker3').data("DateTimePicker").getDate());
+    });
+});
+
+
 function addExpense(){
 	var item = $("#itemDesc").val();
 	//alert(item);
 	var amount = $("#amount").val();
 	var remarks = $("#remarks").val();
-	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount , remarks:remarks}, "last");
+	var date = $("#datetimepicker3").find("input").val();
+	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,date:date, remarks:remarks}, "last");
 }
 
 
