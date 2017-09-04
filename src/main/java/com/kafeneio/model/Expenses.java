@@ -32,7 +32,6 @@ public class Expenses {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
 	@Column(name="date")
 	private Date date;
-	
 	public Long getId() {
 		return id;
 	}
@@ -45,24 +44,23 @@ public class Expenses {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-
 	public String getRemarks() {
 		return remarks;
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	public String getItem() {
 		return item;
 	}
 	public void setItem(String item) {
 		this.item = item;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

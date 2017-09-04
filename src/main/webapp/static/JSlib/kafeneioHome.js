@@ -10,11 +10,11 @@ $( document ).ready(function() {
      
     $("#invoiceGrid").jqGrid({
         colModel: [
-        	{ name: "foodCode", label: "Code", width: 140, align: "center",hidden:true},
-            { name: "foodDesc", label: "Item", width: 140, align: "left" },
-            { name: "quantity", label: "Quantity", width: 80, align: "center" },
-            { name: "amount", label: "Amount", width: 80, template: "number"},
-            { name: 'decrease', label:"", width: 40, sortable: false, search: false, align: "center",
+        	{ name: "foodCode", label: "Code", hidden:true},
+            { name: "foodDesc", label: "Item", width: 110, align: "left" },
+            { name: "quantity", label: "Qty", width: 50, align: "center" },
+            { name: "amount", label: "Amt", width: 60, template: "number",align: "center" },
+            { name: 'decrease', label:"", width: 30, sortable: false, search: false, align: "center",
             	  formatter:function(){
             	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
             	  }}
@@ -121,7 +121,8 @@ function setCaption(){
 		url : ctx+"/maxOrderNo",
 		success : function(responseText) {
 			//alert(JSON.stringify(responseText));
-			$("#invoiceGrid").jqGrid('setCaption',responseText);
+			$("#orderNumber").val(responseText);
+			$("#invoiceGrid").jqGrid('setCaption',responseText+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"+$("#currentDateTime").val());
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
@@ -168,7 +169,7 @@ function generateBill() {
 	}
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
-	var orderNo = $("#invoiceGrid").jqGrid("getGridParam", "caption");
+	var orderNo = $("#orderNumber").val();
 	var order={};
 	order["orderNo"]=orderNo;
 	order["amount"]=null;
@@ -183,6 +184,7 @@ function generateBill() {
 	      url : ctx+"/generateBill",
 	      data: JSON.stringify(order),
 	      success :function(result) {
+		   	   $.print("#printGrid");
 	    	  $(function(){
 	    		  new PNotify({
 	    			  type:'success',
@@ -200,7 +202,8 @@ function generateBill() {
 	    	 });
 	     }
 	  });
-	 
+	  
+
 }
 
 

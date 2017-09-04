@@ -3,6 +3,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html  class="js">
 <head>
 <title>Kafeneio</title>
@@ -20,11 +22,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
+<script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 
 <script  src="static/JSlib/kafeneioHome.js"></script>
 </head>
 <body>
+
+<input type="hidden" name="currentDateTime" id="currentDateTime" value="${currentDateTime}"/> 
+<input type="hidden" name="orderNumber" id="orderNumber" value=""/> 
 
 	<div class="container">
 				<%@include file = "menu.jsp" %>
@@ -59,7 +65,12 @@
 					  <div class="row" style="margin-left: 5" id="itemsRow"></div>
 				</div>
 				<div class="col-lg-4">
-					<table id="invoiceGrid"></table><br>
+				
+				<div id="printGrid">	
+				<h5><b>The Kafeneio</b></h5>
+					<table id="invoiceGrid"></table>
+				</div>
+					<br>
 						<div style="text-align: left;">
 							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
 							<button class="btn btn-default" type="button" onclick="reloadGrid()">Clear</button>
