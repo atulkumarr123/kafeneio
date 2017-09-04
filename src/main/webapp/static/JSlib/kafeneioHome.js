@@ -183,15 +183,22 @@ function generateBill() {
 	      url : ctx+"/generateBill",
 	      data: JSON.stringify(order),
 	      success :function(result) {
-	    	  alert("Order Saved Successfully");
+	    	  $(function(){
+	    		  new PNotify({
+	    			  type:'success',
+	    			  title: 'Success',
+	    			  text: 'Order <b>'+orderNo+'</b> Saved Successfully!'
+	    		  });
+	    	  });
 			  reloadGrid();
-	    	  //validateOrder();
-	    	  //alert(JSON.stringify(result));
 	     },
-	   error:function(responseText) {
-				//alert("error"+JSON.stringify(responseText));
-				$('#outputLabel').text("Error");
-	   }
+	     error:function(responseText) {
+	    	 new PNotify({
+	    		 type:'error',
+	    		 title: 'Error',
+	    		 text: JSON.stringify(responseText)
+	    	 });
+	     }
 	  });
 	 
 }
@@ -205,7 +212,13 @@ function validateOrder(){
 		  return true;
 	  }
 	  else{
-		  alert("Please Order");
+		  $(function(){
+   		   new PNotify({
+   			   type:'info',
+   			   title: 'Info',
+   		      text: 'Please Order!'
+   		   });
+   		});
 	  return false;
 	  }
 }
