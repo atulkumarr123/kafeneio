@@ -9,14 +9,12 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import com.kafeneio.model.Expenses;
 import com.kafeneio.model.Order;
 import com.kafeneio.service.ExpensesService;
 
 @Repository
 public class ReportDAO {
-
-	@Inject
-	ExpensesService expensesService;
 	
 	@Inject
 	EntityManager entityManager;
@@ -32,5 +30,9 @@ public class ReportDAO {
 //		query.setMaxResults(pageSize);
 		List <Order> orders = query.getResultList();
 		return orders;
+	}
+	
+	public List<Expenses> fetchExpenses(Date fromDate, Date toDate) {
+		return null;
 	}
 }
