@@ -47,10 +47,9 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
     $('#datetimepicker3').datetimepicker({
-//        pick12HourFormat: false
     	 format: 'DD-MM-YYYY'
     });
-    $("#setMinDate").click(function () {
+  /*  $("#setMinDate").click(function () {
         $('#datetimepicker3').data("DateTimePicker").setMinDate(new Date("june 12, 2013"));
     });                                
     $("#setMaxDate").click(function () {
@@ -70,7 +69,7 @@ $( document ).ready(function() {
     });
     $("#getDate").click(function () {
         alert($('#datetimepicker3').data("DateTimePicker").getDate());
-    });
+    });*/
 });
 
 

@@ -13,7 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kafeneio.constants.ApplicationConstant;
 
 @Entity
 @Table(name="KAFENEIO_ORDER")
@@ -26,7 +30,9 @@ public class Order {
 		@Column(name="order_no")
 		private Long orderNo;
 		@Column(name="amount")
-		private Double amount;	
+		private Double amount;
+		
+		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
 		@Column(name="creation_date")
 		private Date creationDate;
 		

@@ -1,104 +1,47 @@
-$( document ).ready(function() {
-   /* $("#expensesGrid").jqGrid({
-        colModel: [
-        	{ name: "orderNo", label: "Order No",  align: "center"},
-            { name: "amount", label: "Amount",  align: "center" },
-            { name: "orderDetails.foodDesc", label: "Food Description", editable: true, align: "center" },
-            { name: "orderDetails.quantity", label: "Quantity",  editable: true,align: "center" },
-        ],
-        data: [
-        	 
-                {"id":"12345","orderNo":"111","amount":"1111","orderDetails":{"foodDesc":"Cheese", "quantity": "11" }}, 
-                {"id":"12345","orderNo":"111","amount":"1111","orderDetails":{"foodDesc":"Cheese", "quantity": "11" }}, 
-                {"id":"12345","orderNo":"111","amount":"1111","orderDetails":{"foodDesc":"Cheese", "quantity": "11" }}, 
-                {"id":"12345","orderNo":"111","amount":"1111","orderDetails":{"foodDesc":"Cheese", "quantity": "11" }}, 
-            
-         ],
-        guiStyle: "bootstrap",
-        iconSet: "fontAwesome",
-        rownumbers: false,
-        sortname: "invdate",
-        sortorder: "desc",
-        caption: "Order Details",       
-        height: 'auto',
-       
-      
-    });*/
+$(document).ready(function(){
 	
-	  $(function () {
-          'use strict';
-          var myData = {
-                  _id: "509403957ae7d3929edcb812",
-                  name: "MYBOOK",
-                  layout: {
-                      chapters: [
-                          {
-                              name: "myfirstchapter",
-                              sequence: 1,
-                              title: "My First Chapter",
-                              files: [
-                                  { filetype: "tex", name: "myfirstfile" },
-                                  { filetype: "tmpl", name: "myfileb" }
-                              ]
-                          },
-                          {
-                              name: "mysecondchapter",
-                              sequence: 2,
-                              title: "My Second Chapter",
-                              files: [
-                                  { filetype: "tex", name: "myintro" },
-                                  { filetype: "tex", name: "myfilec" }
-                              ]
-                          }
-                      ]
-                  }
-              },
-              $grid = $("#orderReportGrid");
+  /*myData = [
+      {orderNo: "123", amount: "111", creationDate: "2014-07-27"},
+      {orderNo: "123", amount: "111", creationDate: "2014-07-21"},
+      {orderNo: "123", amount: "111", creationDate: "2014-07-29"},
+  ];
 
-          $grid.jqGrid({
-              datatype: "local",
-              data: myData.layout.chapters,
-              colNames: ["Sequence", "Name", "Title"],
-              colModel: [
-                  {name: "sequence", width: 65, key: true },
-                  {name: "name", width: 150 },
-                  {name: "title", width: 150}
-              ],
-              rowNum: 10,
-              rowList: [5, 10, 20],
-              pager: "#pager",
-              gridview: true,
-              ignoreCase: true,
-              rownumbers: true,
-              sortname: "sequence",
-              viewrecords: true,
-              height: "auto",
-              subGrid: true,
-              subGridRowExpanded: function (subgridId, rowid) {
-                  var subgridTableId = subgridId + "_t";
-                  $("#" + subgridId).html("<table id='" + subgridTableId + "'></table>");
-                  $("#" + subgridTableId).jqGrid({
-                      datatype: "local",
-                      data: $(this).jqGrid("getLocalRow", rowid).files,
-                      colNames: ["Name", "Filetype"],
-                      colModel: [
-                        {name: "name", width: 130, key: true},
-                        {name: "filetype", width: 130}
-                      ],
-                      height: "100%",
-                      rowNum: 10,
-                      sortname: "name",
-                      idPrefix: "s_" + rowid + "_"
-                  });
-              }
-          });
-          $grid.jqGrid("navGrid", "#pager", {add: false, edit: false, del: false});
-      });
+  $("#application-list").jqGrid({
+  url :  $("#contextPath").val()+"/orderList?fromDate=12-12-2015&&toDate=12-12-2017",
+  datatype: "json",
+  mtype : 'POST',
+  colNames: ['Order No', 'Amount', 'Date'],
+  colModel: [
+      { name: 'orderNo', width: 50, align: 'center' },
+      { name: 'amount', width: 50, align: 'center' },
+      { name: 'creationDate', width: 50, align: 'center', sorttype: 'date' },
+  ],
+  rowNum: 3,
+  rowList: [3, 10, 20],
+  pager: '#application-list-pager',
+  gridview: true,
+  rownumbers: false,
+  guiStyle: "bootstrap",
+  autoencode: true,
+  iconSet: "fontAwesome",
+  ignoreCase: true,
+  sortname: 'orderNo',
+  viewrecords: true,
+  sortorder: 'desc',
+  autowidth: true,
+  height: 'auto',
+  caption: 'Order Detail Report',
+});*/
 
-    
+  $(window).on("resize", function () {
+	  var newWidth = $("#orderReportGrid").closest(".ui-jqgrid").parent().width();
+	  $("#orderReportGrid").jqGrid("setGridWidth", newWidth, true);
+
+//	  var newWidth = $("#application-list").closest(".ui-jqgrid").parent().width();
+//	  $("#application-list").jqGrid("setGridWidth", newWidth, true);
 });
-
-
+  
+});
 
 $( document ).ready(function() {
     $('#fromDateTimePicker').datetimepicker({
@@ -109,5 +52,55 @@ $( document ).ready(function() {
    });
   
 });
+
+
+function searchOrders(){
+	var fromDate = $("#fromDateTimePicker").find("input").val();
+	var toDate = $("#toDateTimePicker").find("input").val();
+
+	$("#orderReportGrid").jqGrid({
+		url :  $("#contextPath").val()+"/orderList?fromDate=12-12-2015&&toDate=12-12-2017",
+		datatype : "json",
+		mtype : 'POST',
+		colModel: [
+			{ name: "id", label: "id",hidden:true},
+			{ name: "orderNo", label: "Order No",  align: "center"},
+			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+			{ name: "creationDate", label: "Date",  align: "center" },
+			],
+			 footerrow: true,
+		     userDataOnFooter : true,
+			rowNum:10,
+			rowList:[10,20,30],
+			guiStyle: "bootstrap",
+			iconSet: "fontAwesome",
+			pager: '#pager',
+			sortname: 'orderNo',
+			viewrecords: true,
+			sortorder: "desc",
+			autowidth: true,
+			loadonce: true,
+			caption: "Order Detail Report",
+			/* loadComplete:function() {
+				 adjustTotal();
+			    }*/
+	});
+	$("#orderReportGrid").bind("jqGridAfterLoadComplete", function() {
+		 adjustTotal();
+	});
+	
+}
+
+function adjustTotal(){
+	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
+	var amount = 0;
+	for (var i in data) {
+		var row = data[i];
+		amount=parseInt(amount)+parseInt(row.amount);
+		
+	}	
+//	alert(amount);
+	jQuery("#orderReportGrid").footerData('set',{orderNo:'Total', amount:amount});	
+}
 
 

@@ -59,15 +59,18 @@
 					</fieldset>
 					<div class="form-actions">
 						<div>
-							<button class="btn btn-default" type="button" onclick="addExpense()">Search</button>
+							<button class="btn btn-default" type="button" onclick="searchOrders()">Search</button>
 						</div>
 					</div>
 
 				</div>
 
 				<table id="orderReportGrid"></table>
-				 <div id="pager"></div>
+				 <div id="pager" style="height: 50;"></div>
 				<br>
+				<!-- <table id="application-list"></table>
+				 <div id="application-list-pager" style="height: 50;"></div>
+				 <br> -->
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Eport to Excel</button>
 					<button class="btn btn-default" type="button" onclick="">Generate PDF</button>
