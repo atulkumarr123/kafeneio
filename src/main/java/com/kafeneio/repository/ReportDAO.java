@@ -21,7 +21,7 @@ public class ReportDAO {
 	
 	
 	public List<Order> fetchOrders(Date fromDate, Date toDate) {
-		Query query = entityManager.createQuery("select order from Order order where trunc(creationDate) <= :toDate and trunc(creationDate) >=:fromDate");
+		Query query = entityManager.createQuery("select order from Order order where creationDate <= :toDate and creationDate >=:fromDate");
 //		int pageNumber = 1;
 //		int pageSize = 10;
 		query.setParameter("toDate", toDate);

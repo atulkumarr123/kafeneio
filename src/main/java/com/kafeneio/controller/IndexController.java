@@ -20,7 +20,7 @@ public class IndexController {
 	  public String getIndexPage(ModelMap modelMap) {
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
+		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
 		  return "index";
 	  }
-	  
 }

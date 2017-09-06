@@ -13,7 +13,7 @@ $( document ).ready(function() {
         	{ name: "foodCode", label: "Code", hidden:true},
             { name: "foodDesc", label: "Item", width: 110, align: "left" },
             { name: "quantity", label: "Qty", width: 50, align: "center" },
-            { name: "amount", label: "Amt", width: 60, template: "number",align: "center" },
+            { name: "amount", label: "Amt", width: 60, template: "number",align: "right" },
             { name: 'decrease', label:"", width: 30, sortable: false, search: false, align: "center",
             	  formatter:function(){
             	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"

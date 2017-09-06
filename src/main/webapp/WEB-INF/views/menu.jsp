@@ -20,6 +20,5 @@
 						<li><a href="signUp">Sign Up</a></li>
 						<li><a href="login">Log In </a></li>
 					</ul>
-					
 				</div>
 			</div>

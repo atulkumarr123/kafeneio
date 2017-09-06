@@ -45,10 +45,12 @@ $(document).ready(function(){
 
 $( document ).ready(function() {
     $('#fromDateTimePicker').datetimepicker({
-    	 format: 'DD-MM-YYYY'
+    	 format: $("#dateTimeFormatCalendar").val()
+    	 
     });
     $('#toDateTimePicker').datetimepicker({
-   	 	format: 'DD-MM-YYYY'
+    	 format: $("#dateTimeFormatCalendar").val()
+   	 	
    });
   
 });
@@ -59,7 +61,7 @@ function searchOrders(){
 	var toDate = $("#toDateTimePicker").find("input").val();
 
 	$("#orderReportGrid").jqGrid({
-		url :  $("#contextPath").val()+"/orderList?fromDate=12-12-2015&&toDate=12-12-2017",
+		url :  $("#contextPath").val()+"/orderList?fromDate="+fromDate+"&&toDate="+toDate,
 		datatype : "json",
 		mtype : 'POST',
 		colModel: [

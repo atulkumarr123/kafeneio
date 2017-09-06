@@ -28,6 +28,8 @@
 <script src="static/JSlib/reports.js"></script>
 </head>
 <form action="">
+
+<input type="hidden" name="dateTimeFormatCalendar" id="dateTimeFormatCalendar" value="${dateTimeFormatCalendar}"/> 
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>

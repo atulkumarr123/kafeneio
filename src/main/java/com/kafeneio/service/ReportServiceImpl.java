@@ -23,7 +23,7 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 	@Override
 	public List<Order> fetchOrders(String fromDate, String toDate) {
 		List<Order> orders = null;
-		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_FORMAT);
+		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		Date fromDate1;
 		try {
 			fromDate1 = format.parse(fromDate);
@@ -39,7 +39,7 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 	@Override
 	public List<Expenses> fetchExpenses(String fromDate, String toDate) {
 		List<Expenses> expenses = null;
-		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_FORMAT);
+		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		Date fromDate1;
 		try {
 			fromDate1 = format.parse(fromDate);
