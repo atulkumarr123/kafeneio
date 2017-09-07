@@ -2550,6 +2550,9 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .glyphicon-phone:before {
   content: "\e145";
 }
+.glyphicon-telephone:before {
+  content: "\e183";
+}
 .glyphicon-pushpin:before {
   content: "\e146";
 }

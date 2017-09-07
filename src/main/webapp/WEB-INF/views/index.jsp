@@ -66,10 +66,19 @@
 				</div>
 				<div class="col-lg-4">
 				
-				<div id="printGrid">	
-				<h5><b>The Kafeneio</b></h5>
+				<div id="printGrid" style="width: 253px;text-align: center;">
+					<h5>
+						<b>The Kafeneio</b>
+					</h5>
+					<br>
+					
 					<table id="invoiceGrid"></table>
+					<h5> Tel: 011-49148538 </h5>
+					<h5>D-1 Central Mkt Surajmal Vihar 110092</h5>
+					
 				</div>
+				
+				
 					<br>
 						<div style="text-align: left;">
 							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
