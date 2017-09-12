@@ -73,7 +73,7 @@
 					<br>
 					
 					<table id="invoiceGrid"></table>
-					<h5> Tel: 011-49148538 </h5>
+					<h5> <span class="glyphicon glyphicon-telephone"> 011-49148538 </span></h5>
 					<h5>D-1 Central Mkt Surajmal Vihar 110092</h5>
 					
 				</div>
