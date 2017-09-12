@@ -28,7 +28,7 @@ public class ReportController {
 		List<Order> orders = reportService.fetchOrders(fromDate, toDate); 
 		return orders;
 	}
-	
+	@RequestMapping(value = "/expenseList")
 	public List<Expenses> fetchExpenses(@RequestParam(value = "fromDate", required = true) String fromDate, 
 			@RequestParam(value="toDate", required=true)String toDate) {
 		List<Expenses> expenses = reportService.fetchExpenses(fromDate, toDate); 

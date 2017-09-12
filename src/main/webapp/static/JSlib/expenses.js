@@ -86,7 +86,7 @@ function addExpense(){
 function saveExpenses() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#expensesGrid").jqGrid("getGridParam", "data");
-	alert(JSON.stringify(allData));
+	//alert(JSON.stringify(allData));
 	/*var expense={};
 	expense["item"]=null;
 	expense["amount"]=null;
@@ -98,12 +98,25 @@ function saveExpenses() {
 	      url : ctx+"/expenses",
 	      data: JSON.stringify(allData),
 	      success :function(result) {
-	    	  alert("Expenses Saved Successfully");
+	    	  //alert(JSON.stringify(result));
+	    	  new PNotify({
+    			  type:'success',
+    			  title: 'Success',
+    			  //text: JSON.stringify(result)
+    			  text: result.message
+	    	//  alert("Expenses Saved Successfully");
 	    	  //validateOrder();
 	    	  //alert(JSON.stringify(result));
+	    	  });
 	     },
-	   error:function(responseText) {
-				alert("error"+JSON.stringify(responseText));
+	   error:function(result) {
+		  /* alert(JSON.stringify(result.responseJSON.message));*/
+		   new PNotify({
+	    		 type:'error',
+	    		 title: 'Error',
+	    		 text: result.responseJSON.message
+		   });
+		   //alert("error"+JSON.stringify(responseText));
 	   }
 	  });
 	 

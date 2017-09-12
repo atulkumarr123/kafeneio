@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.Order;
-import com.kafeneio.service.ExpensesService;
 
 @Repository
 public class ReportDAO {
@@ -33,6 +32,14 @@ public class ReportDAO {
 	}
 	
 	public List<Expenses> fetchExpenses(Date fromDate, Date toDate) {
-		return null;
+		Query query = entityManager.createQuery("select expenses from Expenses expenses where creation_date <= :toDate and creation_date >=:fromDate");
+//		int pageNumber = 1;
+//		int pageSize = 10;
+		query.setParameter("toDate", toDate);
+		query.setParameter("fromDate", fromDate);
+//		query.setFirstResult((pageNumber-1) * pageSize); 
+//		query.setMaxResults(pageSize);
+		List <Expenses> expenses = query.getResultList();
+		return expenses;
 	}
 }
