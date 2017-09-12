@@ -5,7 +5,6 @@ $(document).ready(function(){
       {orderNo: "123", amount: "111", creationDate: "2014-07-21"},
       {orderNo: "123", amount: "111", creationDate: "2014-07-29"},
   ];
-
   $("#application-list").jqGrid({
   url :  $("#contextPath").val()+"/orderList?fromDate=12-12-2015&&toDate=12-12-2017",
   datatype: "json",
@@ -32,29 +31,25 @@ $(document).ready(function(){
   height: 'auto',
   caption: 'Order Detail Report',
 });*/
-
   $(window).on("resize", function () {
 	  var newWidth = $("#orderReportGrid").closest(".ui-jqgrid").parent().width();
 	  $("#orderReportGrid").jqGrid("setGridWidth", newWidth, true);
-
+	  
+	  var newWidthEx = $("#expenseReportGrid").closest(".ui-jqgrid").parent().width();
+	  $("#expenseReportGrid").jqGrid("setGridWidth", newWidthEx, true);
+	  
 //	  var newWidth = $("#application-list").closest(".ui-jqgrid").parent().width();
 //	  $("#application-list").jqGrid("setGridWidth", newWidth, true);
 });
-  
 });
-
 $( document ).ready(function() {
     $('#fromDateTimePicker').datetimepicker({
     	 format: $("#dateTimeFormatCalendar").val()
-    	 
     });
     $('#toDateTimePicker').datetimepicker({
-    	 format: $("#dateTimeFormatCalendar").val()
-   	 	
+    	 format: $("#dateTimeFormatCalendar").val()	
    });
-  
 });
-
 
 function searchOrders(){
 	var fromDate = $("#fromDateTimePicker").find("input").val();
@@ -88,12 +83,50 @@ function searchOrders(){
 			    }*/
 	});
 	$("#orderReportGrid").bind("jqGridAfterLoadComplete", function() {
-		 adjustTotal();
+		 adjustTotalOrder();
 	});
 	
 }
 
-function adjustTotal(){
+function searchExpenses(){
+	var fromDate = $("#fromDateTimePicker").find("input").val();
+	var toDate = $("#toDateTimePicker").find("input").val();
+
+	$("#expenseReportGrid").jqGrid({
+		url :  $("#contextPath").val()+"/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		datatype : "json",
+		mtype : 'POST',
+		colModel: [
+			{ name: "id", label: "id",hidden:true},
+			{ name: "expense", label: "Expense",  align: "center"},
+			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+			{ name: "creationDate", label: "Date",  align: "center" },
+			],
+			 footerrow: true,
+		     userDataOnFooter : true,
+			rowNum:10,
+			rowList:[10,20,30],
+			guiStyle: "bootstrap",
+			iconSet: "fontAwesome",
+			pager: '#pager',
+			sortname: 'orderNo',
+			viewrecords: true,
+			sortorder: "desc",
+			autowidth: true,
+			loadonce: true,
+			caption: "Expense Detail Report",
+			/* loadComplete:function() {
+				 adjustTotal();
+			    }*/
+	});
+	$("#expenseReportGrid").bind("jqGridAfterLoadComplete", function() {
+		 adjustTotalExpense();
+	});
+	
+}
+
+
+function adjustTotalOrder(){
 	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
 	var amount = 0;
 	for (var i in data) {
@@ -105,4 +138,15 @@ function adjustTotal(){
 	jQuery("#orderReportGrid").footerData('set',{orderNo:'Total', amount:amount});	
 }
 
+function adjustTotalExpense(){
+	var data = $("#expenseReportGrid").jqGrid("getGridParam", "data");
+	var amount = 0;
+	for (var i in data) {
+		var row = data[i];
+		amount=parseInt(amount)+parseInt(row.amount);
+		
+	}	
+//	alert(amount);
+	jQuery("#expenseReportGrid").footerData('set',{orderNo:'Total', amount:amount});	
+}
 

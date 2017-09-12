@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.service.ExpensesService;
@@ -41,15 +42,20 @@ public class ExpensesController {
 	}
 	*/
 	@RequestMapping(value = "/expenses", method = RequestMethod.POST)
-	public ResponseEntity generateBill(@RequestBody List<Expenses> expenses)
+	public ResponseEntity<MessageDTO> saveExpenses(@RequestBody List<Expenses> expenses)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		ResponseEntity response = null;
-		boolean isSaved =expensesService.saveExpense(expenses); 
+		MessageDTO successDTO=new MessageDTO();
+		ResponseEntity<MessageDTO> response = null;
+		boolean isSaved =expensesService.saveExpense(expenses);
 		if(isSaved){
-			response = new ResponseEntity(HttpStatus.OK);
+			successDTO.setMessage("Expenses Saved");
+			successDTO.setStatusCode(200);
+			response = new ResponseEntity<MessageDTO>(successDTO,HttpStatus.OK);
 		}
 		else{
-			response = new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			successDTO.setMessage("Some Error Occured");
+			successDTO.setStatusCode(500);
+			response = new ResponseEntity<MessageDTO>(successDTO,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return response;
 	}

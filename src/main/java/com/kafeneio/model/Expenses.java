@@ -30,8 +30,8 @@ public class Expenses {
 //	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm a")
 //	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
-	@Column(name="date")
-	private Date date;
+	@Column(name="CREATION_DATE")
+	private Date creationDate;
 	public Long getId() {
 		return id;
 	}
@@ -56,11 +56,12 @@ public class Expenses {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	public Date getDate() {
-		return date;
+	public Date getCreationDate() {
+		return creationDate;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
+	
 	
 }

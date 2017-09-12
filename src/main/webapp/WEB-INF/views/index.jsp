@@ -112,9 +112,6 @@
     </c:otherwise>
 </c:choose> --%>
 
-
-
-
     <div ui-view style="margin-top:50px"></div>
 		<div class="bottom-nav footer">
 			<button class=" navbar navbar-toggle" data-toggle="collapse"
@@ -132,9 +129,7 @@
 					<li><a href="#">Contact us</a></li>
 				</ul>
 			</div>
-		</div>
-		 	
-	</div>
-	
+		</div>		 	
+	</div>	
 </body>
 </html>
