@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,21 @@ public class IndexController {
 	
 	  @RequestMapping(value="/", method = RequestMethod.GET)
 	  public String getIndexPage(ModelMap modelMap) {
+		 /* DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
+		  modelMap.put("currentDateTime", format.format(new Date()));
+		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
+		  System.out.println(environment.getProperty("kafeneio.main.title"));*/
+		  return "index";
+	  }
+	  
+
+	  @PreAuthorize("hasRole('ADMIN')")
+	  @RequestMapping(value="/restraMenu", method = RequestMethod.GET)
+	  public String getMenu(ModelMap modelMap) {
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
 		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
 		  System.out.println(environment.getProperty("kafeneio.main.title"));
-		  return "index";
+		  return "restraMenu";
 	  }
 }

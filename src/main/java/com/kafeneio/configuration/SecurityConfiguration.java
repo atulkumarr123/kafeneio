@@ -111,8 +111,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
 	        .and().formLogin()/*.loginPage("/login")*/
 	        .usernameParameter("ssoId").passwordParameter("password")
+	        .and().logout().logoutSuccessUrl("/login")
+	        //This will be used when You are developing the Complete Rest API using spring security
+//	        .and().exceptionHandling().accessDeniedPage("/accessDenied")
 	        .and().csrf().disable()
-//	        .and().exceptionHandling().accessDeniedPage("/Access_Denied")
+	      
 	        ;
 	    }
 	   

@@ -26,17 +26,17 @@
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 
-<!-- <script  src="static/JSlib/kafeneioHome.js"></script>
- --></head>
+<script  src="static/JSlib/kafeneioHome.js"></script>
+</head>
 <body>
 
-<%-- <input type="hidden" name="currentDateTime" id="currentDateTime" value="${currentDateTime}"/> 
-<input type="hidden" name="orderNumber" id="orderNumber" value=""/>  --%>
+<input type="hidden" name="currentDateTime" id="currentDateTime" value="${currentDateTime}"/> 
+<input type="hidden" name="orderNumber" id="orderNumber" value=""/> 
 
 	<div class="container">
 				<%@include file = "menu.jsp" %>
 		</div>
-		<!-- <div class="container" id="menuChildDiv">
+		<div class="container" id="menuChildDiv">
 		<div class="row">
 		<div class="col-lg-8">
 					<div class="row" style="margin-left: 10">
@@ -88,6 +88,30 @@
 				</div>
 			</div>
 
+<%-- <c:choose>
+    <c:when test="${fileName=='foodCategory'}">
+	<jsp:include page="${fileName}.jsp" />  
+    </c:when>    
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
+
+<c:choose>
+    <c:when test="${fileName=='signUp'}">
+	<jsp:include page="${fileName}.jsp" />  
+    </c:when>    
+    <c:otherwise>
+      
+    </c:otherwise>
+  </c:choose>
+<c:choose>
+    <c:when test="${fileName=='billingHome'}">
+	<jsp:include page="${fileName}.jsp" />  
+    </c:when>    
+    <c:otherwise>
+      
+    </c:otherwise>
+</c:choose> --%>
 
     <div ui-view style="margin-top:50px"></div>
 		<div class="bottom-nav footer">
@@ -107,6 +131,6 @@
 				</ul>
 			</div>
 		</div>		 	
-	</div>	 -->
+	</div>	
 </body>
 </html>
