@@ -1,3 +1,5 @@
+
+
 $( document ).ready(function() {
     $("#expensesGrid").jqGrid({
         colModel: [
@@ -44,12 +46,11 @@ $( document ).ready(function() {
 });
 
 
-
 $( document ).ready(function() {
-    $('#datetimepicker3').datetimepicker({
-    	 format: 'DD-MM-YYYY'
-    });
-  /*  $("#setMinDate").click(function () {
+	$('#datetimepicker3').datetimepicker({
+		format: 'DD-MM-YYYY'
+	});
+	/*  $("#setMinDate").click(function () {
         $('#datetimepicker3').data("DateTimePicker").setMinDate(new Date("june 12, 2013"));
     });                                
     $("#setMaxDate").click(function () {
@@ -70,8 +71,29 @@ $( document ).ready(function() {
     $("#getDate").click(function () {
         alert($('#datetimepicker3').data("DateTimePicker").getDate());
     });*/
+
+	$('#addExpensebutton').click(function() {
+		var isFormFilled = $("#expenses").valid();
+		var valid = validateForm();
+		if(isFormFilled && valid){
+			addExpense();
+		}
+	});
+
+
+
 });
 
+function validateForm(){
+	var amount = $("#amount").val();
+	var valid = true;
+	if(!(/^\d{0,9}(\.\d{0,4})?$/.test(amount))){
+		$("#amount").after('<label id="amount-error" class="error" for="amount">This field is required.</label>');
+		$("#amount-error").text("Enter only digits/decimals");
+		valid = false;
+	}
+	return valid
+}
 
 function addExpense(){
 	var item = $("#itemDesc").val();
@@ -81,7 +103,6 @@ function addExpense(){
 	var date = $("#datetimepicker3").find("input").val();
 	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,date:date, remarks:remarks}, "last");
 }
-
 
 function saveExpenses() {
 	var ctx = $("#contextPath").val();
@@ -119,10 +140,8 @@ function saveExpenses() {
 		   //alert("error"+JSON.stringify(responseText));
 	   }
 	  });
-	 
 }
 
 function removeItem(rowid){
 	$('#expensesGrid').jqGrid('delRowData',rowid);
 }
-

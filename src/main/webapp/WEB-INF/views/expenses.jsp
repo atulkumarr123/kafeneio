@@ -20,6 +20,8 @@
 
 <script src="static/js/app.js" /></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="static/JSlib/jquery.validate.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script> 
 
@@ -29,7 +31,7 @@
 
 <script src="static/JSlib/expenses.js"></script>
 </head>
-<form action="">
+<form action="" name="expenses" id = "expenses">
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -42,27 +44,27 @@
 							<div class="form-group">
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
-										Description</label> <input type="text" name="itemDesc"
+										Description</label> <input type="text" name="itemDesc" 
 										placeholder="" class="form-control"
 										id="itemDesc" required>
 								</div>
 								<div class="col-md-6">
-									<label for="prepended-input" class="control-label">Amount</label>
+									<label for="prepended-input" class="control-label" name="amount">Amount</label>
 									<input type="text" class="form-control" name="amount"
 										id="amount" placeholder="" required>
 								</div>
 							</div>
 						<div class="form-group">
 						<div class="col-md-6">
-							<label for="prepended-input" class="control-label">Date</label>
+							<label for="prepended-input" class="control-label" name="date">Date</label>
 							<div class='input-group date' id='datetimepicker3'>
-								<input type='text' class="form-control" /> <span
+								<input type='text' class="form-control" required/> <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-calendar"></span> </span>
 							</div>
 							</div>
 							<div class="col-md-6">
-									<label for="prepended-input" class="control-label">Remarks</label>
+									<label for="prepended-input" class="control-label" name="remarks">Remarks</label>
 									<textarea class="form-control" name="remarks" id="remarks"></textarea>
 								</div>
 						</div>
@@ -75,19 +77,16 @@
 					</fieldset>
 					<div class="form-actions">
 						<div>
-							<button class="btn btn-default" type="button" onclick="addExpense()">Add</button>
+							<button class="btn btn-default" id= "addExpensebutton" type="button" >Add</button>
 						</div>
 					</div>
-
 				</div>
-
 				<table id="expensesGrid"></table>
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
 					<button class="btn btn-default" type="button" onclick="">Clear</button>
 				</div>
-
 			</div>
 			<div class="col-lg-2"></div>
 		</div>
