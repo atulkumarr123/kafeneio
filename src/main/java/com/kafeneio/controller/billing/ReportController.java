@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class ReportController {
 		List<Order> orders = reportService.fetchOrders(fromDate, toDate); 
 		return orders;
 	}
+	
 	@RequestMapping(value = "/expenseList")
 	public List<Expenses> fetchExpenses(@RequestParam(value = "fromDate", required = true) String fromDate, 
 			@RequestParam(value="toDate", required=true)String toDate) {
@@ -39,6 +41,7 @@ public class ReportController {
 @Controller
 class ReportLoaderController{
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/reports")
 	public String reportHome(ModelMap modelMap)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {

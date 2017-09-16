@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,21 +27,7 @@ public class ExpensesController {
 	@Inject
 	ExpensesService expensesService;
 
-	
-	/*@RequestMapping(value = "/expenses1",method=RequestMethod.POST)
-	public ResponseEntity<Void> getExpenses1(@RequestBody List<Expenses> expenses)
-			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		ResponseEntity<Void> response = null;
-		boolean isSaved =expensesService.saveExpense(expenses); 
-		if(isSaved){
-			response = new ResponseEntity<Void>(HttpStatus.OK);
-		}
-		else{
-			response = new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return response;
-	}
-	*/
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/expenses", method = RequestMethod.POST)
 	public ResponseEntity<MessageDTO> saveExpenses(@RequestBody List<Expenses> expenses)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
@@ -68,6 +55,7 @@ public class ExpensesController {
 @Controller
 class ExpenseLoaderController{
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/expenses")
 	public String getExpenses(ModelMap modelMap)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {

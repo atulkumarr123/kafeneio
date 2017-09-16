@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +32,9 @@ public class BillingController {
 		Set<FoodItems> items = foodService.findFoodItems(category);
 		return items;
 	}
-/*	@RequestMapping(value="/generateBill",method=RequestMethod.POST)
-	public String generateBill(@RequestBody AccountDTO orders)
-			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		return "Order saved Succesfuly!";
-	}*/
+
+	
+	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
 	public ResponseEntity<Order> generateBill(@RequestBody Order order)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {

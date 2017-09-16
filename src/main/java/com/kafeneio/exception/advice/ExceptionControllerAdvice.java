@@ -1,4 +1,4 @@
-package com.kafeneio.exception.advice;
+/*package com.kafeneio.exception.advice;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,6 +19,7 @@ import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.exception.KafeneioSystemException;
 import com.kafeneio.exception.UnauthorizedException;
 import com.kafeneio.enums.Codes;
+
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {
@@ -44,7 +45,7 @@ public class ExceptionControllerAdvice {
 	   * @param exception
 	   *          the exception
 	   * @return the response entity
-	   */
+	   
 	  @ExceptionHandler(KafeneioException.class)
 	  public ResponseEntity<Object> kafeneioExceptionHandler(KafeneioException exception) {
 	    Error error = null;
@@ -62,13 +63,13 @@ public class ExceptionControllerAdvice {
 
 	  }
 
-	  /**
+	  *//**
 	   * This method handles object not found exceptions. When throw ObjectNotFoundException, caller must set error code.
 	   *
 	   * @param exception
 	   *          the exception
 	   * @return the response entity
-	   */
+	   *//*
 	  @ExceptionHandler(ObjectNotFoundException.class)
 	  public ResponseEntity<Object> objectNotFoundExceptionHandler(ObjectNotFoundException exception) {
 	    Error error = null;
@@ -86,13 +87,13 @@ public class ExceptionControllerAdvice {
 
 	  }
 
-	  /**
+	  *//**
 	   * This method handles bad request exceptions. When throw BadRequestException, caller must set error code.
 	   *
 	   * @param exception
 	   *          the exception
 	   * @return the response entity
-	   */
+	   *//*
 	  @ExceptionHandler(BadRequestException.class)
 	  public ResponseEntity<Object> BadRequestExceptionHandler(BadRequestException exception) {
 	    Error error = null;
@@ -116,13 +117,13 @@ public class ExceptionControllerAdvice {
 
 	  }
 
-	  /**
+	  *//**
 	   * This method handles unauthorized exceptions. When throw UnauthorizedException, caller must set error code.
 	   *
 	   * @param exception
 	   *          the exception
 	   * @return the response entity
-	   */
+	   *//*
 	  @ExceptionHandler(UnauthorizedException.class)
 	  public ResponseEntity<Object> UnauthorizedExceptionHandler(UnauthorizedException exception) {
 	    Error error = null;
@@ -141,3 +142,4 @@ public class ExceptionControllerAdvice {
 	  }
 
 }
+*/
