@@ -67,7 +67,7 @@
 				</div>
 				<div class="col-lg-4">
 				
-				<div id="printGrid" style="width: 253px;text-align: center;">
+				<div id="printGrid" style="width: 253px;text-align: center;border: 1px solid; border-color: #745223;">
 					<h5>
 						<b>The Kafeneio</b>
 					</h5>
