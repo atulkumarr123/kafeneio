@@ -17,11 +17,13 @@
 						<li><a href="contactUs">Contact us</a></li>
 					</ul>
 					<ul ng-if="name==null" class="nav navbar-nav navbar-right">
-						<li><a href="signUp">Sign Up</a></li>
+						<!-- <li><a href="signUp">Sign Up</a></li> -->
+						<c:if test="${pageContext.request.userPrincipal.name == null or pageContext.request.userPrincipal.name == ''}">
 						<li><a href="login">Log In </a></li>
+						</c:if>
 						<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<li><spring:message code="kafeneio.welcome.message"/> ${pageContext.request.userPrincipal.name} </li>
 						<li><a href="logout">Logout</a></li>
-						${pageContext.request.userPrincipal.name}
 						</c:if>
 					</ul>
 				</div>
