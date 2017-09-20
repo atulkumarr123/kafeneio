@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name="FOOD_ITEMS")
+@Table(name="KAFENEIO_FOOD_ITEMS")
 public class FoodItems {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

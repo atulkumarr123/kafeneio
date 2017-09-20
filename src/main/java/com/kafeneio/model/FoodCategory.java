@@ -1,5 +1,6 @@
 package com.kafeneio.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="FOOD_CATEGORY")
+@Table(name="KAFENEIO_FOOD_CATEGORY")
 public class FoodCategory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -25,21 +26,19 @@ public class FoodCategory {
 	@Column(name="status")
 	private String status;
 	@Column(name="creation_date")
-	private String date;
-	
+	private Date date;
+
 	@Column(name="food_code")
 	private String foodCode;
-	
+
 	@Column(name="food_desc")
 	private String foodDesc;
-	
-	 @OneToMany(mappedBy="foodCategory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	 @Column(nullable = true)
-	 @JsonManagedReference
-	 private Set<FoodItems> foodItems;
-	
-	 @Column(name="amount")
-	
+
+	@OneToMany(mappedBy="foodCategory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Column(nullable = true)
+	@JsonManagedReference
+	private Set<FoodItems> foodItems;
+
 
 	public Long getId() {
 		return id;
@@ -55,14 +54,6 @@ public class FoodCategory {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
 	}
 
 	public String getFoodCode() {
@@ -87,6 +78,14 @@ public class FoodCategory {
 
 	public void setFoodItems(Set<FoodItems> foodItems) {
 		this.foodItems = foodItems;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 

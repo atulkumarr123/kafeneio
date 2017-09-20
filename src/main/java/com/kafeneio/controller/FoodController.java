@@ -13,18 +13,26 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.service.FoodService;
 
-@Controller
+@RestController
 public class FoodController extends BaseRestController {
 
+
+}
+
+
+
+@Controller
+class FoodLoaderController{
 	@Inject
 	FoodService foodService;
-	
+
 	@RequestMapping(value = "/foodCategory")
 	public String foodCategory(ModelMap modelMap)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
@@ -33,10 +41,11 @@ public class FoodController extends BaseRestController {
 		modelMap.put("fileName","foodCategory");
 		return "index";
 	}
-	
+
 	@RequestMapping(value = "/billingHome")
 	public String billingHome(ModelMap modelMap)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		return "index2";
 	}
+
 }
