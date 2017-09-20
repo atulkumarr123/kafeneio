@@ -9,7 +9,7 @@
 <title>Kafeneio</title>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+ <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
 
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />

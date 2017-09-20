@@ -14,8 +14,9 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 @Configuration
 @PropertySources({
-@PropertySource(value = "classpath:properties/messages_en.properties", ignoreResourceNotFound=true),
-@PropertySource(value = "classpath:properties/applicationLabels_en.properties", ignoreResourceNotFound=true)})
+@PropertySource(value = "classpath:properties/messages_en.properties"),
+@PropertySource(value = "classpath:properties/applicationLabels_en.properties"),
+@PropertySource(value ="classpath:properties/application.properties")})
 public class EnvironmentProperties {
 
 	@Autowired
