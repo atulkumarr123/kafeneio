@@ -18,7 +18,7 @@
 				</li>
 
 			</sec:authorize>
-			<li><a href="billingHome">Items</a></li>
+			<li><a href="addMenuItems">Items</a></li>
 			<li><a href="aboutUs">About us</a></li>
 			<li><a href="termsAndConditions">Terms and Conditions</a></li>
 			<li><a href="whyUs">Why us</a></li>

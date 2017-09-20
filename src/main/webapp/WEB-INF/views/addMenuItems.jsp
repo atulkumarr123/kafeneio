@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html class="js">
 <head>
 <title>Kafeneio</title>
@@ -29,7 +31,7 @@
 
 <script src="static/JSlib/expenses.js"></script>
 </head>
-<form action="" name="expenses" id = "expenses">
+<form action="" name="expenses" id = "expenses" commandName="foodCategory">
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -39,39 +41,39 @@
 			<div class="col-lg-8">
 				<div class="widget-content">
 					<fieldset>
-							<div class="form-group">
+													<div class="form-group">
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Item
+										Code</label> <input type="text" name="itemCode" 
+										placeholder="" class="form-control"
+										id="itemCode" required>
+								</div>
+							
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
 										Description</label> <input type="text" name="itemDesc" 
 										placeholder="" class="form-control"
 										id="itemDesc" required>
 								</div>
-								<div class="col-md-6">
+							
+							</div>
+						<div class="form-group">
+							<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="amount">Amount</label>
 									<input type="text" class="form-control" name="amount"
 										id="amount" placeholder="" required>
 								</div>
-							</div>
-						<div class="form-group">
-						<div class="col-md-6">
-							<label for="prepended-input" class="control-label" name="date">Date</label>
-							<div class='input-group date' id='datetimepicker3'>
-								<input type='text' class="form-control" required/> <span
-									class="input-group-addon"><span
-									class="glyphicon glyphicon-calendar"></span> </span>
-							</div>
-							</div>
-							<div class="col-md-6">
-									<label for="prepended-input" class="control-label" name="remarks">Remarks</label>
-									<textarea class="form-control" name="remarks" id="remarks"></textarea>
+						
+									
+							<div class="col-md-3">
+									<label for="prepended-input" class="control-label" name="category">Category</label>
+								
+					<form:select path="foodCategory">
+             <form:options items="${categoryList}" itemValue="id" itemLabel="foodDesc" />
+        </form:select>
 								</div>
 						</div>
-							<!-- <div class="form-group">
-								<div class="col-md-10">
-									<label for="prepended-input" class="control-label">Remarks</label>
-									<textarea class="form-control" name="remarks" id="remarks"></textarea>
-								</div>
-							</div> -->
+						
 					</fieldset>
 					<div class="form-actions">
 						<div>
