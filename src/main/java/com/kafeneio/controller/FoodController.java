@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodCategory;
-import com.kafeneio.model.FoodItems;
 import com.kafeneio.service.FoodService;
 
 @RestController
@@ -25,7 +19,6 @@ public class FoodController extends BaseRestController {
 
 
 }
-
 
 
 @Controller
@@ -48,4 +41,25 @@ class FoodLoaderController{
 		return "index2";
 	}
 
+	@RequestMapping(value = "/addMenuItems")
+	public String addMenuItems(ModelMap modelMap)
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		FoodCategory foodCategory=new FoodCategory();
+		foodCategory.setId(1L);
+		foodCategory.setFoodCode("KC");
+		foodCategory.setFoodDesc("Kafeneio Coolers");
+		
+		FoodCategory foodCategory1=new FoodCategory();
+		foodCategory1.setId(1L);
+		foodCategory1.setFoodCode("KC");
+		foodCategory1.setFoodDesc("Kafeneio Coolers");
+		
+		
+		List<FoodCategory> list=new ArrayList<FoodCategory>();
+		list.add(foodCategory);
+		list.add(foodCategory1);
+		modelMap.put("categoryList",list);
+		modelMap.put("foodCategory", foodCategory);
+		return "addMenuItems";
+	}
 }
