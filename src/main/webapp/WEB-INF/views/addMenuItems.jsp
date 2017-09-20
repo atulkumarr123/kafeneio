@@ -31,7 +31,7 @@
 
 <script src="static/JSlib/expenses.js"></script>
 </head>
-<form action="" name="expenses" id = "expenses" commandName="foodCategory">
+<form:form action="" id = "expenses" commandName="foodCategory">
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -63,15 +63,16 @@
 									<input type="text" class="form-control" name="amount"
 										id="amount" placeholder="" required>
 								</div>
-						
 									
 							<div class="col-md-3">
-									<label for="prepended-input" class="control-label" name="category">Category</label>
-								
-					<form:select path="foodCategory">
-             <form:options items="${categoryList}" itemValue="id" itemLabel="foodDesc" />
-        </form:select>
-								</div>
+							 
+							  <label for="prepended-input" class="control-label">Category</label>
+							  <form:select path="id" class="form-control">
+									<option value="0">SELECT</option>
+									<form:options items="${categoryList}" itemValue="id" itemLabel="foodDesc" />
+							  </form:select>
+                   			 
+							</div>
 						</div>
 						
 					</fieldset>
@@ -91,4 +92,4 @@
 			<div class="col-lg-2"></div>
 		</div>
 	</div>
-</form>
+</form:form>

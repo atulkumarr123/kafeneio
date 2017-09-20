@@ -17,7 +17,6 @@ import com.kafeneio.service.FoodService;
 @RestController
 public class FoodController extends BaseRestController {
 
-
 }
 
 
@@ -48,18 +47,17 @@ class FoodLoaderController{
 		foodCategory.setId(1L);
 		foodCategory.setFoodCode("KC");
 		foodCategory.setFoodDesc("Kafeneio Coolers");
-		
+
 		FoodCategory foodCategory1=new FoodCategory();
-		foodCategory1.setId(1L);
-		foodCategory1.setFoodCode("KC");
-		foodCategory1.setFoodDesc("Kafeneio Coolers");
-		
-		
+		foodCategory1.setId(2L);
+		foodCategory1.setFoodCode("KC1");
+		foodCategory1.setFoodDesc("Kafeneio Coolers1");
+
 		List<FoodCategory> list=new ArrayList<FoodCategory>();
 		list.add(foodCategory);
 		list.add(foodCategory1);
 		modelMap.put("categoryList",list);
-		modelMap.put("foodCategory", foodCategory);
+		modelMap.put("foodCategory", new FoodCategory());
 		return "addMenuItems";
 	}
 }
