@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kafeneio.model.Expenses;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.repository.FoodRepository;
@@ -44,5 +45,6 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 		Set<FoodItems> items =   foodRepository.findFoodItemsForCategory(category);
 		return items;
 	}
+	
 	
 }

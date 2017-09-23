@@ -1,5 +1,7 @@
 package com.kafeneio.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="KAFENEIO_FOOD_ITEMS")
@@ -23,7 +26,7 @@ public class FoodItems {
 	@Column(name="status")
 	private String status;
 	@Column(name="creation_date")
-	private String date;
+	private Date date;
 	
 	@Column(name="food_item_code")
 	private String foodItemCode;
@@ -43,7 +46,6 @@ public class FoodItems {
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -56,13 +58,6 @@ public class FoodItems {
 		this.status = status;
 	}
 
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
 
 	public String getFoodItemCode() {
 		return foodItemCode;
@@ -94,6 +89,12 @@ public class FoodItems {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	

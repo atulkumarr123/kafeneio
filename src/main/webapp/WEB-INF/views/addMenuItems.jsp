@@ -29,9 +29,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 
-<script src="static/JSlib/expenses.js"></script>
+<script src="static/JSlib/addMenuItems.js"></script>
 </head>
-<form:form action="" id = "expenses" commandName="foodCategory">
+<form:form action="" id = "foodItems" commandName="foodCategory">
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -41,51 +41,64 @@
 			<div class="col-lg-8">
 				<div class="widget-content">
 					<fieldset>
-													<div class="form-group">
+							<div class="form-group">
+							<div class="col-md-6">
+								<label for="prepended-input" class="control-label">Category</label>
+								<form:select path="id" class="form-control" id="category"
+									required="required">
+									<option value="0">SELECT</option>
+									<form:options items="${categoryList}" itemValue="id"
+										itemLabel="foodDesc" />
+								</form:select>
+							</div>
+
+							<div class="col-md-6">
+								<label for="prepended-input" class="control-label">Status</label>
+								<form:select path="id" class="form-control" id="status">
+									<option value="1">Active</option>
+									<option value="0">Inactive</option>
+									<%-- <form:options items="${categoryList}" itemValue="id" itemLabel="foodDesc" /> --%>
+								</form:select>
+							</div>
+							
+							</div>
+							
+							<div class="form-group">
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
-										Code</label> <input type="text" name="itemCode" 
+										Code</label> <input type="text" name="foodItemCode" 
 										placeholder="" class="form-control"
-										id="itemCode" required>
+										id="foodItemCode" required>
 								</div>
 							
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
-										Description</label> <input type="text" name="itemDesc" 
+										Description</label> <input type="text" name="fodItemDesc" 
 										placeholder="" class="form-control"
-										id="itemDesc" required>
+										id="foodItemDesc" required>
 								</div>
 							
 							</div>
 						<div class="form-group">
 							<div class="col-md-6">
-									<label for="prepended-input" class="control-label" name="amount">Amount</label>
+									<label for="prepended-input" class="control-label">Amount</label>
 									<input type="text" class="form-control" name="amount"
 										id="amount" placeholder="" required>
 								</div>
 									
-							<div class="col-md-3">
-							 
-							  <label for="prepended-input" class="control-label">Category</label>
-							  <form:select path="id" class="form-control">
-									<option value="0">SELECT</option>
-									<form:options items="${categoryList}" itemValue="id" itemLabel="foodDesc" />
-							  </form:select>
-                   			 
-							</div>
 						</div>
 						
 					</fieldset>
 					<div class="form-actions">
 						<div>
-							<button class="btn btn-default" id= "addExpensebutton" type="button" >Add</button>
+							<button class="btn btn-default" id= "addFoodItemsbutton" type="button" >Add</button>
 						</div>
 					</div>
 				</div>
-				<table id="expensesGrid"></table>
+				<table id="foodItemsGrid"></table>
 				<br>
 				<div style="text-align: left;">
-					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
+					<button class="btn btn-default" type="button"  onclick="saveFoodItems()">Save</button>
 					<button class="btn btn-default" type="button" onclick="">Clear</button>
 				</div>
 			</div>

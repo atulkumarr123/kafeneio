@@ -47,7 +47,12 @@
 							</button>
 							<div>
 								<ul class=" nav navbar-nav">
-									<li><a href="#" onclick="getItems('KC');">Kafeneio Coolers</a></li>
+								
+								
+									<c:forEach items="${foodCategoryList}" var="category">
+   									    <li><a href="#" onclick="getItems('${category.foodCode}');">${category.foodDesc}</a></li> 
+   									</c:forEach>
+									<!-- <li><a href="#" onclick="getItems('KC');">Kafeneio Coolers</a></li>
 									<li><a href="#" onclick="getItems('BUR');">Burgers</a></li>
 									<li><a href="#" onclick="getItems('SM');">Sandwich Mania</a></li>
 									<li><a href="#" onclick="getItems('WR');">Wraps & Rolls</a></li>
@@ -57,7 +62,7 @@
 									<li><a href="#" onclick="getItems('KOC');">Kafeneio Special</a></li>
 									<li><a href="#" onclick="getItems('PL');">Protein Loaders</a></li>
 									<li><a href="#" onclick="getItems('CL');">Carb Loaders</a></li>
-									<li><a href="#" onclick="getItems('AO');">Ad Ons</a></li>
+									<li><a href="#" onclick="getItems('AO');">Ad Ons</a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -71,9 +76,9 @@
 						<b>The Kafeneio</b>
 					</h5>
 					<br>
-					
 					<table id="invoiceGrid"></table>
-					<h5> <span class="glyphicon glyphicon-telephone"> 011-49148538 </span></h5>
+					<!-- <h5> <span class="glyphicon glyphicon-telephone"> 011-49148538 </span></h5> -->
+					<h5> <span>Contact: 011-49148538, 8218349619</span></h5>
 					<h5>D-1 Central Mkt Surajmal Vihar 110092</h5>
 					
 				</div>
