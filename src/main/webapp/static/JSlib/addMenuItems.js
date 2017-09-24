@@ -8,7 +8,8 @@ $( document ).ready(function() {
             { name: "foodItemDesc", label: "Food Item Description",  align: "center" },
             { name: "amount", label: "Amount",  align: "center" },
             { name: "category", label: "Category",  align: "center" },
-            { name: "status", label: "Status",  align: "center" },
+            { name: "status", label: "Status",  align: "center",hidden:true },
+            { name: "statusVisible", label: "Status",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
             	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
@@ -85,19 +86,29 @@ function addFoodItems(){
 	var foodItemDesc = $("#foodItemDesc").val();
 	//alert(item);
 	var amount = $("#amount").val();
-	var category = $("#category").val();
+	var category = $("#category").find("option:selected").text();
+//	var status = $("#status").find("option:selected").text();
+//	alert(status);
 	var status = $("#status").val();
+	if(status == '1'){
+		status = true;
+		statusVisible = 'Active';
+	}
+	else{
+		status = false;
+		statusVisible = 'Inactive';
+	}
 	//alert(category + " "+ status);
 	
 	//foodGridRowId=parseInt(foodGridRowId)+parseInt(1);
 	//var date = $("#datetimepicker3").find("input").val();
-	$("#foodItemsGrid").jqGrid("addRowData",id , { foodItemCode : foodItemCode, foodItemDesc : foodItemDesc, amount : amount , category:category, status : status}, "last");
+	$("#foodItemsGrid").jqGrid("addRowData",id , { foodItemCode : foodItemCode, foodItemDesc : foodItemDesc, amount : amount , category:category, statusVisible : statusVisible, status : status}, "last");
 }
 
 function saveFoodItems() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#foodItemsGrid").jqGrid("getGridParam", "data");
-	var category = $("#category").val();
+	var categoryId = $("#category").val();
 	//alert(JSON.stringify(allData));
 	/*var expense={};
 	expense["item"]=null;
@@ -107,7 +118,7 @@ function saveFoodItems() {
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url : ctx+"/foodItems?categoryId="+category,
+	      url : ctx+"/foodItems?categoryId="+categoryId,
 	      data: JSON.stringify(allData),
 	      success :function(result) {
 	    	  //alert(JSON.stringify(result));
@@ -127,7 +138,7 @@ function saveFoodItems() {
 		   new PNotify({
 	    		 type:'error',
 	    		 title: 'Error',
-	    		 text: result.responseJSON.message
+	    		 text: JSON.stringify(result)
 		   });
 		   //alert("error"+JSON.stringify(responseText));
 	   }

@@ -24,7 +24,7 @@ public class FoodItems {
 	@Column(name="id" ,unique=true,nullable=false )
 	private Long id;
 	@Column(name="status")
-	private String status;
+	private boolean status;
 	@Column(name="creation_date")
 	private Date date;
 	
@@ -49,15 +49,6 @@ public class FoodItems {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 
 	public String getFoodItemCode() {
 		return foodItemCode;
@@ -95,6 +86,12 @@ public class FoodItems {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	
