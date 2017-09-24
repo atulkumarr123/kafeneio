@@ -16,9 +16,9 @@
 							id="reports" style="color:white">Reports</a></li>
 					</ul>
 				</li>
-
+			<li><a href="addMenuItems">Setup Menu Store</a></li>
 			</sec:authorize>
-			<li><a href="addMenuItems">Items</a></li>
+			
 			<li><a href="aboutUs">About us</a></li>
 			<li><a href="termsAndConditions">Terms and Conditions</a></li>
 			<li><a href="whyUs">Why us</a></li>
