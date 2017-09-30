@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="KAFENEIO_FOOD_ITEMS")
@@ -28,7 +27,7 @@ public class FoodItems {
 	@Column(name="creation_date")
 	private Date date;
 	
-	@Column(name="food_item_code")
+	@Column(unique = true,name="food_item_code")
 	private String foodItemCode;
 	
 	@Column(name="food_item_desc")

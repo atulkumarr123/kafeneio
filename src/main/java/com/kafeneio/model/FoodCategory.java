@@ -28,7 +28,7 @@ public class FoodCategory {
 	@Column(name="creation_date")
 	private Date date;
 
-	@Column(name="food_code")
+	@Column(unique = true,name="food_code")
 	private String foodCode;
 
 	@Column(name="food_desc")
