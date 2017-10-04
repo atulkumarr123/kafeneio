@@ -45,10 +45,16 @@ $(document).ready(function(){
 $( document ).ready(function() {
     $('#fromDateTimePicker').datetimepicker({
     	 format: $("#dateTimeFormatCalendar").val()
+    	 
     });
     $('#toDateTimePicker').datetimepicker({
     	 format: $("#dateTimeFormatCalendar").val()	
    });
+    
+    $("#fromReportDate").val($("#fromDateTime").val());
+    $("#toReportDate").val($("#toDateTime").val());
+    
+    
 });
 
 function searchOrders(){

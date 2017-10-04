@@ -30,6 +30,8 @@
 <form action="">
 
 <input type="hidden" name="dateTimeFormatCalendar" id="dateTimeFormatCalendar" value="${dateTimeFormatCalendar}"/> 
+<input type="hidden" name="toDateTime" id="toDateTime" value="${toDateTime}"/> 
+<input type="hidden" name="fromDateTime" id="fromDateTime" value="${fromDateTime}"/> 
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -43,7 +45,7 @@
 						<div class="col-md-6">
 							<label for="prepended-input" class="control-label">From Date</label>
 							<div class='input-group date' id='fromDateTimePicker'>
-								<input type='text' class="form-control" /> <span
+								<input type='text' id ="fromReportDate"  class="form-control" /> <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-calendar"></span> </span>
 							</div>
@@ -51,7 +53,7 @@
 							<div class="col-md-6">
 							<label for="prepended-input" class="control-label">To Date</label>
 							<div class='input-group date' id='toDateTimePicker'>
-								<input type='text' class="form-control" /> <span
+								<input type='text' id ="toReportDate" class="form-control" /> <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-calendar"></span> </span>
 							</div>

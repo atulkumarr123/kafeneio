@@ -196,4 +196,3 @@ function seatIt(orderId){
 		}	
 	});
 }
-

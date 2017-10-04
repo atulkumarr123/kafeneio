@@ -27,6 +27,7 @@
 <script src="static/JSlib/expenses.js"></script>
 </head>
 <form action="" name="expenses" id = "expenses">
+ <input type="hidden" name="currentDate" id="currentDate" value="${currentDate}"/>
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -53,7 +54,7 @@
 						<div class="col-md-6">
 							<label for="prepended-input" class="control-label" name="date">Date</label>
 							<div class='input-group date' id='datetimepicker3'>
-								<input type='text' class="form-control" required/> <span
+								<input type='text' class="form-control" id="expenseDateTime" required/> <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-calendar"></span> </span>
 							</div>

@@ -51,6 +51,8 @@ $( document ).ready(function() {
 		format: 'DD-MM-YYYY'
 	});
 	var currentDate = $("#currentDate").val();
+	
+	$('#expenseDateTime').val(currentDate);
 	//alert(currentDate);
 //	$( ".selector" ).datepicker( "setDate", new Date());
 //	$('#datetimepicker3').val(currentDate);
