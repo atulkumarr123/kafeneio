@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.Order;
 
@@ -20,7 +21,7 @@ public class ReportDAO {
 	
 	
 	public List<Order> fetchOrders(Date fromDate, Date toDate) {
-		Query query = entityManager.createQuery("select order from Order order where creationDate <= :toDate and creationDate >=:fromDate");
+		Query query = entityManager.createQuery("select order from Order order where creationDate <= :toDate and creationDate >=:fromDate and order.status.code = '"+ApplicationConstant.SERVED_ORDER+"'");
 //		int pageNumber = 1;
 //		int pageSize = 10;
 		query.setParameter("toDate", toDate);

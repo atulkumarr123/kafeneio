@@ -37,6 +37,7 @@ public class IndexController {
 		  modelMap.put("currentDateTime", format.format(new Date()));
 		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
 		  System.out.println(environment.getProperty("kafeneio.main.title"));*/
+		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_FORMAT).format(new Date()));
 		  return "index";
 	  }
 	  
@@ -48,7 +49,6 @@ public class IndexController {
 		  modelMap.put("foodCategoryList",foodCategoryList);
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
-		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
 		  System.out.println(environment.getProperty("kafeneio.main.title"));
 		  return "restraMenu";
 	  }

@@ -19,7 +19,7 @@ public interface FoodRepository  extends JpaRepository<FoodCategory, Long> {
 	
 	
 	@Query(value="select foodItems  from FoodItems foodItems where foodItems.foodCategory.foodCode= :foodCode")
-	Set<FoodItems> findFoodItemsForCategory(@Param("foodCode")String foodCode);
+	List<FoodItems> findFoodItemsForCategory(@Param("foodCode")String foodCode);
 	
 	@Query(value="select case when testParent.toDate>testParent.fromDate then 1 else 0 end from TestParent testParent")
 	List<Object> switchCaseDemo();

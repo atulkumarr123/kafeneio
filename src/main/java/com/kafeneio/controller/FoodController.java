@@ -30,24 +30,12 @@ public class FoodController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/foodItems", method = RequestMethod.POST)
-	public ResponseEntity<MessageDTO> saveExpenses(@RequestBody List<FoodItems> foodItems, @RequestParam("categoryId") Long categoryId)
+	public MessageDTO saveExpenses(@RequestBody List<FoodItems> foodItems, @RequestParam("categoryId") Long categoryId)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		foodItems.stream().forEach(foodItem -> foodItem.setId(null));
-		MessageDTO successDTO=new MessageDTO();
-		ResponseEntity<MessageDTO> response = null;
-		boolean isSaved =foodItemsService.saveFoodItems(foodItems,categoryId);
-		
-		if(isSaved){
-			successDTO.setMessage("Items Saved Successfully");
-			successDTO.setStatusCode(200);
-			response = new ResponseEntity<MessageDTO>(successDTO,HttpStatus.OK);
-		}
-		else{
-			successDTO.setMessage("Some Error Occured");
-			successDTO.setStatusCode(500);
-			response = new ResponseEntity<MessageDTO>(successDTO,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return response;
+		MessageDTO msgDTO = null;
+		msgDTO =foodItemsService.saveFoodItems(foodItems,categoryId);
+		return msgDTO;
 	}
 
 }

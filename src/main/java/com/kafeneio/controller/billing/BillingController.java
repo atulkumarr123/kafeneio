@@ -1,5 +1,6 @@
 package com.kafeneio.controller.billing;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.enums.ResponseKeyName;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodItems;
@@ -27,26 +29,19 @@ public class BillingController {
 	@Inject
 	BillingService billingService;
 	@RequestMapping(value="/food/{category}",method=RequestMethod.GET)
-	public Set<FoodItems> getFoods(@PathVariable String category)
+	public List<FoodItems> getFoods(@PathVariable String category)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		Set<FoodItems> items = foodService.findFoodItems(category);
+		List<FoodItems> items = foodService.findFoodItems(category);
 		return items;
 	}
 
 	
 	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
-	public ResponseEntity<Order> generateBill(@RequestBody Order order)
+	public MessageDTO generateBill(@RequestBody Order order)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		ResponseEntity<Order> response = null;
-		boolean isSaved = billingService.saveOrder(order);
-		if(isSaved){
-			response = new ResponseEntity<Order>(order, HttpStatus.OK);
-		}
-		else{
-			response = new ResponseEntity<Order>(order, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return response;
+		MessageDTO msgDTO = billingService.saveOrder(order);
+		return msgDTO;
 	}
 	@RequestMapping(value="/maxOrderNo",method=RequestMethod.GET)
 	public Long getNextOrderNo()

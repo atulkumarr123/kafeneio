@@ -9,7 +9,7 @@ import com.kafeneio.model.FoodItems;
 
 public interface FoodService {
 	List<FoodCategory> findFoodCategory();
-	Set<FoodItems> findFoodItems(String category);
+	List<FoodItems> findFoodItems(String category);
 	List<Object> switchCaseDemo();
 
 }

@@ -3,8 +3,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.repository.ExpensesRepository;
 
@@ -12,17 +14,19 @@ import com.kafeneio.repository.ExpensesRepository;
 public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesService{
 	@Inject
 	ExpensesRepository expensesRepository;
-	
+
 	@Override
-	public boolean saveExpense(List<Expenses> expenses) {
-			boolean isSaved;
-			try{
-				expensesRepository.save(expenses);
-				isSaved = true;
-			}
-			catch(Exception exception){
-				isSaved = false;
-			}
-			return isSaved;
+	public MessageDTO saveExpense(List<Expenses> expenses) {
+		MessageDTO msgDTO = new MessageDTO();
+		try{
+			expensesRepository.save(expenses);
+			msgDTO.setMessage("Expenses Saved");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
 		}
+		catch(Exception exception){
+			msgDTO.setMessage("Some Error Occured");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
+		return msgDTO;
+	}
 }

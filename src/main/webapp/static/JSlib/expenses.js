@@ -50,6 +50,10 @@ $( document ).ready(function() {
 	$('#datetimepicker3').datetimepicker({
 		format: 'DD-MM-YYYY'
 	});
+	var currentDate = $("#currentDate").val();
+	//alert(currentDate);
+//	$( ".selector" ).datepicker( "setDate", new Date());
+//	$('#datetimepicker3').val(currentDate);
 	/*  $("#setMinDate").click(function () {
         $('#datetimepicker3').data("DateTimePicker").setMinDate(new Date("june 12, 2013"));
     });                                

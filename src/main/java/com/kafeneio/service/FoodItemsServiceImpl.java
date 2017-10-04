@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.repository.FoodItemsRepository;
@@ -20,8 +22,8 @@ public class FoodItemsServiceImpl extends BaseServiceImpl implements FoodItemsSe
 	FoodRepository foodRepository;
 	
 	@Override
-	public boolean saveFoodItems(List<FoodItems> foodItems, Long categoryId) {
-		boolean isSaved;
+	public MessageDTO saveFoodItems(List<FoodItems> foodItems, Long categoryId) {
+		MessageDTO msgDTO = new MessageDTO();
 		try{
 			FoodCategory foodCategory=foodRepository.findById(categoryId);
 			for(FoodItems foodItem : foodItems){
@@ -29,12 +31,14 @@ public class FoodItemsServiceImpl extends BaseServiceImpl implements FoodItemsSe
 				foodItem.setFoodCategory(foodCategory);
 			}
 			foodItemsRepository.save(foodItems);
-			isSaved = true;
+			msgDTO.setMessage("Success");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
 		}
 		catch(Exception exception){
-			isSaved = false;
+			msgDTO.setMessage("Error");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
-		return isSaved;
+		return msgDTO;
 	}
-
+	
 }

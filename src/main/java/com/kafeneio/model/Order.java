@@ -10,11 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kafeneio.constants.ApplicationConstant;
@@ -31,15 +34,21 @@ public class Order {
 		private Long orderNo;
 		@Column(name="amount")
 		private Double amount;
-		
+		@Column(name="table_no")
+		private String table;
 		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
 		@Column(name="creation_date")
 		private Date creationDate;
 		
-		 @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-		 @Column(nullable = true)
-		 @JsonManagedReference
-		 private Set<OrderDetails> orderDetails ;
+		@OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+		@Column(nullable = true)
+		@JsonManagedReference
+		private Set<OrderDetails> orderDetails ;
+		 
+		@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	    @JoinColumn(name="status")
+	    @JsonBackReference
+	 	private OrderStatus status;
 
 		public Long getId() {
 			return id;
@@ -80,4 +89,21 @@ public class Order {
 		public void setCreationDate(Date creationDate) {
 			this.creationDate = creationDate;
 		}
+
+		public OrderStatus getStatus() {
+			return status;
+		}
+
+		public void setStatus(OrderStatus status) {
+			this.status = status;
+		}
+
+		public String getTable() {
+			return table;
+		}
+
+		public void setTable(String table) {
+			this.table = table;
+		}
+
 }

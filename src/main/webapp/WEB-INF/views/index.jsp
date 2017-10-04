@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
+<link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
@@ -28,10 +28,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
+<script  src="static/JSlib/home.js"></script>
 </head>
 <body>
-	<div class="container">
-				<%@include file = "menu.jsp" %>
+<div class="container">
+		<%@include file="menu.jsp"%>
+</div>
+<sec:authorize access="hasRole('ADMIN')">
+	<div class="container" style="display:flex">
+		<div class="row" style="margin: 15px">
+			<table id="newOrdersGrid"></table>
 		</div>
+
+		<div class="row" style="margin: 15px">
+			<table id="servedOrdersGrid"></table>
+			 <div id="servedOrdersPager" style="height: 50;"></div>
+		</div>
+
+		<div class="row" style="margin: 15px">
+			<table id="cancelledOrdersGrid"></table>
+		</div>
+	</div>	
+</sec:authorize>
+<div class="container">
+		<%@include file="footer.jsp"%>
+</div>
 </body>
 </html>

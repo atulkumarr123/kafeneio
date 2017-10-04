@@ -1,5 +1,6 @@
 package com.kafeneio.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="KAFENEIO_FOOD_ITEMS")
-public class FoodItems {
+public class FoodItems{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id" ,unique=true,nullable=false )

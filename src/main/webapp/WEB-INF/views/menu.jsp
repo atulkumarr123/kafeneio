@@ -1,8 +1,10 @@
 <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
+<%-- <input type="text" name="currentDate" id="currentDate" value="${currentDate}"/> --%> 
+
 <div class="top-navbar header b-b">
 	<div>
 		<ul class="nav navbar-nav">
-			<li><a href="home">Home</a></li>
+			<li><a href="${pageContext.request.contextPath}">Home</a></li>
 			<sec:authorize access="hasRole('ADMIN')">
 				<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

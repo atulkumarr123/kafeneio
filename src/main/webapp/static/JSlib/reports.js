@@ -56,7 +56,7 @@ function searchOrders(){
 	var toDate = $("#toDateTimePicker").find("input").val();
 
 	$("#orderReportGrid").jqGrid({
-		url :  $("#contextPath").val()+"/orderList?fromDate="+fromDate+"&&toDate="+toDate,
+		url :  $("#contextPath").val()+"/report/orderList?fromDate="+fromDate+"&&toDate="+toDate,
 		datatype : "json",
 		mtype : 'POST',
 		colModel: [
@@ -93,7 +93,7 @@ function searchExpenses(){
 	var toDate = $("#toDateTimePicker").find("input").val();
 
 	$("#expenseReportGrid").jqGrid({
-		url :  $("#contextPath").val()+"/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		datatype : "json",
 		mtype : 'POST',
 		colModel: [

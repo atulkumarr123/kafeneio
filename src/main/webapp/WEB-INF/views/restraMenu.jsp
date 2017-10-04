@@ -13,8 +13,8 @@
  <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
+<link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
@@ -30,6 +30,7 @@
 <body>
 
 <input type="hidden" name="currentDateTime" id="currentDateTime" value="${currentDateTime}"/> 
+
 <input type="hidden" name="orderNumber" id="orderNumber" value=""/> 
 
 	<div class="container">
@@ -71,18 +72,19 @@
 				</div>
 				<div class="col-lg-4">
 				
-				<div id="printGrid" style="width: 253px;text-align: center;border: 1px solid; border-color: #745223;">
+				<div id="printGrid" style="width: 253px;text-align: center;">
 					<h5>
 						<b>The Kafeneio</b>
 					</h5>
 					<br>
+					<span style="text-align: left">Customer Copy</span>
 					<table id="invoiceGrid"></table>
-					<!-- <h5> <span class="glyphicon glyphicon-telephone"> 011-49148538 </span></h5> -->
-					<h5> <span>Contact: 011-49148538, 8218349619</span></h5>
-					<h5>D-1 Central Mkt Surajmal Vihar 110092</h5>
+					 <!-- <h5> <span class="glyphicon glyphicon-telephone"> 011-49148538, 8218349619 </span></h5> -->
+					 <h5><span>Contact:011-49148538, 8218349619</span></h5>
+					<h5>D-1 Cent. Mkt Surajmal Vihar 110092</h5>
+					<!-- <h4>Happy Dushehra!</h4> -->
 					
 				</div>
-				
 				
 					<br>
 						<div style="text-align: left;">
@@ -91,50 +93,11 @@
 					</div>
 				</div>
 			</div>
-
-<%-- <c:choose>
-    <c:when test="${fileName=='foodCategory'}">
-	<jsp:include page="${fileName}.jsp" />  
-    </c:when>    
-    <c:otherwise>
-    </c:otherwise>
-</c:choose>
-
-<c:choose>
-    <c:when test="${fileName=='signUp'}">
-	<jsp:include page="${fileName}.jsp" />  
-    </c:when>    
-    <c:otherwise>
-      
-    </c:otherwise>
-  </c:choose>
-<c:choose>
-    <c:when test="${fileName=='billingHome'}">
-	<jsp:include page="${fileName}.jsp" />  
-    </c:when>    
-    <c:otherwise>
-      
-    </c:otherwise>
-</c:choose> --%>
-
-    <div ui-view style="margin-top:50px"></div>
-		<div class="bottom-nav footer">
-			<button class=" navbar navbar-toggle" data-toggle="collapse"
-				data-target=".navfootercollapse">
-				<span class=" icon-bar"></span> <span class=" icon-bar"></span> <span
-					class=" icon-bar"></span>
-			</button>
-			<div class=" collapse navbar-collapse navfootercollapse">
-				<ul class=" nav navbar-nav">
-					<li><a href="#">Terms and conditions</a></li>
-					<li><a href="#">Privacy Policy</a></li>
-					<li><a href="#">Renewable Policy</a></li>
-					<li><a href="#">Task Holidays</a></li>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">Contact us</a></li>
-				</ul>
-			</div>
-		</div>		 	
+			
+			
+		
+		
+		<%@include file = "footer.jsp" %>		 	
 	</div>	
 </body>
 </html>

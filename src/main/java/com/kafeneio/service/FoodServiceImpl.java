@@ -1,7 +1,11 @@
 package com.kafeneio.service;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 
@@ -41,8 +45,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	}
 	
 	@Override
-	public Set<FoodItems> findFoodItems(String category) {
-		Set<FoodItems> items =   foodRepository.findFoodItemsForCategory(category);
+	public List<FoodItems> findFoodItems(String category) {
+		List<FoodItems> items =   foodRepository.findFoodItemsForCategory(category);
+		Comparator<FoodItems> byId = (FoodItems item1, FoodItems item2)->item1.getId().compareTo(item2.getId());
+		Collections.sort(items, byId);
 		return items;
 	}
 	

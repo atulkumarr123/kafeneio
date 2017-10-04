@@ -184,21 +184,28 @@ function generateBill() {
 	      url : ctx+"/generateBill",
 	      data: JSON.stringify(order),
 	      success :function(result) {
+	    	  //alert(JSON.stringify(result));
 		   	   $.print("#printGrid");
-	    	  $(function(){
-	    		  new PNotify({
-	    			  type:'success',
-	    			  title: 'Success',
-	    			  text: 'Order <b>'+orderNo+'</b> Saved Successfully!'
+	    	  if(result.statusCode == '208'){
+	    		  $(function(){
+		    		  new PNotify({ type:'info', title: 'Info', text: result.message});
+		    	  });
+	    	  }
+	    	  else if(result.statusCode == '200'){
+	    		  $(function(){
+		    		  new PNotify({ type:'success', title: 'Success', text: result.message});
+		    	  });
+	    	  }
+	    	  else{
+	    		   $(function(){
+	    			  new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
 	    		  });
-	    	  });
-			  reloadGrid();
+	    	  }
+	    
+			  //reloadGrid();
 	     },
 	     error:function(responseText) {
-	    	 new PNotify({
-	    		 type:'error',
-	    		 title: 'Error',
-	    		 text: JSON.stringify(responseText)
+	    	 new PNotify({ type:'error', title: 'Error', text: JSON.stringify(responseText)
 	    	 });
 	     }
 	  });
@@ -209,9 +216,7 @@ function generateBill() {
 
 function validateOrder(){
 	var rowCount=jQuery('#invoiceGrid').jqGrid('getGridParam', 'reccount');
-	  
 	  if(rowCount!=0){
-		  //alert(isEmpty);    
 		  return true;
 	  }
 	  else{
