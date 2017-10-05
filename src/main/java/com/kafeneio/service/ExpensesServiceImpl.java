@@ -1,4 +1,5 @@
 package com.kafeneio.service;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 	public MessageDTO saveExpense(List<Expenses> expenses) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{
+			expenses.stream().forEach(expense -> expense.setCreationDate(new Date()));
 			expensesRepository.save(expenses);
 			msgDTO.setMessage("Expenses Saved");
 			msgDTO.setStatusCode(HttpStatus.OK.value());

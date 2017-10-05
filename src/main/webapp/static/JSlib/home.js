@@ -102,7 +102,7 @@ $( document ).ready(function() {
         loadonce: true,
     });
     $("#servedOrdersGrid").bind("jqGridAfterLoadComplete", function() {
-    	adjustTotal();
+    	//adjustTotal();
 	});
 });
 

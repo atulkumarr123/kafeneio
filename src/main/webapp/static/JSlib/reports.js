@@ -104,7 +104,7 @@ function searchExpenses(){
 		mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
-			{ name: "expense", label: "Expense",  align: "center"},
+			{ name: "item", label: "Expense",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
 			{ name: "creationDate", label: "Date",  align: "center" },
 			],
