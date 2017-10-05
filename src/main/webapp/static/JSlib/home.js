@@ -1,9 +1,39 @@
 $( document ).ready(function() {
+		getOrders('NEW');
+		getOrders('SERVED');
+		getOrders('CANCELLED');
 		
+});
+
+function getOrders(status){
+	$.ajax({
+		url : $("#contextPath").val()+"/report/getOrderListToday/"+status,
+		success : function(responseText) {
+			if(status=='NEW'){
+				createPendingOrderGrid(responseText);
+			}
+			else if(status=='SERVED'){
+				alert(JSON.stringify(responseText));
+				createServedOrdersGrid(responseText);
+			}
+			else if(status=='CANCELLED'){
+				createCancelledOrdersGrid(responseText);
+			}
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+			});
+		}	
+	});
+}
+
+function createPendingOrderGrid(pendingOrders){
     $("#newOrdersGrid").jqGrid({
-    	url :  $("#contextPath").val()+"/report/getOrderListToday/NEW",
-		datatype : "json",
-		mtype : 'POST',
+//    	url :  $("#contextPath").val()+"/report/getOrderListToday/NEW",
+//		datatype : "json",
+    	datatype : "local",
+//		mtype : 'POST',
     	colModel: [
     		{ name: "id", label: "id", hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center"},
@@ -23,9 +53,7 @@ $( document ).ready(function() {
     				return "<button class='btn btn-default' style='color:red' type='button' ><b>Cancel</b></button>"
     		}}
     			],
-        data: [
-        ],
-       
+        data: pendingOrders,
         footerrow: true,
         userDataOnFooter : true,
         guiStyle: "bootstrap",
@@ -48,7 +76,34 @@ $( document ).ready(function() {
             	//alert("cancelButton");
             	cancelThisOrder(rowid);
             }
-        }
+        },
+        
+        subGrid: true,
+        subGridRowExpanded: function (subgridDivId, rowId) {
+            var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
+                colModel = $(this).jqGrid("getGridParam", "colModel");
+
+            $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
+            $subgrid.jqGrid({
+                datatype: "local",
+                data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
+                colModel: [
+                    { name: "foodCode", width: (colModel[2].width - 2) }
+                ],
+                height: "100%",
+                rowNum: 10000,
+                autoencode: true,
+                gridview: true,
+                idPrefix: rowId + "_"
+            });
+            $subgrid.closest("div.ui-jqgrid-view")
+                .children("div.ui-jqgrid-hdiv")
+                .hide();
+        },
+        
+    
+        
+        
     });
     grid = $("#newOrdersGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
@@ -66,25 +121,23 @@ $( document ).ready(function() {
     cancelButton = getColumnIndexByName(grid,'cancel');
   //  alert(serveButton);
    // alert(cancelButton);
-});
-
+}
 
 /**********************************************************************        servedOrdersGrid      ***********************************************************************/
-$( document ).ready(function() {
-	
+
+	function createServedOrdersGrid(servedOrders){
     $("#servedOrdersGrid").jqGrid({
-    	url :  $("#contextPath").val()+"/report/getOrderListToday/SERVED",
-		datatype : "json",
-		mtype : 'POST',
+    //	url :  $("#contextPath").val()+"/report/getOrderListToday/SERVED",
+//		datatype : "json",
+		datatype : "local",
+//		mtype : 'POST',
     	colModel: [
     		{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center", width:100},
 			{ name: "amount", label: "Amount",  align: "right",template: "number", width: 100},
 			{ name: "table", label: "Table",  align: "center",  width: 80},
     			],
-        data: [
-        	{"id":1, "orderNo":123 , "amount":123}
-        ],
+    	 data: servedOrders,
        
         footerrow: true,
         userDataOnFooter : true,
@@ -100,11 +153,36 @@ $( document ).ready(function() {
         caption: "Served Orders",       
         height: 'auto',
         loadonce: true,
+        
+        
+        subGrid: true,
+        subGridRowExpanded: function (subgridDivId, rowId) {
+            var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
+                colModel = $(this).jqGrid("getGridParam", "colModel");
+
+            $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
+            $subgrid.jqGrid({
+                datatype: "local",
+                data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
+                colModel: [
+                    { name: "foodCode", width: (colModel[2].width - 2) }
+                ],
+                height: "100%",
+                rowNum: 10000,
+                autoencode: true,
+                gridview: true,
+                idPrefix: rowId + "_"
+            });
+            $subgrid.closest("div.ui-jqgrid-view")
+                .children("div.ui-jqgrid-hdiv")
+                .hide();
+        },
+        
     });
     $("#servedOrdersGrid").bind("jqGridAfterLoadComplete", function() {
     	adjustTotal();
 	});
-});
+	}
 
 function adjustTotal(){
 	var data = $("#servedOrdersGrid").jqGrid("getGridParam", "data");
@@ -119,20 +197,21 @@ function adjustTotal(){
 }
 /*******************************************************************        cancelledOrdersGrid     **********************************************************************/
 
-$( document ).ready(function() {
+function createCancelledOrdersGrid(cancelledOrders) {
+	
+	
     $("#cancelledOrdersGrid").jqGrid({
-    	url :  $("#contextPath").val()+"/report/getOrderListToday/CANCELLED",
-		datatype : "json",
-		mtype : 'POST',	
+ //   	url :  $("#contextPath").val()+"/report/getOrderListToday/CANCELLED",
+	//	datatype : "json",
+		datatype : "local",
+//		mtype : 'POST',	
     
     	colModel: [
     		{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
     			],
-        data: [
-        	{"id":1, "orderNo":123 , "amount":123}
-        ],
+        data: cancelledOrders,
        
         footerrow: true,
         userDataOnFooter : true,
@@ -145,9 +224,32 @@ $( document ).ready(function() {
         caption: "Cancelled Orders",       
         height: 'auto',
         loadonce: true,
+        
+        subGrid: true,
+        subGridRowExpanded: function (subgridDivId, rowId) {
+            var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
+                colModel = $(this).jqGrid("getGridParam", "colModel");
+
+            $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
+            $subgrid.jqGrid({
+                datatype: "local",
+                data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
+                colModel: [
+                    { name: "foodCode", width: (colModel[2].width - 2) }
+                ],
+                height: "100%",
+                rowNum: 10000,
+                autoencode: true,
+                gridview: true,
+                idPrefix: rowId + "_"
+            });
+            $subgrid.closest("div.ui-jqgrid-view")
+                .children("div.ui-jqgrid-hdiv")
+                .hide();
+        },
      
     });
-});
+}
 function serveThisOrder(rowid){
 	//alert("Served called");
 	var ctx = $("#contextPath").val();
