@@ -13,7 +13,7 @@ function getOrders(status){
 				createPendingOrderGrid(responseText);
 			}
 			else if(status=='SERVED'){
-				alert(JSON.stringify(responseText));
+				//alert(JSON.stringify(responseText));
 				createServedOrdersGrid(responseText);
 			}
 			else if(status=='CANCELLED'){
