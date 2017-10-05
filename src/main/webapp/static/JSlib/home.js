@@ -180,7 +180,7 @@ function createPendingOrderGrid(pendingOrders){
         
     });
     $("#servedOrdersGrid").bind("jqGridAfterLoadComplete", function() {
-    	adjustTotal();
+    	//adjustTotal();
 	});
 	}
 
