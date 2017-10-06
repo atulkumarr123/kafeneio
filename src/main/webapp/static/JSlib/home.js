@@ -42,15 +42,15 @@ function createPendingOrderGrid(pendingOrders){
     			formatter:function(cellValue, option){
     				if(cellValue == null  || cellValue == 'undefined') cellValue = '';
     				return "<div style='display:flex;'><input type='text' name='table' id = 'tableText_"+option.rowId+"' value = '"+cellValue+"' class='form-control' style='font-size: medium;'>&nbsp" +
-    						"<button class='btn btn-default'  onclick = 'seatIt("+option.rowId+")' id = 'tableButton_"+option.rowId+"' type='button' ><b>Seat</b></button> </div>"
+    						"<button class='btn btn-default'  style='font-size: small;background: tan;' onclick = 'seatIt("+option.rowId+")' id = 'tableButton_"+option.rowId+"' type='button' ><b>Seat</b></button> </div>"
     			}},
     		{ name: 'serve', label:"Serve", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
-    				return "<button class='btn btn-default' style='color:#6060c7' type='button' ><b>Serve</b></button>"
+    				return "<button class='btn btn-default' style='color:#6060c7;font-size: small;background: tan;' type='button' ><b>Serve</b></button>"
     			}},
     		{ name: 'cancel', label:"Cancel", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
-    				return "<button class='btn btn-default' style='color:red' type='button' ><b>Cancel</b></button>"
+    				return "<button class='btn btn-default' style='color:red;font-size: small;background: tan;' type='button' ><b>Cancel</b></button>"
     		}}
     			],
         data: pendingOrders,
@@ -142,7 +142,7 @@ function createPendingOrderGrid(pendingOrders){
 			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 80},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
-    				return "<button class='btn btn-default' style='color:green' type='button' ><b>Initiate</b></button>"
+    				return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
     		}}
     			],
     	 data: servedOrders,
@@ -242,7 +242,7 @@ function createCancelledOrdersGrid(cancelledOrders) {
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
-    				return "<button class='btn btn-default' style='color:green' type='button' ><b>Initiate</b></button>"
+    				return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
     		}}
     			],
         data: cancelledOrders,

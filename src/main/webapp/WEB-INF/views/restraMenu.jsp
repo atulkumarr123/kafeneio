@@ -10,7 +10,7 @@
 <head>
 <title><spring:message code="kafeneio.main.title"/></title>
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
- <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
+<link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
@@ -19,12 +19,11 @@
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
 <script src="static/js/app.js" /></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
+<script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
+<script src="static/JSlib/twitter-bootstrap/3.3.7/bootstrap.min.js"></script>
+<script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
-
 <script  src="static/JSlib/kafeneioHome.js"></script>
 </head>
 <body>

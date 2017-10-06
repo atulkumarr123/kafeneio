@@ -19,14 +19,14 @@
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 
 <script src="static/js/app.js" /></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
 <script src="static/JSlib/jquery.validate.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script> 
+<script src="static/JSlib/twitter-bootstrap/3.3.7/bootstrap.min.js"></script>
+<script src="static/JSlib/moment-2.10.6.min.js"></script> 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
+<script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 
 <script src="static/JSlib/addMenuItems.js"></script>

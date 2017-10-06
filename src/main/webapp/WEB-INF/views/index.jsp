@@ -23,9 +23,9 @@
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
 <script src="static/js/app.js" /></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
+<script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
+<script src="static/JSlib/twitter-bootstrap/3.3.7/bootstrap.min.js"></script>
+<script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 <script  src="static/JSlib/home.js"></script>
