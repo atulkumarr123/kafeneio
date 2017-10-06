@@ -11,5 +11,7 @@ public interface OrderService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public MessageDTO cancel(Long orderId);
 	@PreAuthorize("hasRole('ADMIN')")
+	public MessageDTO reInitiate(Long orderId);
+	@PreAuthorize("hasRole('ADMIN')")
 	public MessageDTO seatIt(Long orderId, String tableNo);
 }

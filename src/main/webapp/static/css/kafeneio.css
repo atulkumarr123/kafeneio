@@ -46,3 +46,8 @@
 li.dropdown:hover ul.dropdown-menu{
         display: block; 
 }
+.ui-widget-content{
+	border: 0.5px solid #dddddd;
+    background: #986e35;
+    color: #333333;
+}

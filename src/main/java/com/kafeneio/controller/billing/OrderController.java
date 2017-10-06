@@ -30,6 +30,12 @@ public class OrderController {
 		return msgDTO;
 	}
 	
+	@RequestMapping(value = "/reInitiate/{orderId}")
+	public MessageDTO reInitiate(@PathVariable Long orderId) {
+		MessageDTO msgDTO = orderService.reInitiate(orderId);
+		return msgDTO;
+	}
+	
 	@RequestMapping(value = "/seatIt")
 	public MessageDTO seatIt(@RequestParam(value = "orderId", required = true) Long orderId, 
 			@RequestParam(value="table", required=true)String tableNo) {

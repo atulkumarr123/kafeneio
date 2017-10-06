@@ -37,18 +37,18 @@ function createPendingOrderGrid(pendingOrders){
     	colModel: [
     		{ name: "id", label: "id", hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center"},
-			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
 			{ name: 'table', label:"Table", width: 120, sortable: false, search: false, align: "center", 
     			formatter:function(cellValue, option){
     				if(cellValue == null  || cellValue == 'undefined') cellValue = '';
     				return "<div style='display:flex;'><input type='text' name='table' id = 'tableText_"+option.rowId+"' value = '"+cellValue+"' class='form-control' style='font-size: medium;'>&nbsp" +
     						"<button class='btn btn-default'  onclick = 'seatIt("+option.rowId+")' id = 'tableButton_"+option.rowId+"' type='button' ><b>Seat</b></button> </div>"
     			}},
-    		{ name: 'serve', label:"", width: 80, sortable: false, search: false, align: "center",
+    		{ name: 'serve', label:"Serve", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
     				return "<button class='btn btn-default' style='color:#6060c7' type='button' ><b>Serve</b></button>"
     			}},
-    		{ name: 'cancel', label:"", width: 80, sortable: false, search: false, align: "center",
+    		{ name: 'cancel', label:"Cancel", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
     				return "<button class='btn btn-default' style='color:red' type='button' ><b>Cancel</b></button>"
     		}}
@@ -88,13 +88,18 @@ function createPendingOrderGrid(pendingOrders){
                 datatype: "local",
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
-                    { name: "foodCode", width: (colModel[2].width - 2) }
+                    { name: "foodDesc", label:"Item Desc", width: (colModel[2].width) },
+                    { name: "amount", label:"Amount", width: (colModel[3].width), align:"right"}
                 ],
                 height: "100%",
                 rowNum: 10000,
                 autoencode: true,
                 gridview: true,
-                idPrefix: rowId + "_"
+                idPrefix: rowId + "_",
+               /* gridview: true,
+                rowattr: function (rd) {
+                        return {"style": "background-color:#bd7575"};
+                }*/
             });
             $subgrid.closest("div.ui-jqgrid-view")
                 .children("div.ui-jqgrid-hdiv")
@@ -134,8 +139,11 @@ function createPendingOrderGrid(pendingOrders){
     	colModel: [
     		{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center", width:100},
-			{ name: "amount", label: "Amount",  align: "right",template: "number", width: 100},
-			{ name: "table", label: "Table",  align: "center",  width: 80},
+			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 80},
+			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
+    			formatter:function(){
+    				return "<button class='btn btn-default' style='color:green' type='button' ><b>Initiate</b></button>"
+    		}}
     			],
     	 data: servedOrders,
        
@@ -153,19 +161,26 @@ function createPendingOrderGrid(pendingOrders){
         caption: "Served Orders",       
         height: 'auto',
         loadonce: true,
-        
+        onCellSelect: function (rowid,iCol,cellcontent,e) {
+        	//alert("iCol "+iCol);
+            if (iCol == reInitiateButton) {
+            	//alert("reInitiateButton");
+                reInitiateThisOrder(rowid);
+           
+            }
+        },
         
         subGrid: true,
         subGridRowExpanded: function (subgridDivId, rowId) {
             var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
                 colModel = $(this).jqGrid("getGridParam", "colModel");
-
             $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
             $subgrid.jqGrid({
                 datatype: "local",
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
-                    { name: "foodCode", width: (colModel[2].width - 2) }
+                    { name: "foodDesc", width: (colModel[2].width) },
+                    { name: "amount", label:"Amount", width: (colModel[3].width), align:"right"}
                 ],
                 height: "100%",
                 rowNum: 10000,
@@ -179,9 +194,24 @@ function createPendingOrderGrid(pendingOrders){
         },
         
     });
+    
+    grid = $("#servedOrdersGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+       var cm = grid.jqGrid('getGridParam','colModel');
+       for (var i=0,l=cm.length; i<l; i++) {
+           if (cm[i].name===columnName) {
+               return i; // return the index
+           }
+       }
+       return -1;
+   },
+   
+   reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
+   
     $("#servedOrdersGrid").bind("jqGridAfterLoadComplete", function() {
     	//adjustTotal();
 	});
+    
 	}
 
 function adjustTotal(){
@@ -208,8 +238,12 @@ function createCancelledOrdersGrid(cancelledOrders) {
     
     	colModel: [
     		{ name: "id", label: "id",hidden:true},
-			{ name: "orderNo", label: "Order No",  align: "center"},
-			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+			{ name: "orderNo", label: "Order No",  align: "center",  width: 100},
+			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
+			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
+    			formatter:function(){
+    				return "<button class='btn btn-default' style='color:green' type='button' ><b>Initiate</b></button>"
+    		}}
     			],
         data: cancelledOrders,
        
@@ -217,13 +251,21 @@ function createCancelledOrdersGrid(cancelledOrders) {
         userDataOnFooter : true,
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
-        idPrefix: "gb1_",
+//        idPrefix: "gb1_",
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
         caption: "Cancelled Orders",       
         height: 'auto',
         loadonce: true,
+        onCellSelect: function (rowid,iCol,cellcontent,e) {
+        	//alert("iCol "+iCol);
+            if (iCol == reInitiateButton) {
+            	//alert("reInitiateButton");
+                reInitiateThisOrder(rowid);
+           
+            }
+        },
         
         subGrid: true,
         subGridRowExpanded: function (subgridDivId, rowId) {
@@ -235,10 +277,11 @@ function createCancelledOrdersGrid(cancelledOrders) {
                 datatype: "local",
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
-                    { name: "foodCode", width: (colModel[2].width - 2) }
+                    { name: "foodDesc", width: (colModel[2].width) },
+                	  { name: "amount",  width: (colModel[3].width), align:"right"}
                 ],
                 height: "100%",
-                rowNum: 10000,
+                rowNum: 100,
                 autoencode: true,
                 gridview: true,
                 idPrefix: rowId + "_"
@@ -249,7 +292,21 @@ function createCancelledOrdersGrid(cancelledOrders) {
         },
      
     });
+    
+    grid = $("#cancelledOrdersGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+      var cm = grid.jqGrid('getGridParam','colModel');
+      for (var i=0,l=cm.length; i<l; i++) {
+          if (cm[i].name===columnName) {
+              return i; // return the index
+          }
+      }
+      return -1;
+  },
+  
+  reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
 }
+
 function serveThisOrder(rowid){
 	//alert("Served called");
 	var ctx = $("#contextPath").val();
@@ -282,6 +339,23 @@ function cancelThisOrder(rowid){
 		}	
 	});
 }
+
+function reInitiateThisOrder(rowid){
+	//alert("reInitiateThisOrder called");
+	var ctx = $("#contextPath").val();
+	$.ajax({
+		url : ctx+"/order/reInitiate/"+rowid,
+		success : function(responseText) {
+			location.reload();
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+			});
+		}	
+	});
+}
+
 
 function seatIt(orderId){
 	var ctx = $("#contextPath").val();

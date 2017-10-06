@@ -57,6 +57,25 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 		}
 		return msgDTO;
 	}
+	
+	@Override
+	public MessageDTO reInitiate(Long orderId) {
+		MessageDTO msgDTO = new MessageDTO();
+		try{
+			Order order = orderRepository.findOne(orderId);
+			OrderStatus cancelledStatus = orderStatusRepository.findByCode(ApplicationConstant.NEW_ORDER);
+			order.setStatus(cancelledStatus);
+			msgDTO.setMessage("Order "+order.getOrderNo()+" added successfully!");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
+		}
+		catch(Exception exception){
+			msgDTO.setMessage("Error");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
+		return msgDTO;
+	}
+	
+	
 
 
 	@Override
