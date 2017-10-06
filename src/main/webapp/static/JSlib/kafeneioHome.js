@@ -202,7 +202,7 @@ function generateBill() {
 	    		  });
 	    	  }
 	    
-			  //reloadGrid();
+			  reloadGrid();
 	     },
 	     error:function(responseText) {
 	    	 new PNotify({ type:'error', title: 'Error', text: JSON.stringify(responseText)

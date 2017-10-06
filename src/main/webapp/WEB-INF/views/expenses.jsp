@@ -81,7 +81,7 @@
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
-					<button class="btn btn-default" type="button" onclick="">Clear</button>
+					<button class="btn btn-default" type="button" onclick="clearExpenses()">Clear</button>
 				</div>
 			</div>
 			<div class="col-lg-2"></div>

@@ -129,12 +129,9 @@ function saveExpenses() {
 	    	  new PNotify({
     			  type:'success',
     			  title: 'Success',
-    			  //text: JSON.stringify(result)
     			  text: result.message
-	    	//  alert("Expenses Saved Successfully");
-	    	  //validateOrder();
-	    	  //alert(JSON.stringify(result));
 	    	  });
+	    	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 	     },
 	   error:function(result) {
 		  /* alert(JSON.stringify(result.responseJSON.message));*/
@@ -150,4 +147,9 @@ function saveExpenses() {
 
 function removeItem(rowid){
 	$('#expensesGrid').jqGrid('delRowData',rowid);
+}
+
+function clearExpenses(){
+	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+
 }
