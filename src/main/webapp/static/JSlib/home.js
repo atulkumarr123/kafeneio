@@ -50,7 +50,7 @@ function createPendingOrderGrid(pendingOrders){
     			}},
     		{ name: 'cancel', label:"Cancel", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
-    				return "<button class='btn btn-default' style='color:red;font-size: small;background: tan;' type='button' ><b>Cancel</b></button>"
+    				return "<button class='btn btn-default' style='color:#c12f2f;font-size: small;background: tan;' type='button' ><b>Cancel</b></button>"
     		}}
     			],
         data: pendingOrders,
@@ -88,8 +88,9 @@ function createPendingOrderGrid(pendingOrders){
                 datatype: "local",
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
-                    { name: "foodDesc", label:"Item Desc", width: (colModel[2].width) },
-                    { name: "amount", label:"Amount", width: (colModel[3].width), align:"right"}
+                    { name: "quantity",  width: (colModel[3].width/3), align:"right"},
+                    { name: "foodDesc", width: (colModel[2].width) },
+                    { name: "amount", width: (colModel[3].width*2)/3, align:"right"}
                 ],
                 height: "100%",
                 rowNum: 10000,
