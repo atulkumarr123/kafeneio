@@ -113,6 +113,15 @@ function addExpense(){
 function saveExpenses() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#expensesGrid").jqGrid("getGridParam", "data");
+	//alert(allData);
+	if(jQuery.isEmptyObject(allData)){
+		  new PNotify({
+	    		 type:'error',
+	    		 title: 'Error',
+	    		 text: 'Please add atleast one expense!'
+		   });
+		  return false;
+	}
 	//alert(JSON.stringify(allData));
 	/*var expense={};
 	expense["item"]=null;
