@@ -88,9 +88,9 @@ function createPendingOrderGrid(pendingOrders){
                 datatype: "local",
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
-                    { name: "quantity",  width: (colModel[3].width/3), align:"right"},
-                    { name: "foodDesc", width: (colModel[2].width) },
-                    { name: "amount", width: (colModel[3].width*2)/3, align:"right"}
+                    { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
+                    { name: "foodDesc", label:"Item", width: (colModel[2].width) },
+                    { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
                 ],
                 height: "100%",
                 rowNum: 10000,
@@ -131,89 +131,95 @@ function createPendingOrderGrid(pendingOrders){
 
 /**********************************************************************        servedOrdersGrid      ***********************************************************************/
 
-	function createServedOrdersGrid(servedOrders){
-    $("#servedOrdersGrid").jqGrid({
-    //	url :  $("#contextPath").val()+"/report/getOrderListToday/SERVED",
+function createServedOrdersGrid(servedOrders){
+	$("#servedOrdersGrid").jqGrid({
+		//	url :  $("#contextPath").val()+"/report/getOrderListToday/SERVED",
 //		datatype : "json",
 		datatype : "local",
 //		mtype : 'POST',
-    	colModel: [
-    		{ name: "id", label: "id",hidden:true},
+		colModel: [
+			{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center", width:100},
 			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 80},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
-    			formatter:function(){
-    				return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
-    		}}
-    			],
-    	 data: servedOrders,
-       
-        footerrow: true,
-        userDataOnFooter : true,
-        rowNum:10,
-		rowList:[10,20,30],
-		guiStyle: "bootstrap",
-        iconSet: "fontAwesome",
-        pager: '#servedOrdersPager',
-//        idPrefix: "gb1_",
-        rownumbers: false,
-        sortname: "orderNo",
-        sortorder: "desc",
-        caption: "Served Orders",       
-        height: 'auto',
-        loadonce: true,
-        onCellSelect: function (rowid,iCol,cellcontent,e) {
-        	//alert("iCol "+iCol);
-            if (iCol == reInitiateButton) {
-            	//alert("reInitiateButton");
-                reInitiateThisOrder(rowid);
-           
-            }
-        },
-        
-        subGrid: true,
-        subGridRowExpanded: function (subgridDivId, rowId) {
-            var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
-                colModel = $(this).jqGrid("getGridParam", "colModel");
-            $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
-            $subgrid.jqGrid({
-                datatype: "local",
-                data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
-                colModel: [
-                    { name: "foodDesc", width: (colModel[2].width) },
-                    { name: "amount", label:"Amount", width: (colModel[3].width), align:"right"}
-                ],
-                height: "100%",
-                rowNum: 10000,
-                autoencode: true,
-                gridview: true,
-                idPrefix: rowId + "_"
-            });
-            $subgrid.closest("div.ui-jqgrid-view")
-                .children("div.ui-jqgrid-hdiv")
-                .hide();
-        },
-        
-    });
-    
-    grid = $("#servedOrdersGrid"),
-	 getColumnIndexByName = function(grid,columnName) {
-       var cm = grid.jqGrid('getGridParam','colModel');
-       for (var i=0,l=cm.length; i<l; i++) {
-           if (cm[i].name===columnName) {
-               return i; // return the index
-           }
-       }
-       return -1;
-   },
-   
-   reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
-   
-    $("#servedOrdersGrid").bind("jqGridAfterLoadComplete", function() {
-    	//adjustTotal();
+				formatter:function(){
+					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
+				}}
+			],
+			data: servedOrders,
+
+			footerrow: true,
+			userDataOnFooter : true,
+			rowNum:10,
+			rowList:[10,20,30],
+			guiStyle: "bootstrap",
+			iconSet: "fontAwesome",
+			pager: '#servedOrdersPager',
+//			idPrefix: "gb1_",
+			rownumbers: false,
+			sortname: "orderNo",
+			sortorder: "desc",
+			caption: "Served Orders",       
+			height: 'auto',
+			loadonce: true,
+			onCellSelect: function (rowid,iCol,cellcontent,e) {
+				//alert("iCol "+iCol);
+				if (iCol == reInitiateButton) {
+					//alert("reInitiateButton");
+					reInitiateThisOrder(rowid);
+
+				}
+
+			},
+			loadComplete:function() {
+				adjustTotal();
+			},
+
+
+
+			subGrid: true,
+			subGridRowExpanded: function (subgridDivId, rowId) {
+				var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
+				colModel = $(this).jqGrid("getGridParam", "colModel");
+				$subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
+				$subgrid.jqGrid({
+					datatype: "local",
+					data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
+					colModel: [
+						{ name: "foodDesc", width: (colModel[2].width) },
+						{ name: "amount", label:"Amount", width: (colModel[3].width), align:"right"}
+						],
+						height: "100%",
+						rowNum: 10000,
+						autoencode: true,
+						gridview: true,
+						idPrefix: rowId + "_"
+				});
+				$subgrid.closest("div.ui-jqgrid-view")
+				.children("div.ui-jqgrid-hdiv")
+				.hide();
+			},
+
 	});
-    
-	}
+
+	grid = $("#servedOrdersGrid"),
+	getColumnIndexByName = function(grid,columnName) {
+		var cm = grid.jqGrid('getGridParam','colModel');
+		for (var i=0,l=cm.length; i<l; i++) {
+			if (cm[i].name===columnName) {
+				return i; // return the index
+			}
+		}
+		return -1;
+	},
+
+	reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
+
+	$("#servedOrdersGrid").bind("jqGridAfterLoadComplete", function() {
+		//adjustTotal();
+	});
+
+}
 
 function adjustTotal(){
 	var data = $("#servedOrdersGrid").jqGrid("getGridParam", "data");
