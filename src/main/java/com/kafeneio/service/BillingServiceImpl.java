@@ -26,10 +26,9 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	OrderStatusRepository orderStatusRepository;
 
 	@Override
-	public MessageDTO saveOrder(Order order){
+	public synchronized MessageDTO saveOrder(Order order){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
-			synchronized (order) {
 				if(isOrderExist(order.getOrderNo())){
 					msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
 					msgDTO.setStatusCode(HttpStatus.ALREADY_REPORTED.value());
@@ -42,7 +41,6 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 					msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
 					msgDTO.setStatusCode(HttpStatus.OK.value());
 				}
-			}
 		}
 		catch(Exception exception){
 			msgDTO.setMessage("Error");

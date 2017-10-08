@@ -172,7 +172,7 @@ function createServedOrdersGrid(servedOrders){
 
 			},
 			loadComplete:function() {
-				adjustTotal();
+				//adjustTotal();
 			},
 
 
