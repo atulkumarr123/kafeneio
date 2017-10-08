@@ -29,17 +29,19 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	public MessageDTO saveOrder(Order order){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
-			if(isOrderExist(order.getOrderNo())){
-				msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
-				msgDTO.setStatusCode(HttpStatus.ALREADY_REPORTED.value());
-			}
-			else{
-				populateOrder(order);
-				OrderStatus orderStatus = orderStatusRepository.findByCode(ApplicationConstant.NEW_ORDER);
-				order.setStatus(orderStatus);
-				orderRepository.save(order);
-				msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
-				msgDTO.setStatusCode(HttpStatus.OK.value());
+			synchronized (order) {
+				if(isOrderExist(order.getOrderNo())){
+					msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
+					msgDTO.setStatusCode(HttpStatus.ALREADY_REPORTED.value());
+				}
+				else{
+					populateOrder(order);
+					OrderStatus orderStatus = orderStatusRepository.findByCode(ApplicationConstant.NEW_ORDER);
+					order.setStatus(orderStatus);
+					orderRepository.save(order);
+					msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
+					msgDTO.setStatusCode(HttpStatus.OK.value());
+				}
 			}
 		}
 		catch(Exception exception){
