@@ -88,8 +88,8 @@ function createPendingOrderGrid(pendingOrders){
                 datatype: "local",
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
-                    { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
                     { name: "foodDesc", label:"Item", width: (colModel[2].width) },
+                    { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
                     { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
                 ],
                 height: "100%",

@@ -85,19 +85,38 @@ function orderReport(orderData){
 
 
 function searchExpenses(){
+	$("#expenseReportGrid").jqGrid('GridUnload');	
 	var fromDate = $("#fromDateTimePicker").find("input").val();
 	var toDate = $("#toDateTimePicker").find("input").val();
+	
+	$.ajax({
+		url :$("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		success : function(responseText) {
+			expensesReport(responseText);
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+			});
+		}	
+	});
+	
+}
 
+
+function expensesReport(expenseData){
 	$("#expenseReportGrid").jqGrid({
-		url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
-		datatype : "json",
-		mtype : 'POST',
+		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		//datatype : "json",
+		datatype : "local",
+		//mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
 			{ name: "item", label: "Expense",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
 			{ name: "creationDate", label: "Date",  align: "center" },
 			],
+			data:expenseData,
 			footerrow: true,
 			userDataOnFooter : true,
 			rowNum:10,
