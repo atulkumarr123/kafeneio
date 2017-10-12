@@ -7,15 +7,15 @@
 <html class="js">
 <head>
 <title>Kafeneio</title>
-<link rel="stylesheet" href="static/css/kafeneio.css"></link>
+
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
  <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
-
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
 <link href = "static/css/bootstrap-datetimepicker-4.17.37.min.css" rel = "stylesheet">
 <link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
+<link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
 <script src="static/js/app.js" /></script>
 <script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
@@ -24,9 +24,11 @@
 
 <script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
-
+<!-- <script src="static/JSlib/bootstrap-modal.2.0.4.js"></script>
+ -->
 <script src="static/JSlib/reports.js"></script>
 </head>
+<body>
 <form action="">
 
 <input type="hidden" name="dateTimeFormatCalendar" id="dateTimeFormatCalendar" value="${dateTimeFormatCalendar}"/> 
@@ -69,6 +71,8 @@
 					</div>
 
 				</div>
+				
+
 
 				<table id="orderReportGrid"></table>
 				 <div id="pager" style="height: 50;"></div>
@@ -91,3 +95,42 @@
 		</div>
 	</div>
 </form>
+
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Expense</h4>
+        </div>
+        <div class="modal-body">
+         <div class="form-group">
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Item
+									Code</label> <input type="text" name="foodItemCode1" placeholder=""
+									class="form-control" id="foodItemCode1" required>
+							</div>
+
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Item
+									Description</label> <input type="text" name="fodItemDesc"
+									placeholder="" class="form-control" id="foodItemDesc" required>
+							</div>
+
+		 </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>

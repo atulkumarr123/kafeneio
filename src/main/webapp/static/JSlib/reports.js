@@ -115,6 +115,10 @@ function expensesReport(expenseData){
 			{ name: "item", label: "Expense",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
 			{ name: "creationDate", label: "Date",  align: "center" },
+			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
+				formatter:function(){
+					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
+				}}
 			],
 			data:expenseData,
 			footerrow: true,
@@ -129,18 +133,43 @@ function expensesReport(expenseData){
 			sortorder: "desc",
 			autowidth: true,
 			loadonce: true,
+			onCellSelect: function (rowid,iCol,cellcontent,e) {
+				//alert("iCol "+iCol);
+				if (iCol == editButton) {
+					//alert("reInitiateButton");
+					openPopup(rowid);
+
+				}
+
+			},
 			caption: "Expense Detail Report",
 			loadComplete:function() {
 				adjustTotalExpense();
 			}
 	});
+	
+	grid = $("#expenseReportGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+       var cm = grid.jqGrid('getGridParam','colModel');
+       for (var i=0,l=cm.length; i<l; i++) {
+           if (cm[i].name===columnName) {
+               return i; // return the index
+           }
+       }
+       return -1;
+   },
+		editButton = getColumnIndexByName(grid,'editButton');
+
 	/*$("#expenseReportGrid").bind("jqGridAfterLoadComplete", function() {
 		 adjustTotalExpense();
 	});*/
 
 }
 
-
+ function openPopup(rowid){
+	 	 $('#myModal').modal('show');
+	 	 $("#foodItemCode1").val('Atul'+rowid);
+ } 
 function adjustTotalOrder(){
 	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
 	var amount = 0;

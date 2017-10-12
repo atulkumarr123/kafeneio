@@ -51,3 +51,12 @@ li.dropdown:hover ul.dropdown-menu{
     background: #986e35;
     color: #333333;
 }
+
+.modal-content {
+	position: relative;
+	border: 1px solid rgba(254, 182, 203, 0.5);
+	border-radius: 6px;
+	outline: none;
+	background:  #753e27;
+}
+
