@@ -14,7 +14,7 @@ public interface OrderRepository  extends JpaRepository<Order, Long> {
 	@Query(value="select MAX(orderNo) from Order order where trunc(sysdate) = trunc(creationDate)")
 	Long findOrderNo();
 	
-	@Query(value="select ord.orderNo from Order ord order by id desc")
+	@Query(value="select ord.orderNo from Order ord where trunc(sysdate) = trunc(creationDate) order by id desc")
 	List<Long> findRecentOrder(); 
 	
 	@Query(value="select ord from Order ord where ord.status.code=:status and trunc(sysdate) = trunc(creationDate) order by id desc")
