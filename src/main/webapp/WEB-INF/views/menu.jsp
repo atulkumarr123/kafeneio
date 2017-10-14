@@ -21,11 +21,11 @@
 			<li><a href="addMenuItems">Setup Menu Store</a></li>
 			</sec:authorize>
 			
-			<li><a href="aboutUs">About us</a></li>
-			<li><a href="termsAndConditions">Terms and Conditions</a></li>
-			<li><a href="whyUs">Why us</a></li>
-			<li><a href="fAQ">FAQ</a></li>
-			<li><a href="contactUs">Contact us</a></li>
+			<li><a href="#">About us</a></li>
+			<li><a href="#">Terms and Conditions</a></li>
+			<li><a href="#">Why us</a></li>
+			<li><a href="#">FAQ</a></li>
+			<li><a href="#">Contact us</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<!-- <li><a href="signUp">Sign Up</a></li> -->

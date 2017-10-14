@@ -31,4 +31,20 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 		}
 		return msgDTO;
 	}
+
+	@Override
+	public MessageDTO updateExpense(Expenses expenses) {
+		MessageDTO msgDTO = new MessageDTO();
+		try{
+			expensesRepository.save(expenses);
+			msgDTO.setMessage("Expenses Updated");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
+		}
+		catch(Exception exception){
+			msgDTO.setMessage("Some Error Occured");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
+		return msgDTO;
+		
+	}
 }

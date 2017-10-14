@@ -9,12 +9,13 @@
 <title>Kafeneio</title>
 
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
- <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
+<link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
 <link href = "static/css/bootstrap-datetimepicker-4.17.37.min.css" rel = "stylesheet">
 <link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
+<link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
 <script src="static/js/app.js" /></script>
@@ -24,6 +25,7 @@
 
 <script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
+<script src="static/JSlib/pnotify.custom.js" /></script>
 <!-- <script src="static/JSlib/bootstrap-modal.2.0.4.js"></script>
  -->
 <script src="static/JSlib/reports.js"></script>
@@ -109,24 +111,48 @@
           <h4 class="modal-title">Edit Expense</h4>
         </div>
         <div class="modal-body">
-         <div class="form-group">
-							<div class="col-md-6">
-								<label for="normal-field" class="control-label">Item
-									Code</label> <input type="text" name="foodItemCode1" placeholder=""
-									class="form-control" id="foodItemCode1" required>
-							</div>
+        <fieldset>
+        				<input type="hidden" id="expenseRowId" name="expenseRowId"/>
+							 <div class="form-group">
+<!-- 								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Item
+										Code</label> <input type="text" name="foodItemCode1" placeholder=""
+										class="form-control" id="foodItemCode1" required>
+								</div>
+ -->
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Item
+										Description</label> <input type="text" name="fodItemDesc"
+										placeholder="" class="form-control" id="foodItemDesc" required>
+								</div>
 
 							<div class="col-md-6">
-								<label for="normal-field" class="control-label">Item
-									Description</label> <input type="text" name="fodItemDesc"
-									placeholder="" class="form-control" id="foodItemDesc" required>
+									<label for="normal-field" class="control-label">Amount
+										</label> <input type="text" name="amount" placeholder=""
+										class="form-control" id="amount" required>
+								</div>
+	
 							</div>
 
-		 </div>
+
+							<div class="form-group">
+								<div class="col-md-6">
+									<label for="prepended-input" class="control-label" name="date">Date</label>
+									<div class='input-group date' id='datetimepicker3'>
+										<input type='text' class="form-control" id="expenseDateTime"
+											required /> <span class="input-group-addon"><span
+											class="glyphicon glyphicon-calendar"></span> </span>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+		 
+		 		 
+		  
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default">Update</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default"  id= "updateExpensesButton" onclick="updateExpense()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelExpensesButton" >Close</button>
         </div>
       </div>
       

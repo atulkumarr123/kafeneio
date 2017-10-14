@@ -74,7 +74,40 @@ function orderReport(orderData){
 			caption: "Order Detail Report",
 			 loadComplete:function() {
 				 adjustTotalOrder();
-			    }
+			    },
+			    
+			    
+			    subGrid: true,
+		        subGridRowExpanded: function (subgridDivId, rowId) {
+		            var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
+		                colModel = $(this).jqGrid("getGridParam", "colModel");
+
+		            $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
+		            $subgrid.jqGrid({
+		                datatype: "local",
+		                data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
+		                colModel: [
+		                    { name: "foodDesc", label:"Item", width: (colModel[2].width) },
+		                    { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
+		                    { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
+		                ],
+		                height: "100%",
+		                rowNum: 10000,
+		                autoencode: true,
+		                gridview: true,
+		                idPrefix: rowId + "_",
+		               /* gridview: true,
+		                rowattr: function (rd) {
+		                        return {"style": "background-color:#bd7575"};
+		                }*/
+		            });
+		            $subgrid.closest("div.ui-jqgrid-view")
+		                .children("div.ui-jqgrid-hdiv")
+		                .hide();
+		        },
+
+			    
+			    
 	});
 	/*$("#orderReportGrid").bind("jqGridAfterLoadComplete", function() {
 		adjustTotalOrder();
@@ -159,17 +192,58 @@ function expensesReport(expenseData){
        return -1;
    },
 		editButton = getColumnIndexByName(grid,'editButton');
-
-	/*$("#expenseReportGrid").bind("jqGridAfterLoadComplete", function() {
-		 adjustTotalExpense();
-	});*/
-
 }
 
  function openPopup(rowid){
 	 	 $('#myModal').modal('show');
-	 	 $("#foodItemCode1").val('Atul'+rowid);
+	 
+	 	 
+	 	var rowData = $("#expenseReportGrid").jqGrid("getRowData", rowid);
+	 	 $("#expenseRowId").val(rowid);
+	 	$('#foodItemDesc').val(rowData.item);
+	 	$('#amount').val(rowData.amount);
+	 	$('#expenseDateTime').val(rowData.creationDate);
  } 
+ 
+ 
+ function updateExpense(){
+	 var rowId= $("#expenseRowId").val();
+		var ctx = $("#contextPath").val();
+	// alert(rowId);
+	 	var rowData = $("#expenseReportGrid").jqGrid("getRowData", rowId);
+	 	rowData.item = $('#foodItemDesc').val();
+	 	rowData.amount = $('#amount').val();
+	 	rowData.creationDate = $('#expenseDateTime').val();
+	 	rowData.editButton = '';
+	 	$("#expenseReportGrid").jqGrid("setRowData", rowId, rowData);
+	   $.ajax({
+		      type: "POST",
+		      contentType : 'application/json; charset=utf-8',
+		      dataType : 'json',
+		      url : ctx+"/report/updateExpenses",
+		      data: JSON.stringify(rowData),
+		      success :function(result) {
+		    	  new PNotify({
+	    			  type:'success',
+	    			  title: 'Success',
+	    			  text: result.message
+		    	  });
+		    	  $( "#cancelExpensesButton").click();
+		    	  
+		     },
+		   error:function(result) {
+			  // alert(JSON.stringify(result));
+			   new PNotify({
+		    		 type:'error',
+		    		 title: 'Error',
+		    		 text: result.responseJSON.message
+			   });
+			   //alert("error"+JSON.stringify(responseText));
+		   }
+		  });
+ } 
+ 
+ 
 function adjustTotalOrder(){
 	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
 	var amount = 0;
@@ -187,6 +261,7 @@ function adjustTotalExpense(){
 	for (var i in data) {
 		var row = data[i];
 		amount=parseInt(amount)+parseInt(row.amount);
+		
 		
 	}	
 //	alert(amount);

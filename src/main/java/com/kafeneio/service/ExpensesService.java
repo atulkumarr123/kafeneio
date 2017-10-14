@@ -8,4 +8,6 @@ import com.kafeneio.model.Expenses;
 public interface ExpensesService {
 	
 	public MessageDTO saveExpense(List<Expenses> expenses);
+	public MessageDTO updateExpense(Expenses expenses);
+	
 }
