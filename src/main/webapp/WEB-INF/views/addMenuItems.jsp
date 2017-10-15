@@ -47,8 +47,7 @@
 								<form:select path="id" class="form-control" id="category"
 									required="required">
 									<option value="0">SELECT</option>
-									<form:options items="${categoryList}" itemValue="id"
-										itemLabel="foodDesc" />
+									<form:options items="${categoryList}" itemValue="id" itemLabel="foodDesc" />
 								</form:select>
 							</div>
 

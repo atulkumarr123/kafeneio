@@ -50,6 +50,12 @@ public class Order {
 	    @JsonBackReference
 	 	private OrderStatus status;
 
+		@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	    @JoinColumn(name="mode_of_payment")
+	    @JsonBackReference
+	 	private ModeOfPayment modeOfPayment ;
+
+		
 		public Long getId() {
 			return id;
 		}
@@ -104,6 +110,14 @@ public class Order {
 
 		public void setTable(String table) {
 			this.table = table;
+		}
+
+		public ModeOfPayment getModeOfPayment() {
+			return modeOfPayment;
+		}
+
+		public void setModeOfPayment(ModeOfPayment modeOfPayment) {
+			this.modeOfPayment = modeOfPayment;
 		}
 
 }

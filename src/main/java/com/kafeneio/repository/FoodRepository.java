@@ -23,7 +23,4 @@ public interface FoodRepository  extends JpaRepository<FoodCategory, Long> {
 	
 	@Query(value="select case when testParent.toDate>testParent.fromDate then 1 else 0 end from TestParent testParent")
 	List<Object> switchCaseDemo();
-	
-	
-	
 }

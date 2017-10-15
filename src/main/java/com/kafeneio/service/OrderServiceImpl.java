@@ -1,14 +1,17 @@
 package com.kafeneio.service;
+import java.util.List;
+
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderStatus;
+import com.kafeneio.repository.ModeOfPaymentRepository;
 import com.kafeneio.repository.OrderRepository;
 import com.kafeneio.repository.OrderStatusRepository;
 
@@ -23,15 +26,21 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 	OrderStatusRepository orderStatusRepository;
 	
 
+	@Inject
+	ModeOfPaymentRepository modeOfPaymentRepository;
+
 	@Override
-	public MessageDTO serve(Long orderId){
+	public MessageDTO serve(Long orderId, Long mopId){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
 			Order order = orderRepository.findOne(orderId);
 			OrderStatus servedStatus = orderStatusRepository.findByCode(ApplicationConstant.SERVED_ORDER);
 			order.setStatus(servedStatus);
+			ModeOfPayment modeOfPayment = modeOfPaymentRepository.findOne(mopId);
+			order.setModeOfPayment(modeOfPayment);
 			msgDTO.setMessage("Order "+order.getOrderNo()+" served successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
+	
 		}
 		catch(Exception exception){
 			msgDTO.setMessage("Error");
@@ -93,6 +102,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 		return msgDTO;
+	}
+
+
+	@Override
+	public List<ModeOfPayment> findMOPs() {
+		List<ModeOfPayment> mops = modeOfPaymentRepository.findAll();
+		return mops;
 	}
 	
 }

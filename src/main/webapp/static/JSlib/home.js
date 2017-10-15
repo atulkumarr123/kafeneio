@@ -68,8 +68,9 @@ function createPendingOrderGrid(pendingOrders){
         onCellSelect: function (rowid,iCol,cellcontent,e) {
         	//alert("iCol "+iCol);
             if (iCol == serveButton) {
-            	//alert("serveButton");
-                serveThisOrder(rowid);
+            	
+            	openModeOfPaymentPopup(rowid);
+            	//     serveThisOrder(rowid);
            
             }
             else if (iCol == cancelButton) {
@@ -314,11 +315,17 @@ function createCancelledOrdersGrid(cancelledOrders) {
   reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
 }
 
-function serveThisOrder(rowid){
+function serveThisOrder(){
+	 var rowid= $("#mopOrderId").val();
+	 //alert(rowid);
+var mopId = $('select[id = modeOfPayment]').val();
+
+
 	//alert("Served called");
 	var ctx = $("#contextPath").val();
+	//alert(ctx+"/order/serve/"+rowid);
 	$.ajax({
-		url : ctx+"/order/serve/"+rowid,
+		url : ctx+"/order/serve/"+rowid+"?mopId="+mopId,
 		success : function(responseText) {
 			location.reload();
 		},
@@ -377,5 +384,34 @@ function seatIt(orderId){
 				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
 			});
 		}	
+	});
+}
+
+function openModeOfPaymentPopup(rowid){
+	var ctx = $("#contextPath").val();
+	 $("#mopOrderId").val(rowid);
+
+	$.ajax({
+		url : ctx+"/order/modeOfPayments",
+		success : function(responseText) {
+		//	alert(JSON.stringify(responseText));
+			writeMOP(responseText);
+			//$('#outputLabel').text(JSON.stringify(responseText));
+		},
+		error:function(responseText) {
+			alert("error"+responseText);
+			$('#outputLabel').text("Error");
+		}	
+	});
+	
+	 $('#modeOfPaymentModal').modal('show');
+}
+
+function writeMOP(data){
+	$.each(data, function (i, data) {
+	    $('#modeOfPayment').append($('<option>', { 
+	        value: data.id,
+	        text : data.description
+	    }));
 	});
 }

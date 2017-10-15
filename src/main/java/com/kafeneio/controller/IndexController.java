@@ -1,7 +1,6 @@
 package com.kafeneio.controller;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodCategory;
+import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.service.FoodService;
 
 @Controller
@@ -40,7 +41,6 @@ public class IndexController {
 		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_FORMAT).format(new Date()));
 		  return "index";
 	  }
-	  
 
 	  @PreAuthorize("hasRole('ADMIN')")
 	  @RequestMapping(value="/restraMenu", method = RequestMethod.GET)
@@ -52,4 +52,6 @@ public class IndexController {
 		  System.out.println(environment.getProperty("kafeneio.main.title"));
 		  return "restraMenu";
 	  }
+	  
+	  
 }

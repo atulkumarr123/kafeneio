@@ -1,13 +1,18 @@
 package com.kafeneio.controller.billing;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.DTO.MessageDTO;
+import com.kafeneio.exception.KafeneioException;
+import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.service.OrderService;
 
 @RestController
@@ -19,8 +24,8 @@ public class OrderController {
 	OrderService orderService;
 
 	@RequestMapping(value = "/serve/{orderId}")
-	public MessageDTO serve(@PathVariable Long orderId) {
-		MessageDTO msgDTO = orderService.serve(orderId);
+	public MessageDTO serve(@PathVariable Long orderId, @RequestParam(value = "mopId", required = true) Long mopId) {
+		MessageDTO msgDTO = orderService.serve(orderId, mopId);
 		return msgDTO;
 	}
 	
@@ -43,7 +48,12 @@ public class OrderController {
 		return msgDTO;
 	}
 	
-	
+	@RequestMapping(value="/modeOfPayments",method=RequestMethod.GET)
+	public List<ModeOfPayment> getMOPs()
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		List<ModeOfPayment> mops = orderService.findMOPs();
+		return mops;
+	}
 	
 	
 }
