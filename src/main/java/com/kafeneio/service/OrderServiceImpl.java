@@ -36,8 +36,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 			Order order = orderRepository.findOne(orderId);
 			OrderStatus servedStatus = orderStatusRepository.findByCode(ApplicationConstant.SERVED_ORDER);
 			order.setStatus(servedStatus);
-			ModeOfPayment modeOfPayment = modeOfPaymentRepository.findOne(mopId);
-			order.setModeOfPayment(modeOfPayment);
+			if(mopId != null){
+				ModeOfPayment modeOfPayment = modeOfPaymentRepository.findOne(mopId);
+				order.setModeOfPayment(modeOfPayment);
+			}
 			msgDTO.setMessage("Order "+order.getOrderNo()+" served successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
 	
@@ -109,6 +111,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 	public List<ModeOfPayment> findMOPs() {
 		List<ModeOfPayment> mops = modeOfPaymentRepository.findAll();
 		return mops;
+	}
+
+
+	@Override
+	public Order findOrder(Long orderId) {
+		Order order=orderRepository.findOne(orderId);
+		return order;
 	}
 	
 }

@@ -19,5 +19,6 @@ public interface OrderRepository  extends JpaRepository<Order, Long> {
 	
 	@Query(value="select ord from Order ord where ord.status.code=:status and trunc(sysdate) = trunc(creationDate) order by id desc")
 	List<Order> getOrderListToday(@Param("status")String status);
-	
+
+	Order findOne(Long orderid);
 }

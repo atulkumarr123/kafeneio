@@ -68,9 +68,7 @@ function createPendingOrderGrid(pendingOrders){
         onCellSelect: function (rowid,iCol,cellcontent,e) {
         	//alert("iCol "+iCol);
             if (iCol == serveButton) {
-            	
-            	openModeOfPaymentPopup(rowid);
-            	//     serveThisOrder(rowid);
+            	modeOfPaymentCheck(rowid);
            
             }
             else if (iCol == cancelButton) {
@@ -315,17 +313,15 @@ function createCancelledOrdersGrid(cancelledOrders) {
   reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
 }
 
-function serveThisOrder(){
-	 var rowid= $("#mopOrderId").val();
-	 //alert(rowid);
-var mopId = $('select[id = modeOfPayment]').val();
-
-
-	//alert("Served called");
+function serveThisOrder(orderId, mopId){
 	var ctx = $("#contextPath").val();
-	//alert(ctx+"/order/serve/"+rowid);
+	var localUrl = ctx+"/order/serve/"+orderId;
+	if(mopId != null){
+		localUrl = ctx+"/order/serve/"+orderId+"?mopId="+mopId;
+	}
+	
 	$.ajax({
-		url : ctx+"/order/serve/"+rowid+"?mopId="+mopId,
+		url : localUrl,	
 		success : function(responseText) {
 			location.reload();
 		},
@@ -390,20 +386,20 @@ function seatIt(orderId){
 function openModeOfPaymentPopup(rowid){
 	var ctx = $("#contextPath").val();
 	 $("#mopOrderId").val(rowid);
+	 if( !$('#modeOfPayment').val()) {
+		 $.ajax({
+			 url : ctx+"/order/modeOfPayments",
+			 success : function(responseText) {			
+				 writeMOP(responseText);
 
-	$.ajax({
-		url : ctx+"/order/modeOfPayments",
-		success : function(responseText) {
-		//	alert(JSON.stringify(responseText));
-			writeMOP(responseText);
-			//$('#outputLabel').text(JSON.stringify(responseText));
-		},
-		error:function(responseText) {
-			alert("error"+responseText);
-			$('#outputLabel').text("Error");
-		}	
-	});
-	
+			 },
+			 error:function(responseText) {
+				 $(function(){
+					 new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+				 });
+			 }	
+		 });
+	 }
 	 $('#modeOfPaymentModal').modal('show');
 }
 
@@ -415,3 +411,31 @@ function writeMOP(data){
 	    }));
 	});
 }
+
+function serveOrderOnOk(){
+	var orderId= $("#mopOrderId").val();
+	var mopId = $('select[id = modeOfPayment]').val();
+	serveThisOrder(orderId, mopId);
+}
+
+function modeOfPaymentCheck(rowid){
+	var ctx = $("#contextPath").val();
+	 $.ajax({
+		url : ctx+"/order/modeOfPaymentCheck/"+rowid,
+		success : function(responseText) {
+			if(responseText.modeOfPayment == null ){
+				openModeOfPaymentPopup(responseText.id);
+			}
+			else{
+				  serveThisOrder(responseText.id, null);
+			}
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: JSON.stringify(responseText)});
+			});
+		}	
+	});
+}
+
+

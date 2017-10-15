@@ -34,6 +34,7 @@ function searchOrders(){
 	$.ajax({
 		url : $("#contextPath").val()+"/report/orderList?fromDate="+fromDate+"&&toDate="+toDate,
 		success : function(responseText) {
+			//alert(JSON.stringify(responseText));
 			orderReport(responseText);
 		},
 		error:function(responseText) {
@@ -56,6 +57,7 @@ function orderReport(orderData){
 			{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+			{ name: "modeOfPayment.description", label: "Mode of Payment",  align: "center" },
 			{ name: "creationDate", label: "Date",  align: "center" },
 			],
 

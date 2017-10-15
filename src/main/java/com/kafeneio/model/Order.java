@@ -47,12 +47,10 @@ public class Order {
 		 
 		@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	    @JoinColumn(name="status")
-	    @JsonBackReference
 	 	private OrderStatus status;
 
 		@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	    @JoinColumn(name="mode_of_payment")
-	    @JsonBackReference
 	 	private ModeOfPayment modeOfPayment ;
 
 		

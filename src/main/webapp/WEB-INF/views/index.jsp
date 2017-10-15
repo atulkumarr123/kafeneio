@@ -83,7 +83,7 @@
 		  
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default"  id= "okMOPButton" onclick="serveThisOrder()">OK</button>
+          <button type="button" class="btn btn-default"  id= "okMOPButton" onclick="serveOrderOnOk()">OK</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelMOPButton" >Close</button>
         </div>
       </div>

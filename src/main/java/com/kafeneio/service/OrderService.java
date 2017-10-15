@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.model.ModeOfPayment;
+import com.kafeneio.model.Order;
 
 public interface OrderService {
 	
@@ -19,4 +20,6 @@ public interface OrderService {
 	public MessageDTO seatIt(Long orderId, String tableNo);
 	
 	List<ModeOfPayment> findMOPs();
+	Order findOrder(Long orderId);
 }
+

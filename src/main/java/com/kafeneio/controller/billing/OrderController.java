@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.ModeOfPayment;
+import com.kafeneio.model.Order;
 import com.kafeneio.service.OrderService;
 
 @RestController
@@ -24,7 +25,7 @@ public class OrderController {
 	OrderService orderService;
 
 	@RequestMapping(value = "/serve/{orderId}")
-	public MessageDTO serve(@PathVariable Long orderId, @RequestParam(value = "mopId", required = true) Long mopId) {
+	public MessageDTO serve(@PathVariable Long orderId, @RequestParam(value = "mopId", required = false) Long mopId) {
 		MessageDTO msgDTO = orderService.serve(orderId, mopId);
 		return msgDTO;
 	}
@@ -55,6 +56,11 @@ public class OrderController {
 		return mops;
 	}
 	
-	
+	@RequestMapping(value="/modeOfPaymentCheck/{orderId}", method=RequestMethod.GET)
+	public Order modeOfPaymentsCheck(@PathVariable Long orderId)
+			throws KafeneioException {
+		Order order = orderService.findOrder(orderId);		
+		return order;
+	}
 }
 
