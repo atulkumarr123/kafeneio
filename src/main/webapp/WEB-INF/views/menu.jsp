@@ -1,3 +1,5 @@
+<script  src="static/JSlib/kafeneioCommons.js"></script>
+
 <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
 <%-- <input type="text" name="currentDate" id="currentDate" value="${currentDate}"/> --%> 
 

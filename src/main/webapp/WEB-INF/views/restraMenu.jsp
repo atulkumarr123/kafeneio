@@ -98,5 +98,44 @@
 		
 		<%@include file = "footer.jsp" %>		 	
 	</div>	
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="modeOfPaymentModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="closeButton">&times;</button>
+          <h4 class="modal-title">Mode Of Payment</h4>
+        </div>
+        <div class="modal-body">
+        <fieldset>
+        
+							 <div class="form-group">			
+ 								<div class="col-md-6">
+								<label for="prepended-input" class="control-label">Mode Of Payment</label>
+								<select path="id" class="form-control" id="modeOfPayment" required="required">
+								</select>
+							</div>
+ 								
+							</div>
+						</fieldset>
+		 
+		 		 
+		  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "okMOPButton" onclick="saveOrderWithModeOfPayment()">Ok</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="payOnServeButton" onclick = "saveOrder(null)">Pay on serve</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
 </body>
 </html>

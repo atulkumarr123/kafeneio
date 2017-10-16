@@ -167,6 +167,19 @@ function generateBill() {
 	if(!validateOrder()){
 		return false;
 	}
+	
+	openModeOfPaymentPopup(null); //Here order is getting passed as NULL, Since Order is not yet created
+	
+}
+
+function saveOrderWithModeOfPayment(){
+	var mopId = $('select[id = modeOfPayment]').val();
+	saveOrder(mopId);
+}
+
+
+function saveOrder(mopId){
+	
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var orderNo = $("#orderNumber").val();
@@ -175,13 +188,16 @@ function generateBill() {
 	order["amount"]=null;
 	order["creation_date"]=null;
 	order["orderDetails"]=allData;
-	
+	var localUrl = ctx+"/generateBill";
+	if(mopId != null){
+		localUrl = ctx+"/generateBill?mopId="+mopId;
+	}
 	//alert(JSON.stringify(allData));
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url : ctx+"/generateBill",
+	      url : localUrl,
 	      data: JSON.stringify(order),
 	      success :function(result) {
 	    	  //alert(JSON.stringify(result));
@@ -203,16 +219,16 @@ function generateBill() {
 	    	  }
 	    
 			  reloadGrid();
+				 $( "#closeButton").click();
+			 
 	     },
 	     error:function(responseText) {
 	    	 new PNotify({ type:'error', title: 'Error', text: JSON.stringify(responseText)
 	    	 });
 	     }
 	  });
-	  
 
 }
-
 
 function validateOrder(){
 	var rowCount=jQuery('#invoiceGrid').jqGrid('getGridParam', 'reccount');
@@ -230,3 +246,5 @@ function validateOrder(){
 	  return false;
 	  }
 }
+
+

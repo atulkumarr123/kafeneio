@@ -8,7 +8,7 @@ import com.kafeneio.model.Order;
 public interface BillingService {
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	public MessageDTO saveOrder(Order order);
+	public MessageDTO saveOrder(Order order, Long mopId);
 	public Long getOrderNo();
 
 }

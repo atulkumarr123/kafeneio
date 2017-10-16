@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderDetails;
 import com.kafeneio.model.OrderStatus;
+import com.kafeneio.repository.ModeOfPaymentRepository;
 import com.kafeneio.repository.OrderRepository;
 import com.kafeneio.repository.OrderStatusRepository;
 
@@ -25,8 +27,11 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	@Inject
 	OrderStatusRepository orderStatusRepository;
 
+	@Inject
+	ModeOfPaymentRepository modeOfPaymentRepository;
+	
 	@Override
-	public synchronized MessageDTO saveOrder(Order order){
+	public synchronized MessageDTO saveOrder(Order order, Long mopId){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
 				if(isOrderExist(order.getOrderNo())){
@@ -37,6 +42,10 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 					populateOrder(order);
 					OrderStatus orderStatus = orderStatusRepository.findByCode(ApplicationConstant.NEW_ORDER);
 					order.setStatus(orderStatus);
+					if(mopId != null){
+						ModeOfPayment modeOfPayment = modeOfPaymentRepository.findOne(mopId);
+						order.setModeOfPayment(modeOfPayment);
+					}
 					orderRepository.save(order);
 					msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
 					msgDTO.setStatusCode(HttpStatus.OK.value());

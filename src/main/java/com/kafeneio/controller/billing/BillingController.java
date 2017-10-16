@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.DTO.MessageDTO;
@@ -38,9 +39,9 @@ public class BillingController {
 	
 	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
-	public MessageDTO generateBill(@RequestBody Order order)
+	public MessageDTO generateBill(@RequestBody Order order, @RequestParam(value = "mopId", required = false) Long mopId)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		MessageDTO msgDTO = billingService.saveOrder(order);
+		MessageDTO msgDTO = billingService.saveOrder(order, mopId);
 		return msgDTO;
 	}
 	@RequestMapping(value="/maxOrderNo",method=RequestMethod.GET)
