@@ -36,8 +36,8 @@ function createPendingOrderGrid(pendingOrders){
 //		mtype : 'POST',
     	colModel: [
     		{ name: "id", label: "id", hidden:true},
-			{ name: "orderNo", label: "Order No",  align: "center"},
-			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
+			{ name: "orderNo", label: "Order No",  align: "center", width:100},
+			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 90},
 			{ name: 'table', label:"Table", width: 120, sortable: false, search: false, align: "center", 
     			formatter:function(cellValue, option){
     				if(cellValue == null  || cellValue == 'undefined') cellValue = '';

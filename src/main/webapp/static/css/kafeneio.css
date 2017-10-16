@@ -60,3 +60,11 @@ li.dropdown:hover ul.dropdown-menu{
 	background:  #753e27;
 }
 
+.modal-title {
+	color:white
+}
+.close {
+	color: white;
+    font-size: xx-large;
+}
+
