@@ -20,7 +20,21 @@
 							id="reports" style="color:white">Reports</a></li>
 					</ul>
 				</li>
-			<li><a href="addMenuItems">Setup Menu Store</a></li>
+				
+				
+				<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Masters<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li ><a href="${pageContext.request.contextPath}/units"
+							id="units" style="color:white">Units</a></li>
+						<li><a href="${pageContext.request.contextPath}/addMenuItems"
+							id="menuStore" style="color:white">Menu Store</a></li>
+						
+					</ul>
+				</li>
+				
+			<!-- <li><a href="addMenuItems">Setup Menu Store</a></li> -->
 			</sec:authorize>
 			
 			<li><a href="#">About us</a></li>
