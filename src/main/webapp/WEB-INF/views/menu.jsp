@@ -27,9 +27,9 @@
 					aria-expanded="false">Masters<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li ><a href="${pageContext.request.contextPath}/units"
-							id="units" style="color:white">Units</a></li>
+							id="units" style="color:white">Setup Units</a></li>
 						<li><a href="${pageContext.request.contextPath}/addMenuItems"
-							id="menuStore" style="color:white">Menu Store</a></li>
+							id="menuStore" style="color:white">Setup Menu Store</a></li>
 						
 					</ul>
 				</li>

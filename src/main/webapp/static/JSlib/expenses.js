@@ -20,7 +20,7 @@ $( document ).ready(function() {
         userDataOnFooter : true,
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
-        idPrefix: "gb1_",
+        //idPrefix: "gb1_",
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
