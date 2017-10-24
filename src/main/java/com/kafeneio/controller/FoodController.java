@@ -71,7 +71,8 @@ class FoodLoaderController{
 		List<FoodCategory> foodList = foodService.findFoodCategory();
 		
 		modelMap.put("categoryList",foodList);
-		modelMap.put("foodCategory", new FoodCategory());
+		FoodCategory foodCategory = new FoodCategory();
+		modelMap.put("foodCategory", foodCategory);
 		return "addMenuItems";
 	}
 }
