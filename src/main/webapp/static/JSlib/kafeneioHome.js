@@ -247,4 +247,48 @@ function validateOrder(){
 	  }
 }
 
+function discount(){
+	if(!validateOrder()){
+		return false;
+	}
+	else{
+	$('#discountModal').modal('show');
+	}
+}
+
+
+$( document ).ready(function() {
+$('#okDiscountButton').click(function() {
+	var isFormFilled = $("#menu").valid();
+	var valid = validateDiscountModal();
+	//alert(valid);
+	//if(isFormFilled && valid){
+	//	addExpense();
+	//}
+});
+});
+
+function validateDiscountModal(){
+	
+
+	var discountPercentage = $("#discountPercentage").val();
+	var valid = true;
+	if(!(/^\d{0,9}(\.\d{0,4})?$/.test(discountPercentage))){
+		$("#discountPercentage").after('<label id="discountPercentage-error" class="error" for="discountPercentage">This field is required.</label>');
+		$("#discountPercentage-error").text("Enter only digits/decimals");
+		valid = false;
+	}
+	
+	if(discountPercentage>50){
+		$("#discountPercentage").after('<label id="discountPercentage-error" class="error" for="discountPercentage"></label>');
+		$("#discountPercentage-error").text("Discount cannot be more than 50");
+	}
+	return valid
+}
+
+/*function applyDiscount() {
+	if(!validateOrder()){
+		return false;
+	}	
+}*/
 
