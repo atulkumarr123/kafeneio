@@ -20,6 +20,7 @@
 
 <script src="static/js/app.js" /></script>
 <script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
+<script src="static/JSlib/jquery.validate.js"></script>
 <script src="static/JSlib/twitter-bootstrap/3.3.7/bootstrap.min.js"></script>
 <script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
@@ -27,7 +28,7 @@
 <script  src="static/JSlib/kafeneioHome.js"></script>
 </head>
 <body>
-
+<form action="" name="menu" id = "menu">
 <input type="hidden" name="currentDateTime" id="currentDateTime" value="${currentDateTime}"/> 
 
 <input type="hidden" name="orderNumber" id="orderNumber" value=""/> 
@@ -89,6 +90,7 @@
 						<div style="text-align: left;">
 							<button class="btn btn-default" type="button" onclick="generateBill();">Print</button>
 							<button class="btn btn-default" type="button" onclick="reloadGrid()">Clear</button>
+							<button class="btn btn-default" type="button" onclick="discount()">Discount</button>
 					</div>
 				</div>
 			</div>
@@ -137,5 +139,41 @@
 </div>
 
 
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="discountModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="closeButton">&times;</button>
+          <h4 class="modal-title">Discount</h4>
+        </div>
+        <div class="modal-body">
+        <fieldset>
+
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Discount %</label> <input type="text" name="discountPercentage"
+									placeholder="" class="form-control" id="discountPercentage" required>
+							</div>
+
+						</fieldset>
+		 
+		 		 
+		  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "okDiscountButton" onclick="">Ok</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"  id= "cancelDiscountButton" onclick="">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+</form>
 </body>
 </html>
