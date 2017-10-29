@@ -22,7 +22,7 @@ function getOrders(status){
 		},
 		error:function(responseText) {
 			$(function(){
-				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+				//new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
 			});
 		}	
 	});
@@ -139,7 +139,7 @@ function createServedOrdersGrid(servedOrders){
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center", width:100},
-			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 80},
+			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 90},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
 					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
@@ -186,7 +186,8 @@ function createServedOrdersGrid(servedOrders){
 					data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
 					colModel: [
 						{ name: "foodDesc", width: (colModel[2].width) },
-						{ name: "amount", label:"Amount", width: (colModel[3].width), align:"right"}
+						{ name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
+		                { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
 						],
 						height: "100%",
 						rowNum: 10000,
@@ -245,7 +246,7 @@ function createCancelledOrdersGrid(cancelledOrders) {
     	colModel: [
     		{ name: "id", label: "id",hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center",  width: 100},
-			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
+			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 90},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
     				return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
@@ -284,7 +285,8 @@ function createCancelledOrdersGrid(cancelledOrders) {
                 data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
                 colModel: [
                     { name: "foodDesc", width: (colModel[2].width) },
-                	  { name: "amount",  width: (colModel[3].width), align:"right"}
+                    { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
+                    { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
                 ],
                 height: "100%",
                 rowNum: 100,
