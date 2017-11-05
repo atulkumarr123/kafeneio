@@ -36,8 +36,9 @@ function createPendingOrderGrid(pendingOrders){
 //		mtype : 'POST',
     	colModel: [
     		{ name: "id", label: "id", hidden:true},
-			{ name: "orderNo", label: "Order No",  align: "center", width:100},
-			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 90},
+			{ name: "orderNo", label: "Order No",  align: "center", width:80},
+			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
+			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
 			{ name: 'table', label:"Table", width: 120, sortable: false, search: false, align: "center", 
     			formatter:function(cellValue, option){
     				if(cellValue == null  || cellValue == 'undefined') cellValue = '';
@@ -138,8 +139,9 @@ function createServedOrdersGrid(servedOrders){
 //		mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
-			{ name: "orderNo", label: "Order No",  align: "center", width:100},
+			{ name: "orderNo", label: "Order No",  align: "center", width:80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 80},
+			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
 					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
@@ -244,8 +246,9 @@ function createCancelledOrdersGrid(cancelledOrders) {
     
     	colModel: [
     		{ name: "id", label: "id",hidden:true},
-			{ name: "orderNo", label: "Order No",  align: "center",  width: 100},
+			{ name: "orderNo", label: "Order No",  align: "center",  width: 80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
+			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
     				return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"

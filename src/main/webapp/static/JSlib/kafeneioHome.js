@@ -52,16 +52,18 @@ $( document ).ready(function() {
     firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
 });
 
-
-
 function reloadGrid(){
 	$("#invoiceGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 	$("#invoiceGrid").jqGrid('setCaption','');
 }
 function removeItem(rowid){
+	if(validateExistingBeforeRemoval(rowid)){
+		  new PNotify({ type:'info', title: 'Info', text: 'Can not remove items after discount applied, Please remove discount to removeitems!'});
+		  return false;
+	}
 	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowid);
 	//alert(rowData.amount);
-	if(rowData.quantity!=1){	
+	if(rowData.quantity!=1 && rowid != -999){	
 		rowData.amount=parseInt(rowData.amount)-(parseInt(rowData.amount)/parseInt(rowData.quantity));
 		rowData.quantity=parseInt(rowData.quantity)-1;
 		//alert(rowData.quantity);
@@ -108,6 +110,10 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	if(rowCount < 1){
 		setCaption();
 	}
+	if(validateExistingGrid()){
+		  new PNotify({ type:'info', title: 'Info', text: 'Items not allowed after discount applied, Please remove discount to add more items!'});
+		  return false;
+	}
 	if(!increaseIfPresent(foodCode,amount)){
 	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
@@ -126,10 +132,35 @@ function setCaption(){
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
-			alert("error"+JSON.stringify(responseText));
+			//alert("error"+JSON.stringify(responseText));
 			$('#outputLabel').text("Error");
 		}
 	});
+}
+
+function validateExistingGrid(){
+	var isDiscApplied = false;
+	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+	$.each(allData, function(i, item){
+		if(item.foodCode == "DSCNT") {
+			isDiscApplied = true;
+		}
+	});
+	return isDiscApplied;
+}
+
+function validateExistingBeforeRemoval(rowId){
+	var isDiscApplied = false;
+	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowId);
+	if(rowData.foodCode != 'DSCNT'){
+		var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+		$.each(allData, function(i, item){
+			if(item.foodCode == "DSCNT") {
+				isDiscApplied = true;
+			}
+		});
+	}
+	return isDiscApplied;
 }
 
 function increaseIfPresent(foodCode,amount){
@@ -157,11 +188,17 @@ function adjustTotal(){
 	var amount=0;
 	$.each(allData, function(i, item){
 		var rowData = $("#invoiceGrid").jqGrid("getRowData", item.id);
+		if(rowData.quantity != null && rowData.quantity != ''){
 			quantity=parseInt(quantity)+parseInt(rowData.quantity);
-			amount=parseInt(amount)+parseInt(rowData.amount);
+		}
+		amount=parseInt(amount)+parseInt(rowData.amount);
 	});
-	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});	
+
+	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});
+
 }
+
+
 
 function generateBill() {
 	if(!validateOrder()){
@@ -183,11 +220,13 @@ function saveOrder(mopId){
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var orderNo = $("#orderNumber").val();
+	var discountPercentage = $("#discountPercentage").val();
 	var order={};
 	order["orderNo"]=orderNo;
 	order["amount"]=null;
 	order["creation_date"]=null;
 	order["orderDetails"]=allData;
+	order["discountPercentage"]=discountPercentage;
 	var localUrl = ctx+"/generateBill";
 	if(mopId != null){
 		localUrl = ctx+"/generateBill?mopId="+mopId;
@@ -258,37 +297,73 @@ function discount(){
 
 
 $( document ).ready(function() {
+	$("#discountModal").on('shown.bs.modal', function () {
+	    $("#discountPercentage").focus();
+	})
 $('#okDiscountButton').click(function() {
 	var isFormFilled = $("#menu").valid();
 	var valid = validateDiscountModal();
-	//alert(valid);
-	//if(isFormFilled && valid){
-	//	addExpense();
-	//}
+	
+	if(valid){
+	calculateDiscount();
+	}
+	else{
+		return false;
+	}
+	  $( "#cancelDiscountButton").click();
+
 });
 });
 
 function validateDiscountModal(){
-	
-
 	var discountPercentage = $("#discountPercentage").val();
 	var valid = true;
 	if(!(/^\d{0,9}(\.\d{0,4})?$/.test(discountPercentage))){
-		$("#discountPercentage").after('<label id="discountPercentage-error" class="error" for="discountPercentage">This field is required.</label>');
 		$("#discountPercentage-error").text("Enter only digits/decimals");
+		$("#discountPercentage-error").show();
 		valid = false;
 	}
-	
+
 	if(discountPercentage>50){
-		$("#discountPercentage").after('<label id="discountPercentage-error" class="error" for="discountPercentage"></label>');
 		$("#discountPercentage-error").text("Discount cannot be more than 50");
+		$("#discountPercentage-error").show();
+		valid = false;
 	}
-	return valid
+	if(valid){
+		$("#discountPercentage-error").hide();
+	}
+	return valid;
 }
 
-/*function applyDiscount() {
-	if(!validateOrder()){
-		return false;
-	}	
-}*/
+function calculateDiscount(){
+	var discountPercentage = $("#discountPercentage").val();
+	if(discountPercentage!=null){
+		var isPresent = false;
+		var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+		var amount=0;
+		$.each(allData, function(i, item){
+			var rowData = $("#invoiceGrid").jqGrid("getRowData", item.id);
+			if(rowData.foodCode == 'DSCNT'){
+				isPresent = true;
+			}
+			else{
+				amount=parseInt(amount)+parseInt(rowData.amount);
+			}
+		});
+		//alert((amount * discountPercentage)/100);
+		var discountAmount = Math.floor((amount * discountPercentage)/100);
+		//alert(discountAmount);
+
+		if(isPresent){
+			$("#invoiceGrid").jqGrid("setRowData", -999,  { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount });
+		}
+		else{
+			$("#invoiceGrid").jqGrid("addRowData",-999 , { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount }, "last");
+		}
+
+		adjustTotal();
+	}
+
+}
+
 

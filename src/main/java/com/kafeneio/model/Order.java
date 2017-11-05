@@ -40,6 +40,10 @@ public class Order {
 		@Column(name="creation_date")
 		private Date creationDate;
 		
+		
+		@Column(name="discount_percentage")
+		private Long discountPercentage;
+		
 		@OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 		@Column(nullable = true)
 		@JsonManagedReference
@@ -113,9 +117,17 @@ public class Order {
 		public ModeOfPayment getModeOfPayment() {
 			return modeOfPayment;
 		}
-
+		
 		public void setModeOfPayment(ModeOfPayment modeOfPayment) {
 			this.modeOfPayment = modeOfPayment;
+		}
+
+		public Long getDiscountPercentage() {
+			return discountPercentage;
+		}
+
+		public void setDiscountPercentage(Long discountPercentage) {
+			this.discountPercentage = discountPercentage;
 		}
 
 }

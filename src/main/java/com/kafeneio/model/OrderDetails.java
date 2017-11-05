@@ -28,7 +28,7 @@ public class OrderDetails {
 	private String foodDesc;
 	
 	@Column(name="QUANTITY") 
-	private int quantity;
+	private Integer quantity;
 	
 	@Column(name="AMOUNT") 
 	private Double amount;
@@ -63,14 +63,6 @@ public class OrderDetails {
 		this.foodDesc = foodDesc;
 	}
 
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
 	public Double getAmount() {
 		return amount;
 	}
@@ -85,6 +77,14 @@ public class OrderDetails {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 	
 	

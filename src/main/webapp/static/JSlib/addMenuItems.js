@@ -50,6 +50,7 @@ $( document ).ready(function() {
 
 
 $( document ).ready(function() {
+	
 	$('#addFoodItemsbutton').click(function() {
 		var isFormFilled = $("#foodItems").valid();
 		var valid = validateForm();
@@ -81,6 +82,9 @@ function validateForm(){
 }
 
 function addFoodItems(){
+	$('#gbox_foodItemsGrid').show();
+	$('#gbox_editFoodItemsGrid').hide();
+
 	var id = $("#foodItemsGrid").jqGrid("getGridParam", "data").length;
 	var foodItemCode = $("#foodItemCode").val();
 	var foodItemDesc = $("#foodItemDesc").val();
@@ -151,4 +155,88 @@ function removeItem(rowid){
 
 function reloadGrid(){
 	$("#foodItemsGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+}
+
+$( document ).ready(function() {
+	
+
+	$('#searchAndEditFoodItemsbutton').click(function() {
+	$('#gbox_foodItemsGrid').hide();
+	$('#gbox_editFoodItemsGrid').show();
+
+	searchAndEdit();
+	});
+   
+   $('#gbox_foodItemsGrid').hide();
+	$('#gbox_editFoodItemsGrid').hide();
+});
+
+
+function searchAndEditFoodItems(){
+	$("#editFoodItemsGrid").jqGrid('GridUnload');	
+	$.ajax({
+		url :$("#contextPath").val()+"/",
+		success : function(responseText) {
+			searchAndEdit(responseText);
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+			});
+		}	
+	});
+	
+}
+
+
+
+function searchAndEdit(foodItems){
+	$("#editFoodItemsGrid").jqGrid({
+		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		//datatype : "json",
+		datatype : "local",
+		//mtype : 'POST',
+		colModel: [
+			{ name: "id", label: "id",hidden:true},
+        	{ name: "foodItemCode", label: "Food Item Code",  align: "center"},
+            { name: "foodItemDesc", label: "Food Item Description",  align: "center" },
+            { name: "amount", label: "Amount",  align: "center" },
+            { name: "category", label: "Category",  align: "center" },
+            { name: "status", label: "Status",  align: "center",hidden:true },
+            { name: "statusVisible", label: "Status",  align: "center" },
+			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
+				formatter:function(){
+					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
+				}}
+			],
+			data:foodItems,
+			footerrow: true,
+			userDataOnFooter : true,
+			rowNum:10,
+			rowList:[10,20,30],
+			guiStyle: "bootstrap",
+			iconSet: "fontAwesome",
+			pager: '#pager',
+			//sortname: 'orderNo',
+			viewrecords: true,
+			sortorder: "desc",
+			autowidth: true,
+			loadonce: true,
+			caption: "Seached Food Items",
+			/*loadComplete:function() {
+				//adjustTotalExpense();
+			}*/
+	});
+	
+	grid = $("#editFoodItemsGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+       var cm = grid.jqGrid('getGridParam','colModel');
+       for (var i=0,l=cm.length; i<l; i++) {
+           if (cm[i].name===columnName) {
+               return i; // return the index
+           }
+       }
+       return -1;
+   },
+		editButton = getColumnIndexByName(grid,'editButton');
 }

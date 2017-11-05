@@ -154,7 +154,8 @@
 
 							<div class="col-md-6">
 								<label for="normal-field" class="control-label">Discount %</label> <input type="text" name="discountPercentage"
-									placeholder="" class="form-control" id="discountPercentage" required>
+									placeholder="" class="form-control" id="discountPercentage">
+									<label id="discountPercentage-error" style="color:red" for="discountPercentage"></label>
 							</div>
 
 						</fieldset>
