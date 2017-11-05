@@ -44,7 +44,8 @@
 			<table id="servedOrdersGrid"></table>
 			 <div id="servedOrdersPager" style="height: 50;"></div>
 		</div>
-
+	</div>
+	<div class="container" style="display:flex">
 		<div class="row" style="margin: 15px">
 			<table id="cancelledOrdersGrid"></table>
 		</div>
