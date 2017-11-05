@@ -91,10 +91,14 @@
 					<div class="form-actions">
 						<div>
 							<button class="btn btn-default" id= "addFoodItemsbutton" type="button" >Add</button>
+							<button class="btn btn-default" id= "searchAndEditFoodItemsbutton" type="button" >Search & Edit</button>
+			
 						</div>
 					</div>
 				</div>
 				<table id="foodItemsGrid"></table>
+				<br>
+				<table id="editFoodItemsGrid"></table>
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveFoodItems()">Save</button>
