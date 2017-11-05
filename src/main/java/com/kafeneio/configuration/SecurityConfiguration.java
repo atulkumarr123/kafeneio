@@ -112,6 +112,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        .and().formLogin()/*.loginPage("/login")*/
 	        .usernameParameter("ssoId").passwordParameter("password")
 	        .and().logout().logoutSuccessUrl("/login")
+	        .and().httpBasic()
 	        //This will be used when You are developing the Complete Rest API using spring security
 //	        .and().exceptionHandling().accessDeniedPage("/accessDenied")
 	        .and().csrf().disable()

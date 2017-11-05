@@ -13,11 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kafeneio.constants.ApplicationConstant;
@@ -45,6 +43,7 @@ public class Order {
 		private Long discountPercentage;
 		
 		@OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+		@OrderBy("id DESC")
 		@Column(nullable = true)
 		@JsonManagedReference
 		private Set<OrderDetails> orderDetails ;

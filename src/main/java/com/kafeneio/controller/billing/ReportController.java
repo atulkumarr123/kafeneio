@@ -50,6 +50,7 @@ public class ReportController {
 		return expenses;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/getOrderListToday/{status}")
 	public List<Order> getOrderListToday(@PathVariable String status) {
 		List<Order> orders = reportService.getOrderListToday(status); 

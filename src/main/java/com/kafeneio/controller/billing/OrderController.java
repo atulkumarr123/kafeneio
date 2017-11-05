@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,24 +25,28 @@ public class OrderController {
 	@Inject
 	OrderService orderService;
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/serve/{orderId}")
 	public MessageDTO serve(@PathVariable Long orderId, @RequestParam(value = "mopId", required = false) Long mopId) {
 		MessageDTO msgDTO = orderService.serve(orderId, mopId);
 		return msgDTO;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/cancel/{orderId}")
 	public MessageDTO cancel(@PathVariable Long orderId) {
 		MessageDTO msgDTO = orderService.cancel(orderId);
 		return msgDTO;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/reInitiate/{orderId}")
 	public MessageDTO reInitiate(@PathVariable Long orderId) {
 		MessageDTO msgDTO = orderService.reInitiate(orderId);
 		return msgDTO;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/seatIt")
 	public MessageDTO seatIt(@RequestParam(value = "orderId", required = true) Long orderId, 
 			@RequestParam(value="table", required=true)String tableNo) {
