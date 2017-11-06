@@ -43,7 +43,7 @@ public class Order {
 		private Long discountPercentage;
 		
 		@OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-		@OrderBy("id DESC")
+		@OrderBy("id ASC")
 		@Column(nullable = true)
 		@JsonManagedReference
 		private Set<OrderDetails> orderDetails ;
