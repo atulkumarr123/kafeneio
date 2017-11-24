@@ -72,7 +72,7 @@
 							
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
-										Description</label> <input type="text" name="fodItemDesc" 
+										Description</label> <input type="text" name="foodItemDesc" 
 										placeholder="" class="form-control"
 										id="foodItemDesc" required>
 								</div>
@@ -91,7 +91,7 @@
 					<div class="form-actions">
 						<div>
 							<button class="btn btn-default" id= "addFoodItemsbutton" type="button" >Add</button>
-							<button class="btn btn-default" id= "searchAndEditFoodItemsbutton" type="button" >Search & Edit</button>
+							<button class="btn btn-default" id= "searchAndEditFoodItemsbutton" type="button" onclick = "searchAndEditFoodItems()" >Search & Edit</button>
 			
 						</div>
 					</div>
@@ -99,6 +99,7 @@
 				<table id="foodItemsGrid"></table>
 				<br>
 				<table id="editFoodItemsGrid"></table>
+				 <div id="pager" style="height: 50;"></div>
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveFoodItems()">Save</button>

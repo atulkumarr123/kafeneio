@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,10 @@ public class FoodController {
 	@Inject
 	FoodItemsService foodItemsService;
 
+	@Inject
+	FoodService foodService;
+
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/foodItems", method = RequestMethod.POST)
 	public MessageDTO saveExpenses(@RequestBody List<FoodItems> foodItems, @RequestParam("categoryId") Long categoryId)
@@ -37,11 +42,16 @@ public class FoodController {
 		msgDTO =foodItemsService.saveFoodItems(foodItems,categoryId);
 		return msgDTO;
 	}
+	
+	
+	@RequestMapping(value="/editFoodItems",method=RequestMethod.GET)
+	public List<FoodItems> getFoods()
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		List<FoodItems> items = foodService.editFoodItems();
+		return items;
 
 }
-
-
-
+}
 
 
 @Controller

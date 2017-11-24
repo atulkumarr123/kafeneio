@@ -9,7 +9,7 @@
 <title>Kafeneio</title>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
- <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
+<link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
 
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
@@ -78,6 +78,7 @@
 					</div>
 				</div>
 				<table id="unitsGrid"></table>
+				<table id="editUnitsGrid"></table>
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button" onclick="saveUnits()">Save</button>
@@ -87,4 +88,4 @@
 			<div class="col-lg-2"></div>
 		</div>
 	</div>
-</form:form>>
+</form:form>

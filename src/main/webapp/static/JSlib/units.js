@@ -49,12 +49,19 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
 	$('#addUnitsbutton').click(function() {
-			addUnits();
+		var isFormFilled = $("#unitForm").valid();
+		if(isFormFilled){	
+		addUnits();
+
+		}
 	});
 });
 
 
 function addUnits(){
+	$('#gbox_unitsGrid').show();
+	$('#gbox_editUnitsGrid').hide();
+	
 	var id = $("#unitsGrid").jqGrid("getGridParam", "data").length;
 	var unitCode = $("#unitCode").val();
 	var unitDesc = $("#unitDesc").val();
@@ -100,4 +107,25 @@ function removeItem(rowid){
 
 function reloadGrid(){
 	$("#unitsGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+}
+
+
+
+$( document ).ready(function() {
+	
+
+	$('#searchUnitsbutton').click(function() {
+	$('#gbox_unitsGrid').hide();
+	$('#gbox_editUnitsGrid').show();
+
+	editUnits();
+	});
+   
+   $('#gbox_unitsGrid').hide();
+	$('#gbox_editUnitsGrid').hide();
+});
+
+function editUnits(){
+	
+	
 }

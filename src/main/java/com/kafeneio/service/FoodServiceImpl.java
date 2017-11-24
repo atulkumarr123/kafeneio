@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.repository.FoodRepository;
+import com.kafeneio.repository.EditFoodItemsRepository;
 
 @Service
 @Qualifier(value="foodService")
@@ -20,6 +21,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	
 	@Inject
 	FoodRepository foodRepository;
+	
+	@Inject
+	EditFoodItemsRepository editFoodItemsRepository;
+	
 	
 	@Override
 	public List<FoodCategory> findFoodCategory() {
@@ -49,5 +54,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 		return items;
 	}
 	
+	@Override
+	public List<FoodItems> editFoodItems() {
+		List<FoodItems> items =   editFoodItemsRepository.editFoodItems();
+		return items;
+	}
 	
 }

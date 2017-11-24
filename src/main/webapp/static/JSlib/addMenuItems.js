@@ -174,7 +174,7 @@ $( document ).ready(function() {
 
 function searchAndEditFoodItems(){
 	$("#editFoodItemsGrid").jqGrid('GridUnload');	
-	$.ajax({
+	/*$.ajax({
 		url :$("#contextPath").val()+"/",
 		success : function(responseText) {
 			searchAndEdit(responseText);
@@ -184,11 +184,31 @@ function searchAndEditFoodItems(){
 				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
 			});
 		}	
-	});
+	});*/
 	
+	
+	var ctx = $("#contextPath").val();
+	$.ajax({
+		url : ctx+"/editFoodItems",
+		success : function(responseText) {
+			alert(JSON.stringify(responseText));
+			editFoodItems(responseText);
+			//$('#outputLabel').text(JSON.stringify(responseText));
+		},
+		error:function(responseText) {
+		//	alert("error"+responseText);
+			$('#outputLabel').text("Error");
+		}	
+	});
 }
 
-
+function editFoodItems(data){
+	for (var i in data) {
+		var row = data[i];
+		$("#editFoodItemsGrid").jqGrid("addRowData",row.id , { foodItemCode:row.foodItemCode, foodItemDesc:row.foodItemDesc ,  amount:row.amount , category:row.category , status:row.status  }, "last");
+	}
+	
+}
 
 function searchAndEdit(foodItems){
 	$("#editFoodItemsGrid").jqGrid({
