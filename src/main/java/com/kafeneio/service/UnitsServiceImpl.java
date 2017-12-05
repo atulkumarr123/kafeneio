@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
+import com.kafeneio.model.FoodItems;
+import com.kafeneio.model.Order;
 import com.kafeneio.model.Units;
 import com.kafeneio.repository.UnitsRepository;
 
@@ -23,6 +25,7 @@ public class UnitsServiceImpl extends BaseServiceImpl implements UnitsService{
 			for(Units unit : units){
 				unit.setDate(new Date());
 			}
+			
 			unitsRepository.save(units);
 			msgDTO.setMessage("Unit(s) added successfully");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
@@ -32,6 +35,33 @@ public class UnitsServiceImpl extends BaseServiceImpl implements UnitsService{
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 		return msgDTO;
+	}
+
+	@Override
+	public List<Units> editUnits() {
+		List<Units> items =   unitsRepository.editUnits();
+		return items;
+	}
+
+	@Override
+	public MessageDTO updateUnit(Units unit) {
+		MessageDTO msgDTO = new MessageDTO();
+		try{
+			Units unitFromDb = unitsRepository.findOne(unit.getId());
+			unitFromDb.setCode(unit.getCode());
+			unitFromDb.setDescription(unit.getDescription());
+			unitFromDb.setStatus(unit.isStatus());
+			
+			unitsRepository.save(unitFromDb);
+			msgDTO.setMessage("Unit Updated");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
+		}
+		catch(Exception exception){
+			msgDTO.setMessage("Some Error Occured");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
+		return msgDTO;
+		
 	}
 	
 }

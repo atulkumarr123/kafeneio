@@ -5,7 +5,8 @@ function openModeOfPaymentPopup(rowid){
 	 if( !$('#modeOfPayment').val()) {
 		 $.ajax({
 			 url : ctx+"/order/modeOfPayments",
-			 success : function(responseText) {			
+			 success : function(responseText) {		
+				 //alert(JSON.stringify(responseText));
 				 writeMOP(responseText);
 
 			 },

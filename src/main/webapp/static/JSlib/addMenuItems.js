@@ -174,24 +174,12 @@ $( document ).ready(function() {
 
 function searchAndEditFoodItems(){
 	$("#editFoodItemsGrid").jqGrid('GridUnload');	
-	/*$.ajax({
-		url :$("#contextPath").val()+"/",
-		success : function(responseText) {
-			searchAndEdit(responseText);
-		},
-		error:function(responseText) {
-			$(function(){
-				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
-			});
-		}	
-	});*/
-	
-	
+		
 	var ctx = $("#contextPath").val();
 	$.ajax({
 		url : ctx+"/editFoodItems",
 		success : function(responseText) {
-			alert(JSON.stringify(responseText));
+			//alert(JSON.stringify(responseText));
 			editFoodItems(responseText);
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
@@ -207,14 +195,13 @@ function editFoodItems(data){
 		var row = data[i];
 		$("#editFoodItemsGrid").jqGrid("addRowData",row.id , { foodItemCode:row.foodItemCode, foodItemDesc:row.foodItemDesc ,  amount:row.amount , category:row.category , status:row.status  }, "last");
 	}
-	
 }
 
 function searchAndEdit(foodItems){
 	$("#editFoodItemsGrid").jqGrid({
 		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		//datatype : "json",
-		datatype : "local",
+		//datatype : "local",
 		//mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.exception.KafeneioException;
+import com.kafeneio.model.Expenses;
+import com.kafeneio.model.FoodItems;
 import com.kafeneio.model.Units;
 import com.kafeneio.service.UnitsService;
 
@@ -37,6 +39,25 @@ public class UnitsController {
 			msgDTO.setMessage("Some error occured on server!");
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
+		return msgDTO;
+	}
+	
+	
+	
+	
+	@RequestMapping(value="/searchUnits",method=RequestMethod.GET)
+	public List<Units> getUnits()
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		List<Units> units = unitsService.editUnits();
+		return units;
+
+}
+	
+	
+	@RequestMapping(value = "/updateUnit", method = RequestMethod.POST)
+	public MessageDTO updateUnit(@RequestBody Units unit)
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		MessageDTO msgDTO = unitsService.updateUnit(unit);
 		return msgDTO;
 	}
 
