@@ -15,6 +15,7 @@ import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderDetails;
 import com.kafeneio.model.OrderStatus;
 import com.kafeneio.repository.ModeOfPaymentRepository;
+import com.kafeneio.repository.OrderDAO;
 import com.kafeneio.repository.OrderRepository;
 import com.kafeneio.repository.OrderStatusRepository;
 
@@ -29,6 +30,9 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 
 	@Inject
 	ModeOfPaymentRepository modeOfPaymentRepository;
+	
+	@Inject
+	OrderDAO orderDao;
 	
 	@Override
 	public synchronized MessageDTO saveOrder(Order order, Long mopId){
@@ -59,7 +63,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	}
 
 	private boolean isOrderExist(Long orderNo) {
-		List<Long> orders = orderRepository.findRecentOrder();
+		List<Long> orders = orderDao.findRecentOrder();
 		if(orders != null && !orders.isEmpty()){
 			return orders.get(0).equals(orderNo);
 		}
@@ -80,7 +84,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	}
 
 	public Long getOrderNo(){
-		Long orderNo = orderRepository.findOrderNo();
+		Long orderNo = orderDao.findOrderNo();
 		orderNo=(orderNo!=null)?(orderNo+1):ApplicationConstant.BASE_ORDER_NO;
 		return orderNo;
 	}

@@ -13,6 +13,7 @@ import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderStatus;
+import com.kafeneio.repository.OrderDAO;
 import com.kafeneio.repository.OrderRepository;
 import com.kafeneio.repository.ReportDAO;
 
@@ -21,6 +22,9 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 
 	@Inject
 	ReportDAO reportDao;
+	
+	@Inject
+	OrderDAO orderDao;
 	
 	@Inject
 	OrderRepository orderRepository;
@@ -59,7 +63,7 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 	@Override
 	public List<Order> getOrderListToday(String status) {
 		List<Order> orders = null;
-			orders = orderRepository.getOrderListToday(status);
+			orders = orderDao.getOrderListToday(status);
 		return orders;
 	}
 	
