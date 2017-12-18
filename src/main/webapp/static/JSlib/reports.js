@@ -30,7 +30,8 @@ function searchOrders(){
 	$("#orderReportGrid").jqGrid('GridUnload');	
 	var fromDate = $("#fromDateTimePicker").find("input").val();
 	var toDate = $("#toDateTimePicker").find("input").val();
-
+	var checked =$('input[name="modeOfPayment"]:checked').serialize();
+	alert(checked);
 	$.ajax({
 		url : $("#contextPath").val()+"/report/orderList?fromDate="+fromDate+"&&toDate="+toDate,
 		success : function(responseText) {
@@ -108,16 +109,13 @@ function orderReport(orderData){
 		                .hide();
 		        },
 
-			    
-			    
+	    
 	});
 	/*$("#orderReportGrid").bind("jqGridAfterLoadComplete", function() {
 		adjustTotalOrder();
 	});*/
 
-
 }
-
 
 function searchExpenses(){
 	$("#expenseReportGrid").jqGrid('GridUnload');	
@@ -138,7 +136,6 @@ function searchExpenses(){
 	
 }
 
-
 function expensesReport(expenseData){
 	$("#expenseReportGrid").jqGrid({
 		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
@@ -150,10 +147,15 @@ function expensesReport(expenseData){
 			{ name: "item", label: "Expense",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
 			{ name: "creationDate", label: "Date",  align: "center" },
+			{ name: "remarks", label: "Remarks",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
 					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
-				}}
+				}},
+            { name: 'decrease', label:"", width: 30, sortable: false, search: false, align: "center",
+          	  formatter:function(){
+          	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
+          	  }}
 			],
 			data:expenseData,
 			footerrow: true,
@@ -168,12 +170,15 @@ function expensesReport(expenseData){
 			sortorder: "desc",
 			autowidth: true,
 			loadonce: true,
-			onCellSelect: function (rowid,iCol,cellcontent,e) {
-				//alert("iCol "+iCol);
-				if (iCol == editButton) {
+			 onCellSelect: function (rowid,iCol,cellcontent,e) {
+		            if (iCol >= firstButtonColumnIndex) {
+		                removeExpense(rowid);
+		            }
+			
+		            else if (iCol == editButton) {
 					//alert("reInitiateButton");
 					openPopup(rowid);
-
+					
 				}
 
 			},
@@ -194,6 +199,7 @@ function expensesReport(expenseData){
        return -1;
    },
 		editButton = getColumnIndexByName(grid,'editButton');
+   firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
 }
 
  function openPopup(rowid){
@@ -205,6 +211,7 @@ function expensesReport(expenseData){
 	 	$('#foodItemDesc').val(rowData.item);
 	 	$('#amount').val(rowData.amount);
 	 	$('#expenseDateTime').val(rowData.creationDate);
+	 	$('#remarks').val(rowData.remarks);
  } 
  
  
@@ -216,6 +223,7 @@ function expensesReport(expenseData){
 	 	rowData.item = $('#foodItemDesc').val();
 	 	rowData.amount = $('#amount').val();
 	 	rowData.creationDate = $('#expenseDateTime').val();
+	 	rowData.remarks = $('#remarks').val();
 	 	rowData.editButton = '';
 	 	$("#expenseReportGrid").jqGrid("setRowData", rowId, rowData);
 	   $.ajax({
@@ -268,5 +276,24 @@ function adjustTotalExpense(){
 	}	
 //	alert(amount);
 	jQuery("#expenseReportGrid").footerData('set',{orderNo:'Total', amount:amount});	
+}
+
+function removeExpense(rowid){
+	
+	$.ajax({
+		url : $("#contextPath").val()+"/deleteExpense/"+rowid,
+		success : function(responseText) {
+			$(function(){
+				new PNotify({ type:'success', title: 'Success', text: responseText.message});
+				$('#expenseReportGrid').jqGrid('delRowData',rowid);
+			});
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: responseText.message});
+			});
+		}	
+	});
+	
 }
 

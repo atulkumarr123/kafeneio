@@ -78,17 +78,89 @@
 					<div class="form-actions">
 						<div>
 							<button class="btn btn-default" id= "addExpensebutton" type="button" >Add</button>
+							<button class="btn btn-default" id= "searchAndEditExpensesbutton" type="button" onclick = "searchAndEditExpenses()" >Search & Edit</button>
 						</div>
 					</div>
 				</div>
 				<table id="expensesGrid"></table>
+				<table id="searchAndEditExpensesGrid"></table>
 				<br>
 				<div style="text-align: left;">
-					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Save</button>
-					<button class="btn btn-default" type="button" onclick="clearExpenses()">Clear</button>
+					<button class="btn btn-default" type="button"  onclick="saveExpenses()" id="saveExpensesButton">Save</button>
+					<button class="btn btn-default" type="button" onclick="clearExpenses()" id= "clearExpensesButton">Clear</button>
 				</div>
 			</div>
 			<div class="col-lg-2"></div>
 		</div>
 	</div>
 </form>
+
+<div class="container">
+  <div class="modal fade" id="myModalExpenses" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Expense</h4>
+        </div>
+        <div class="modal-body">
+        <fieldset>
+        				<input type="hidden" id="expenseRowId" name="expenseRowId"/>
+							 <div class="form-group">
+<!-- 								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Item
+										Code</label> <input type="text" name="foodItemCode1" placeholder=""
+										class="form-control" id="foodItemCode1" required>
+								</div>
+ -->
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Item
+										Description</label> <input type="text" name="fodItemDesc"
+										placeholder="" class="form-control" id="foodItemDescModal" required>
+								</div>
+
+							<div class="col-md-6">
+									<label for="normal-field" class="control-label">Amount
+										</label> <input type="text" name="amount" placeholder=""
+										class="form-control" id="amountModal" required>
+								</div>
+	
+							</div>
+
+
+							<div class="form-group">
+								<div class="col-md-6">
+									<label for="prepended-input" class="control-label" name="date">Date</label>
+									<div class='input-group date' id='datetimepicker3'>
+										<input type='text' class="form-control" id="expenseDateTimeModal"
+											required /> <span class="input-group-addon"><span
+											class="glyphicon glyphicon-calendar"></span> </span>
+									</div>
+								</div>
+							</div>
+							
+							
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Remarks
+										</label> <input type="text" name="remarks" placeholder=""
+										class="form-control" id="remarksModal" required>
+								</div>
+	
+							
+						</fieldset>
+		 
+		 		 
+		  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "updateExpensesButton" onclick="updateExpense()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelExpensesButton" >Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>

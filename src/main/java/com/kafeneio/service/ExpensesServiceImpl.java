@@ -1,4 +1,5 @@
 package com.kafeneio.service;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -9,12 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.model.Expenses;
+import com.kafeneio.repository.ExpensesDAO;
 import com.kafeneio.repository.ExpensesRepository;
 
 @Service
 public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesService{
+	
 	@Inject
 	ExpensesRepository expensesRepository;
+	
+	@Inject
+	ExpensesDAO expensesDAO;
 
 	@Override
 	public MessageDTO saveExpense(List<Expenses> expenses) {
@@ -46,5 +52,27 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 		}
 		return msgDTO;
 		
+	}
+
+	@Override
+	public MessageDTO deleteExpense(Long id) {
+		MessageDTO msgDTO = new MessageDTO();
+		try{
+			expensesRepository.delete(id);
+			msgDTO.setMessage("Expenses deleted");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
+		}
+		catch(Exception exception){
+			msgDTO.setMessage("Some Error Occured During Deletion");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
+		return msgDTO;
+	}
+
+	@Override
+	public List<Expenses> fetchExpenses() {
+		List<Expenses> expenses = null;
+		expenses = expensesDAO.fetchExpenses();
+		return expenses;
 	}
 }

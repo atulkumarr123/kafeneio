@@ -79,6 +79,12 @@ $( document ).ready(function() {
     });*/
 
 	$('#addExpensebutton').click(function() {
+	//	alert("in add expenses button");
+		$('#gbox_expensesGrid').show();
+		$('#gbox_searchAndEditExpensesGrid').hide();
+		$('#saveExpensesButton').show();
+		$('#clearExpensesButton').show();
+		
 		var isFormFilled = $("#expenses").valid();
 		var valid = validateForm();
 		if(isFormFilled && valid){
@@ -100,6 +106,8 @@ function validateForm(){
 }
 
 function addExpense(){
+	//alert("in add expenses");
+
 	var item = $("#itemDesc").val();
 	//alert(item);
 	var amount = $("#amount").val();
@@ -109,6 +117,7 @@ function addExpense(){
 }
 
 function saveExpenses() {
+	
 	var ctx = $("#contextPath").val();
 	var allData = $("#expensesGrid").jqGrid("getGridParam", "data");
 	//alert(allData);
@@ -160,3 +169,200 @@ function clearExpenses(){
 	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 
 }
+
+$( document ).ready(function() {
+	$('#searchAndEditExpensesbutton').click(function() {
+	$('#gbox_expensesGrid').hide();
+	$('#gbox_searchAndEditExpensesGrid').show();
+	$('#saveExpensesButton').hide();
+	$('#clearExpensesButton').hide();
+
+	//searchAndEdit();
+	});
+/*   
+   $('#gbox_expensesGrid').hide();
+	$('#gbox_searchAndEditExpensesGrid').hide();*/
+});
+
+
+
+function searchAndEditExpenses(){
+//	alert("in search and edit");
+	$("#searchAndEditExpensesGrid").jqGrid('GridUnload');	
+	$.ajax({
+		url :$("#contextPath").val()+"/expensesList",
+		success : function(responseText) {
+			EditExpenses(responseText);
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+			});
+		}	
+	});
+	
+}
+
+
+function EditExpenses(expenseData){
+	$("#searchAndEditExpensesGrid").jqGrid({
+		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		//datatype : "json",
+		datatype : "local",
+		//mtype : 'POST',
+		colModel: [
+			{ name: "id", label: "id",hidden:true},
+			{ name: "item", label: "Expense",  align: "center"},
+			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+			{ name: "creationDate", label: "Date",  align: "center" },
+			{ name: "remarks", label: "Remarks",  align: "center" },
+			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
+				formatter:function(){
+					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
+				}},
+            { name: 'decrease', label:"", width: 30, sortable: false, search: false, align: "center",
+          	  formatter:function(){
+          	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
+          	  }}
+			],
+			data:expenseData,
+			footerrow: true,
+			userDataOnFooter : true,
+			rowNum:10,
+			rowList:[10,20,30],
+			guiStyle: "bootstrap",
+			iconSet: "fontAwesome",
+			pager: '#pager',
+			sortname: 'orderNo',
+			viewrecords: true,
+			sortorder: "desc",
+			autowidth: true,
+			loadonce: true,
+			 onCellSelect: function (rowid,iCol,cellcontent,e) {
+		            if (iCol >= firstButtonColumnIndex) {
+		                removeExpense(rowid);
+		            }
+			
+		            else if (iCol == editButton) {
+					//alert("reInitiateButton");
+					openPopup(rowid);
+					
+				}
+
+			},
+			caption: "Search & Edit Expense",
+			loadComplete:function() {
+				adjustTotalExpense();
+			}
+	});
+	
+	grid = $("#searchAndEditExpensesGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+       var cm = grid.jqGrid('getGridParam','colModel');
+       for (var i=0,l=cm.length; i<l; i++) {
+           if (cm[i].name===columnName) {
+               return i; // return the index
+           }
+       }
+       return -1;
+   },
+		editButton = getColumnIndexByName(grid,'editButton');
+   firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
+}
+
+ function openPopup(rowid){
+	 	 $('#myModalExpenses').modal('show');
+	 
+	 	 
+	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowid);
+	 	 $("#expenseRowId").val(rowid);
+	 	$('#foodItemDescModal').val(rowData.item);
+	 	//alert(rowData.amount);
+	 	$('#amountModal').val(rowData.amount);
+	 	$('#expenseDateTimeModal').val(rowData.creationDate);
+	 	$('#remarksModal').val(rowData.remarks);
+ } 
+ 
+ 
+ function updateExpense(){
+	 var rowId= $("#expenseRowId").val();
+		var ctx = $("#contextPath").val();
+	// alert(rowId);
+	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowId);
+	 	rowData.item = $('#foodItemDescModal').val();
+	 	rowData.amount = $('#amountModal').val();
+	 	rowData.creationDate = $('#expenseDateTimeModal').val();
+	 	rowData.remarks = $('#remarksModal').val();
+	 	rowData.editButton = '';
+	 	$("#searchAndEditExpensesGrid").jqGrid("setRowData", rowId, rowData);
+	   $.ajax({
+		      type: "POST",
+		      contentType : 'application/json; charset=utf-8',
+		      dataType : 'json',
+		      url : ctx+"/report/updateExpenses",
+		      data: JSON.stringify(rowData),
+		      success :function(result) {
+		    	  new PNotify({
+	    			  type:'success',
+	    			  title: 'Success',
+	    			  text: result.message
+		    	  });
+		    	  $( "#cancelExpensesButton").click();
+		    	  
+		     },
+		   error:function(result) {
+			  // alert(JSON.stringify(result));
+			   new PNotify({
+		    		 type:'error',
+		    		 title: 'Error',
+		    		 text: result.responseJSON.message
+			   });
+			   //alert("error"+JSON.stringify(responseText));
+		   }
+		  });
+ } 
+ 
+ 
+function adjustTotalOrder(){
+	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
+	var amount = 0;
+	for (var i in data) {
+		var row = data[i];
+		amount=parseInt(amount)+parseInt(row.amount);
+		
+	}	
+	jQuery("#orderReportGrid").footerData('set',{orderNo:'Total', amount:amount});	
+}
+
+function adjustTotalExpense(){
+	var data = $("#searchAndEditExpensesGrid").jqGrid("getGridParam", "data");
+	var amount = 0;
+	for (var i in data) {
+		var row = data[i];
+		amount=parseInt(amount)+parseInt(row.amount);
+		
+		
+	}	
+//	alert(amount);
+	jQuery("#searchAndEditExpensesGrid").footerData('set',{orderNo:'Total', amount:amount});	
+}
+
+function removeExpense(rowid){
+	
+	$.ajax({
+		url : $("#contextPath").val()+"/deleteExpense/"+rowid,
+		success : function(responseText) {
+			$(function(){
+				new PNotify({ type:'success', title: 'Success', text: responseText.message});
+				$('#searchAndEditExpensesGrid').jqGrid('delRowData',rowid);
+			});
+		},
+		error:function(responseText) {
+			$(function(){
+				new PNotify({ type:'error', title: 'Error', text: responseText.message});
+			});
+		}	
+	});
+	
+}
+

@@ -44,9 +44,25 @@
 			<div class="col-lg-2"></div>
 			<div class="col-lg-8">
 				<div class="widget-content">
+		
+		<fieldset>
+							<div class="form-group">
+
+								<!-- <div class="col-md-12"> -->
+									<div class="checkbox checkbox-inline">
+										<input type="checkbox" id="inlineCheckbox1" value="option1">
+										<label for="inlineCheckbox1"> Inline One </label>
+									</div>
+									
+								<!-- </div> -->
+							</div>
+						</fieldset>
 					<fieldset>
+											
 						<div class="form-group">
+				
 						<div class="col-md-6">
+						
 							<label for="prepended-input" class="control-label">From Date</label>
 							<div class='input-group date' id='fromDateTimePicker'>
 								<input type='text' id ="fromReportDate"  class="form-control" /> <span
@@ -99,12 +115,10 @@
 </form>
 
 
-<div class="container">
-  <!-- Modal -->
+ <div class="container">
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
-      <!-- Modal content-->
+
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -114,12 +128,12 @@
         <fieldset>
         				<input type="hidden" id="expenseRowId" name="expenseRowId"/>
 							 <div class="form-group">
-<!-- 								<div class="col-md-6">
+								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
 										Code</label> <input type="text" name="foodItemCode1" placeholder=""
 										class="form-control" id="foodItemCode1" required>
 								</div>
- -->
+
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
 										Description</label> <input type="text" name="fodItemDesc"
@@ -145,6 +159,15 @@
 									</div>
 								</div>
 							</div>
+							
+							
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Remarks
+										</label> <input type="text" name="remarks" placeholder=""
+										class="form-control" id="remarks" required>
+								</div>
+	
+							
 						</fieldset>
 		 
 		 		 
