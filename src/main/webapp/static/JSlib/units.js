@@ -81,27 +81,35 @@ function addUnits(){
 }
 
 function saveUnits() {
-	var ctx = $("#contextPath").val();
-	var allData = $("#unitsGrid").jqGrid("getGridParam", "data");
-	   $.ajax({
-	      type: "POST",
-	      contentType : 'application/json; charset=utf-8',
-	      dataType : 'json',
-	      url : ctx+"/addUnits",
-	      data: JSON.stringify(allData),
-	      success :function(result) {
-	    	  if(result.statusCode == '200'){
-	    	  new PNotify({ type:'success', title: 'Success', text: result.message });
-	    	  }
-	    	  else if(result.statusCode == '500'){
-	    		  new PNotify({ type:'error', title: 'Error', text: result.message });
-	    	  }
-	    	  reloadGrid();
-	     },
-	   error:function(result) {	  
-		   new PNotify({ type:'error', title: 'Error', text: result.message });
-	   }
-	  });
+
+	if(!validateUnit()){
+		return false;
+	}
+
+	else
+	{
+		var ctx = $("#contextPath").val();
+		var allData = $("#unitsGrid").jqGrid("getGridParam", "data");
+		$.ajax({
+			type: "POST",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			url : ctx+"/addUnits",
+			data: JSON.stringify(allData),
+			success :function(result) {
+				if(result.statusCode == '200'){
+					new PNotify({ type:'success', title: 'Success', text: result.message });
+				}
+				else if(result.statusCode == '500'){
+					new PNotify({ type:'error', title: 'Error', text: result.message });
+				}
+				reloadGrid();
+			},
+			error:function(result) {	  
+				new PNotify({ type:'error', title: 'Error', text: result.message });
+			}
+		});
+	}
 }
 
 function removeItem(rowid){
@@ -254,6 +262,8 @@ function updateUnit(){
 		      url : ctx+"/updateUnit",
 		      data: JSON.stringify(rowData),
 		      success :function(result) {
+		    	  rowData.status= statusVisible;
+		    	  $("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
 		    	  new PNotify({
 	    			  type:'success',
 	    			  title: 'Success',
@@ -284,12 +294,12 @@ function openPopup(rowid){
 	//alert(rowData.status);
 	var status = rowData.status;
 	if(status == 'Active'){
-		$('[id=status] option').filter(function() { 
+		$('[id=statusModal] option').filter(function() { 
 			return ($(this).text() == 'Active'); 
 		}).prop('selected', true);
 	}
 	else {
-		$('[id=status] option').filter(function() { 
+		$('[id=statusModal] option').filter(function() { 
 			return ($(this).text() == 'Inactive'); 
 		}).prop('selected', true);
 	}
@@ -297,3 +307,27 @@ function openPopup(rowid){
 	
 } 
 
+function reloadUnitGrid(){
+	$("#editUnitsGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	$("#editUnitsGrid").jqGrid('setCaption','');
+
+}
+
+
+
+function validateUnit(){
+	var rowCount=jQuery('#unitsGrid').jqGrid('getGridParam', 'reccount');
+	  if(rowCount!=0){
+		  return true;
+	  }
+	  else{
+		  $(function(){
+   		   new PNotify({
+   			   type:'error',
+   			   title: 'Error',
+   		      text: 'Please add atleast one Unit!'
+   		   });
+   		});
+	  return false;
+	  }
+}

@@ -110,3 +110,61 @@
 		</div>
 	</div>
 </form:form>
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="searchedFoodItemsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Food Items</h4>
+        </div>
+        <div class="modal-body">
+        <fieldset>
+						<input type="text" id="foodItemsRowId" name="foodItemsRowId" />
+						<div class="form-group">
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Item
+									Code</label> <input type="text" name="code" placeholder=""
+									class="form-control" id="code" required>
+							</div>
+
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Item
+									Description</label> <input type="text" name="description"
+									placeholder="" class="form-control" id="description" required>
+							</div>
+														
+							<div class="form-group">
+							<div class="col-md-6">
+									<label for="prepended-input" class="control-label">Amount</label>
+									<input type="text" class="form-control" name="amount"
+										id="amount" placeholder="" required>
+								</div>									
+						</div>
+						
+							<div class="col-md-6">
+								<label for="prepended-input" class="control-label">
+								Status</label> 
+								<select path="id" class="form-control"
+									id="itemStatusModal" required="required">
+									<option value="1">Active</option>
+									<option value="0">Inactive</option>
+								</select>
+							</div>
+							
+						</div>
+					</fieldset>
+		 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "updateUnitButton" onclick="updateFoodItem()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelFoodItemButton" >Close</button>
+        </div>
+      </div>      
+    </div>
+  </div>
+</div>

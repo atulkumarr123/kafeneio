@@ -36,7 +36,7 @@ public class FoodCategory {
 
 	@OneToMany(mappedBy="foodCategory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Column(nullable = true)
-	@JsonManagedReference
+//	@JsonManagedReference
 	private Set<FoodItems> foodItems;
 
 

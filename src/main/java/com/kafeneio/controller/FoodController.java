@@ -4,12 +4,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +41,10 @@ public class FoodController {
 	}
 	
 	
-	@RequestMapping(value="/editFoodItems",method=RequestMethod.GET)
-	public List<FoodItems> getFoods()
+	@RequestMapping(value="/editFoodItems",method=RequestMethod.POST)
+	public List<FoodItems> editFoodItems(@RequestBody FoodItems foodItems)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		List<FoodItems> items = foodService.editFoodItems();
+		List<FoodItems> items = foodService.editFoodItems(foodItems);
 		return items;
 
 }

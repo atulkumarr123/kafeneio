@@ -84,7 +84,7 @@
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button" id="saveUnitButton" onclick="saveUnits()">Save</button>
-					<button class="btn btn-default" type="button" onclick="">Clear</button>
+					<button class="btn btn-default" type="button" onclick="reloadUnitGrid()">Clear</button>
 				</div>
 			</div>
 			<div class="col-lg-2"></div>

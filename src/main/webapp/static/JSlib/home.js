@@ -142,7 +142,6 @@ function createServedOrdersGrid(servedOrders){
 			{ name: "orderNo", label: "Order No",  align: "center", width:80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 80},
 			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
-			{ name: "orderNo", label: "Order No",  align: "center", width:100},
 			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 90},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
@@ -252,7 +251,6 @@ function createCancelledOrdersGrid(cancelledOrders) {
 			{ name: "orderNo", label: "Order No",  align: "center",  width: 80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
 			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
-			{ name: "orderNo", label: "Order No",  align: "center",  width: 100},
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 90},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){

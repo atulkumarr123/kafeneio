@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.Expenses;
+import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
-import com.kafeneio.model.OrderStatus;
+import com.kafeneio.repository.ModeOfPaymentRepository;
 import com.kafeneio.repository.OrderDAO;
 import com.kafeneio.repository.OrderRepository;
 import com.kafeneio.repository.ReportDAO;
@@ -29,15 +30,19 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 	@Inject
 	OrderRepository orderRepository;
 	
+	@Inject
+	ModeOfPaymentRepository modeOfPaymentRepository;
+	
+	
 	@Override
-	public List<Order> fetchOrders(String fromDate, String toDate) {
+	public List<Order> fetchOrders(String fromDate, String toDate, String modes) {
 		List<Order> orders = null;
 		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		Date fromDate1;
 		try {
 			fromDate1 = format.parse(fromDate);
 			Date toDate1 = format.parse(toDate);
-			orders = reportDao.fetchOrders(fromDate1, toDate1);
+			orders = reportDao.fetchOrders(fromDate1, toDate1, modes);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -65,6 +70,13 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 		List<Order> orders = null;
 			orders = orderDao.getOrderListToday(status);
 		return orders;
+	}
+
+
+	@Override
+	public List<ModeOfPayment> findModeOfPayment() {
+		List<ModeOfPayment> modes = modeOfPaymentRepository.findModeOfPayment();
+		return modes;
 	}
 	
 	

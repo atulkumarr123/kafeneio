@@ -10,7 +10,7 @@ import com.kafeneio.model.FoodItems;
 public interface FoodService {
 	List<FoodCategory> findFoodCategory();
 	List<FoodItems> findFoodItems(String category);
-	List<FoodItems> editFoodItems();
 	List<Object> switchCaseDemo();
+	List<FoodItems> editFoodItems(FoodItems foodItems);
 
 }

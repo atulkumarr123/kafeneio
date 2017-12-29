@@ -1,4 +1,4 @@
-package com.kafeneio.repository;
+package com.kafeneio.dao;
 
 import java.util.Date;
 import java.util.List;
@@ -11,30 +11,31 @@ import org.springframework.stereotype.Repository;
 
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.Expenses;
+import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.model.Order;
 
 @Repository
-public class ReportDAO {
-
+public class FoodDAO {
+	
 	@Inject
 	EntityManager entityManager;
-
-	public List<Order> fetchOrders(Date fromDate, Date toDate, String modes) {
-		//Query query = entityManager.createQuery();
-		StringBuffer queryStr = new StringBuffer("select order from Order order where creationDate <= :toDate and creationDate >=:fromDate and order.status.code = '"+ApplicationConstant.SERVED_ORDER+"'");	
-
-		if(modes!=null && modes !=""){
-			queryStr.append("and order.modeOfPayment.id in ("+modes+")");
+	
+	public List<FoodItems> editFoodItems(FoodItems foodItems) {
+		StringBuffer queryStr = new StringBuffer("select foodItems  from FoodItems foodItems");
+		if(foodItems.getFoodCategory() != null && !"".equals(foodItems.getFoodCategory())){
+			FoodCategory category = foodItems.getFoodCategory();
+			queryStr.append(" where foodItems.foodCategory.id = "+category.getId());
 		}
+		if(foodItems.isStatus()){
+			queryStr.append(" and foodItems.status = 1");
+		}
+		if(!foodItems.isStatus()){
+			queryStr.append(" and foodItems.status = 0");
+		}
+		
 		Query query = entityManager.createQuery(queryStr.toString());
-		//int pageNumber = 1;
-		//		int pageSize = 10;
-		query.setParameter("toDate", toDate);
-		query.setParameter("fromDate", fromDate);		
-		//		query.setFirstResult((pageNumber-1) * pageSize); 
-		//		query.setMaxResults(pageSize);
-		List <Order> orders = query.getResultList();
+		List <FoodItems> orders = query.getResultList();
 		return orders;
 	}
 	

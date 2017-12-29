@@ -1,6 +1,7 @@
 package com.kafeneio.controller.billing;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.Expenses;
+import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
 import com.kafeneio.service.ExpensesService;
 import com.kafeneio.service.ReportService;
@@ -38,8 +40,9 @@ public class ReportController {
 	
 	@RequestMapping(value = "/orderList")
 	public List<Order> fetchOrders(@RequestParam(value = "fromDate", required = true) String fromDate, 
-			@RequestParam(value="toDate", required=true)String toDate) {
-		List<Order> orders = reportService.fetchOrders(fromDate, toDate); 
+			@RequestParam(value="toDate", required=true)String toDate,
+			@RequestParam(value="modes")String modes) {
+		List<Order> orders = reportService.fetchOrders(fromDate, toDate, modes); 
 		return orders;
 	}
 	
@@ -63,20 +66,32 @@ public class ReportController {
 		MessageDTO msgDTO = expensesService.updateExpense(expenses);
 		return msgDTO;
 	}
-
-	
-	
 }
 
 @Controller
 class ReportLoaderController{
 
+	@Inject
+	ReportService reportService;
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/reports")
 	public String reportHome(ModelMap modelMap)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		//modelMap.put("dateTimeFormat", ApplicationConstant.DATE_TIME_FORMAT);
 		modelMap.put("dateTimeFormatCalendar", ApplicationConstant.DATE_TIME_FORMAT_CALENDAR);
+		//List<ModeOfPayment> modeOfPayments = new ArrayList<ModeOfPayment>();
+		
+		List<ModeOfPayment> modes  = reportService.findModeOfPayment();
+		
+	  /*ModeOfPayment mode  = new ModeOfPayment();
+		mode.setCode("rt");
+		mode.setDescription("rt");
+		mode.setId(3l); 
+		
+		modeOfPayments.add(modes); */
+		
+		modelMap.put("modeOfPayments",modes);
 		SimpleDateFormat dateFormat = new SimpleDateFormat(ApplicationConstant.DATE_FORMAT);
 		String fromDate = dateFormat.format(new Date());
 		String toDate = getTomorrow(dateFormat);

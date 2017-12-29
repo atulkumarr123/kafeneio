@@ -44,17 +44,15 @@
 			<div class="col-lg-2"></div>
 			<div class="col-lg-8">
 				<div class="widget-content">
-		
-		<fieldset>
+	
+						<fieldset>
 							<div class="form-group">
-
-								<!-- <div class="col-md-12"> -->
-									<div class="checkbox checkbox-inline">
-										<input type="checkbox" id="inlineCheckbox1" value="option1">
-										<label for="inlineCheckbox1"> Inline One </label>
+							 	<c:forEach items="${modeOfPayments}" var="mode" varStatus = "status">
+									<div class="col-md-2">
+										<input type="checkbox" id="modeOfPayment${status.index}" name="modeOfPayment" value="${mode.id}" /> 
+										<label for="modeOfPayment${status.index}"><span></span>${mode.description}</label>
 									</div>
-									
-								<!-- </div> -->
+								</c:forEach> 
 							</div>
 						</fieldset>
 					<fieldset>

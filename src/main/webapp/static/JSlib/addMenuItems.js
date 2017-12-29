@@ -74,7 +74,7 @@ function validateForm(){
 	if(category == '0'){
 		$("#category").after('<label id="category-error" class="error" for="category">This field is required.</label>');
 	//	$("#category-error").text("");
-		
+		valid = false;
 		
 	}
 	
@@ -113,7 +113,9 @@ function saveFoodItems() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#foodItemsGrid").jqGrid("getGridParam", "data");
 	var categoryId = $("#category").val();
-	//alert(JSON.stringify(allData));
+//	alert(JSON.stringify(allData));
+//	console.log(JSON.stringify(allData));
+//	return false;
 	/*var expense={};
 	expense["item"]=null;
 	expense["amount"]=null;
@@ -159,12 +161,11 @@ function reloadGrid(){
 
 $( document ).ready(function() {
 	
-
 	$('#searchAndEditFoodItemsbutton').click(function() {
 	$('#gbox_foodItemsGrid').hide();
 	$('#gbox_editFoodItemsGrid').show();
 
-	searchAndEdit();
+	//searchAndEdit();
 	});
    
    $('#gbox_foodItemsGrid').hide();
@@ -174,34 +175,55 @@ $( document ).ready(function() {
 
 function searchAndEditFoodItems(){
 	$("#editFoodItemsGrid").jqGrid('GridUnload');	
-		
 	var ctx = $("#contextPath").val();
+	var status = $("#status").val();
+	var category = $("#category").val();
+	var foodItemCode = $("#foodItemCode").val();
+	
+	var foodItems={"foodItemCode":$("#foodItemCode").val(),"foodItemDesc":$("#foodItemDesc").val(),"amount":$("#amount").val(),"foodCategory":{id:$("#category").val()},"status":(status==1)?true:false};
+	/*foodItems["status"]=(status==1)?true:false;
+	foodItems["foodCategory"]=null;
+	foodItems["foodItemCode"]=foodItemCode;
+	foodItems["id"]=null;
+	foodItems["foodItemDesc"]=null;
+	foodItems["amount"]=foodItemCode;
+	foodItems["date"]=null;
+	*/
+	alert(JSON.stringify(foodItems));
+	
 	$.ajax({
+		type: "POST",
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
 		url : ctx+"/editFoodItems",
+		data: JSON.stringify(foodItems),
 		success : function(responseText) {
-			//alert(JSON.stringify(responseText));
-			editFoodItems(responseText);
+			alert(JSON.stringify(responseText));
+			//editFoodItems(responseText);
+			searchAndEdit(responseText);
+
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
-		//	alert("error"+responseText);
+			//	alert("error"+responseText);
 			$('#outputLabel').text("Error");
 		}	
 	});
 }
 
+/*
 function editFoodItems(data){
 	for (var i in data) {
 		var row = data[i];
 		$("#editFoodItemsGrid").jqGrid("addRowData",row.id , { foodItemCode:row.foodItemCode, foodItemDesc:row.foodItemDesc ,  amount:row.amount , category:row.category , status:row.status  }, "last");
 	}
-}
+} */
 
 function searchAndEdit(foodItems){
 	$("#editFoodItemsGrid").jqGrid({
 		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		//datatype : "json",
-		//datatype : "local",
+		datatype : "local",
 		//mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
@@ -229,7 +251,14 @@ function searchAndEdit(foodItems){
 			sortorder: "desc",
 			autowidth: true,
 			loadonce: true,
-			caption: "Seached Food Items",
+			caption: "Searched Food Items",
+			onCellSelect: function (rowid,iCol,cellcontent,e) {
+				//alert("iCol "+iCol);
+				if (iCol == editButton) {
+					//alert("reInitiateButton");
+					openPopupFoodItem(rowid);
+				}
+			}
 			/*loadComplete:function() {
 				//adjustTotalExpense();
 			}*/
@@ -247,3 +276,84 @@ function searchAndEdit(foodItems){
    },
 		editButton = getColumnIndexByName(grid,'editButton');
 }
+
+function updateFoodItem(){
+	//alert("in update");
+	
+	 var rowId= $("#foodItemsRowId").val();
+		var ctx = $("#contextPath").val();
+		// alert(rowId);
+	 	var rowData = $("#editFoodItemsGrid").jqGrid("getRowData", rowId);
+	 	rowData.code = $('#code').val();
+	 	rowData.description = $('#description').val();
+	 	//alert($('#status').val());
+	 	rowData.amount = $('#amount').val();
+	 	var statusVal = $('#itemStatusModal').val();
+	 
+	 	
+	 	if(statusVal == '1'){
+	 		statusVal = true;
+			statusVisible = 'Active';
+		}
+		else{
+			statusVal = false;
+			statusVisible = 'Inactive';
+		}
+	 //	rowData.statusVisible= statusVisible;
+	 	rowData.status= statusVal;
+	 	rowData.creationDate = $('#expenseDateTime').val();
+	 	rowData.editButton = '';
+	 	
+	 //	$("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
+	  /* $.ajax({
+		      type: "POST",
+		      contentType : 'application/json; charset=utf-8',
+		      dataType : 'json',
+		      url : ctx+"/updateUnit",
+		      data: JSON.stringify(rowData),
+		      success :function(result) {
+		    	  rowData.status= statusVisible;
+		    	  $("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
+		    	  new PNotify({
+	    			  type:'success',
+	    			  title: 'Success',
+	    			  text: result.message
+		    	  });
+		    	  $( "#cancelUnitButton").click();
+		    	  
+		     },
+		   error:function(result) {
+			   alert(JSON.stringify(result));
+			   new PNotify({
+		    		 type:'error',
+		    		 title: 'Error',
+		    		 text: result.responseJSON.message
+			   });
+			   //alert("error"+JSON.stringify(responseText));
+		   }
+		  }); */
+} 
+
+
+function openPopupFoodItem(rowid){
+	$('#searchedFoodItemsModal').modal('show');
+	var rowData = $("#editFoodItemsGrid").jqGrid("getRowData", rowid);
+	$("#foodItemsRowId").val(rowid);
+	$('#code').val(rowData.code);
+	$('#description').val(rowData.description);
+	//alert(rowData.status);
+	var status = rowData.status;
+	if(status == 'Active'){
+		$('[id=itemStatusModal] option').filter(function() { 
+			return ($(this).text() == 'Active'); 
+		}).prop('selected', true);
+	}
+	else {
+		$('[id=itemStatusModal] option').filter(function() { 
+			return ($(this).text() == 'Inactive'); 
+		}).prop('selected', true);
+	}
+	
+	
+} 
+
