@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
+import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.Units;
@@ -63,5 +64,20 @@ public class UnitsServiceImpl extends BaseServiceImpl implements UnitsService{
 		return msgDTO;
 		
 	}
+	
+	@Override
+	public List<Units> findUnits() {
+		List<Units> units = unitsRepository.findUnits();
+		/*Map<String,String> foodCatMap=new HashMap<String,String>();
+		Iterator<FoodCategory> itr=categories.iterator();
+		if(itr.hasNext()){
+			FoodCategory foodCategory = itr.next();
+			foodCatMap.put(foodCategory.getFoodCode(),foodCategory.getFoodDesc());	
+		}*/
+		
+		
+		return units;
+	}
+
 	
 }

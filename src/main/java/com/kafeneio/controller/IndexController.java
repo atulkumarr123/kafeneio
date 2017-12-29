@@ -32,6 +32,16 @@ public class IndexController {
 	@Inject
 	FoodService foodService;
 	
+	  @RequestMapping(value="/home", method = RequestMethod.GET)
+	  public String getHomePage(ModelMap modelMap) {
+		 /* DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
+		  modelMap.put("currentDateTime", format.format(new Date()));
+		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
+		  System.out.println(environment.getProperty("kafeneio.main.title"));*/
+		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_FORMAT).format(new Date()));
+		  return "index";
+	  }
+	  
 	  @RequestMapping(value="/", method = RequestMethod.GET)
 	  public String getIndexPage(ModelMap modelMap) {
 		 /* DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);

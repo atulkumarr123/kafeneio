@@ -7,9 +7,9 @@
 <html class="js">
 <head>
 <title>Kafeneio</title>
-<link rel="stylesheet" href="static/css/kafeneio.css"></link>
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
  <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
+<link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
@@ -28,6 +28,8 @@
 <script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
+<script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
+
 
 <script src="static/JSlib/addMenuItems.js"></script>
 </head>
@@ -110,3 +112,61 @@
 		</div>
 	</div>
 </form:form>
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="searchedFoodItemsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Food Items</h4>
+        </div>
+        <div class="modal-body">
+        <fieldset>
+						<input type="text" id="foodItemsRowId" name="foodItemsRowId" />
+						<div class="form-group">
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Item
+									Code</label> <input type="text" name="code" placeholder=""
+									class="form-control" id="code" required>
+							</div>
+
+							<div class="col-md-6">
+								<label for="normal-field" class="control-label">Item
+									Description</label> <input type="text" name="description"
+									placeholder="" class="form-control" id="description" required>
+							</div>
+														
+							<div class="form-group">
+							<div class="col-md-6">
+									<label for="prepended-input" class="control-label">Amount</label>
+									<input type="text" class="form-control" name="amount"
+										id="amount" placeholder="" required>
+								</div>									
+						</div>
+						
+							<div class="col-md-6">
+								<label for="prepended-input" class="control-label">
+								Status</label> 
+								<select path="id" class="form-control"
+									id="itemStatusModal" required="required">
+									<option value="1">Active</option>
+									<option value="0">Inactive</option>
+								</select>
+							</div>
+							
+						</div>
+					</fieldset>
+		 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "updateUnitButton" onclick="updateFoodItem()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelFoodItemButton" >Close</button>
+        </div>
+      </div>      
+    </div>
+  </div>
+</div>

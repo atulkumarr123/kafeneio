@@ -21,4 +21,5 @@ public interface OrderRepository  extends JpaRepository<Order, Long> {
 	List<Order> getOrderListToday(@Param("status")String status);*/
 
 	Order findOne(Long orderid);
+	List<Order> findAll();
 }

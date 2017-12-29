@@ -16,9 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.kafeneio.constants.ApplicationConstant;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.kafeneio.utils.CustomDateDeserializer;
 
 @Entity
 @Table(name="KAFENEIO_ORDER")
@@ -34,7 +34,7 @@ public class Order {
 		private Double amount;
 		@Column(name="table_no")
 		private String table;
-		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
+//		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
 		@Column(name="creation_date")
 		private Date creationDate;
 		
@@ -88,7 +88,8 @@ public class Order {
 		public void setOrderDetails(Set<OrderDetails> orderDetails) {
 			this.orderDetails = orderDetails;
 		}
-
+		
+		@JsonDeserialize(using = CustomDateDeserializer.class)
 		public Date getCreationDate() {
 			return creationDate;
 		}

@@ -38,6 +38,8 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	public synchronized MessageDTO saveOrder(Order order, Long mopId){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
+			
+			order.setOrderNo(this.getOrderNo());
 				if(isOrderExist(order.getOrderNo())){
 					msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
 					msgDTO.setStatusCode(HttpStatus.ALREADY_REPORTED.value());
@@ -76,11 +78,13 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 		while(itr.hasNext()){
 			OrderDetails orderDetails= itr.next();
 			amount=amount+orderDetails.getAmount();
+			orderDetails.setCreationDate(new Date());
 		}
 
 		//order.setOrderNo(orderNo);
 		order.setCreationDate(new Date());
 		order.setAmount(amount);
+		
 	}
 
 	public Long getOrderNo(){

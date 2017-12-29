@@ -1,4 +1,6 @@
 <script  src="static/JSlib/kafeneioCommons.js"></script>
+<script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
+
 
 <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
 <%-- <input type="text" name="currentDate" id="currentDate" value="${currentDate}"/> --%> 
@@ -6,18 +8,22 @@
 <div class="top-navbar header b-b">
 	<div>
 		<ul class="nav navbar-nav">
-			<li><a href="${pageContext.request.contextPath}">Home</a></li>
+			<li><a href="${pageContext.request.contextPath}/home">Home</a></li>
 			<sec:authorize access="hasRole('ADMIN')">
 				<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Admin <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li ><a href="${pageContext.request.contextPath}/restraMenu"
-							id="menu" style="color:white">Menu</a></li>
+						<li><a href="${pageContext.request.contextPath}/restraMenu"
+							id="menu" style="color: white">Menu</a></li>
 						<li><a href="${pageContext.request.contextPath}/expenses"
-							id="expenses" style="color:white">Expenses</a></li>
+							id="expenses" style="color: white">Expenses</a></li>
 						<li><a href="${pageContext.request.contextPath}/reports"
-							id="reports" style="color:white">Reports</a></li>
+							id="reports" style="color: white">Reports</a></li>
+						 <li><a href="${pageContext.request.contextPath}/rawMaterial"
+							id="rawMaterial" style="color: white">Raw Material</a></li>
+						 <li><a href="${pageContext.request.contextPath}/salesAnalytics"
+							id="salesAnalytics" style="color: white">Analytics</a></li>
 					</ul>
 				</li>
 				
@@ -57,6 +63,26 @@
 		</ul>
 	</div>
 </div>
+<!-- <div class="modal fade" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+<div class="modal-header"><h1>Processing...</h1></div><div class="modal-body">
+<div class="progress progress-striped active"><div class="bar">
+</div>
+ </div> -->
+
+
+  <div class="modal fade progresBarModal" id="pleaseWaitDialog" role="dialog" data-keyboard="true">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+<!--         <div class="modal-header">
+ -->          <h4 class="modal-title center">Processing...</h4>
+        <!-- </div> -->
+<!--         <div class="modal-body"></div>
+ -->      </div>
+      
+    </div>
+  </div>
+
 <!-- 
 
 <nav class="navbar navbar-default">

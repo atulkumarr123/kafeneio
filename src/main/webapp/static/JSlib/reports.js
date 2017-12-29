@@ -1,16 +1,17 @@
 $(document).ready(function(){
-	
-  $(window).on("resize", function () {
-	  var newWidth = $("#orderReportGrid").closest(".ui-jqgrid").parent().width();
-	  $("#orderReportGrid").jqGrid("setGridWidth", newWidth, true);
-	  
-	  var newWidthEx = $("#expenseReportGrid").closest(".ui-jqgrid").parent().width();
-	  $("#expenseReportGrid").jqGrid("setGridWidth", newWidthEx, true);
-	  
-//	  var newWidth = $("#application-list").closest(".ui-jqgrid").parent().width();
-//	  $("#application-list").jqGrid("setGridWidth", newWidth, true);
+
+	$(window).on("resize", function () {
+		var newWidth = $("#orderReportGrid").closest(".ui-jqgrid").parent().width();
+		$("#orderReportGrid").jqGrid("setGridWidth", newWidth, true);
+
+		var newWidthEx = $("#expenseReportGrid").closest(".ui-jqgrid").parent().width();
+		$("#expenseReportGrid").jqGrid("setGridWidth", newWidthEx, true);
+
+//		var newWidth = $("#application-list").closest(".ui-jqgrid").parent().width();
+//		$("#application-list").jqGrid("setGridWidth", newWidth, true);
+	});
 });
-});
+
 $( document ).ready(function() {
     $('#fromDateTimePicker').datetimepicker({
     	 format: $("#dateTimeFormatCalendar").val()
@@ -28,14 +29,25 @@ $( document ).ready(function() {
 
 function searchOrders(){
 	$("#orderReportGrid").jqGrid('GridUnload');	
+	var modes = [];
+	$(':checkbox:checked').each(function(i){
+		if($(this).val()!="" && $(this).val()!= null){
+			//alert($(this).val());
+			modes[i] = $(this).val();
+		}
+	});
+	var modesStr = modes.join(", ");
 	var fromDate = $("#fromDateTimePicker").find("input").val();
 	var toDate = $("#toDateTimePicker").find("input").val();
 	var checked =$('input[name="modeOfPayment"]:checked').serialize();
-	alert(checked);
+	//alert(checked);
+//	$('#pleaseWaitDialog').modal('show');
+	waitingDialog.show('Please wait...');
+
 	$.ajax({
-		url : $("#contextPath").val()+"/report/orderList?fromDate="+fromDate+"&&toDate="+toDate,
+		url : $("#contextPath").val()+"/report/orderList?fromDate="+fromDate+"&&toDate="+toDate+"&&modes="+modesStr,
 		success : function(responseText) {
-			//alert(JSON.stringify(responseText));
+//			alert(JSON.stringify(responseText));
 			orderReport(responseText);
 		},
 		error:function(responseText) {
@@ -76,7 +88,7 @@ function orderReport(orderData){
 			autowidth: true,
 			caption: "Order Detail Report",
 			 loadComplete:function() {
-				 adjustTotalOrder();
+				 adjustTotalOrder('orderReportGrid');
 			    },
 			    
 			    
@@ -114,14 +126,19 @@ function orderReport(orderData){
 	/*$("#orderReportGrid").bind("jqGridAfterLoadComplete", function() {
 		adjustTotalOrder();
 	});*/
+//	$('#pleaseWaitDialog').modal('hide');
+	waitingDialog.hide();
 
 }
 
 function searchExpenses(){
-	$("#expenseReportGrid").jqGrid('GridUnload');	
+	$("#expenseReportGrid").jqGrid('GridUnload');
+	
 	var fromDate = $("#fromDateTimePicker").find("input").val();
 	var toDate = $("#toDateTimePicker").find("input").val();
 	
+	waitingDialog.show('Please wait...');
+
 	$.ajax({
 		url :$("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		success : function(responseText) {
@@ -200,6 +217,9 @@ function expensesReport(expenseData){
    },
 		editButton = getColumnIndexByName(grid,'editButton');
    firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
+   
+	waitingDialog.hide();
+
 }
 
  function openPopup(rowid){
@@ -254,16 +274,7 @@ function expensesReport(expenseData){
  } 
  
  
-function adjustTotalOrder(){
-	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
-	var amount = 0;
-	for (var i in data) {
-		var row = data[i];
-		amount=parseInt(amount)+parseInt(row.amount);
-		
-	}	
-	jQuery("#orderReportGrid").footerData('set',{orderNo:'Total', amount:amount});	
-}
+
 
 function adjustTotalExpense(){
 	var data = $("#expenseReportGrid").jqGrid("getGridParam", "data");

@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.kafeneio.dao.FoodDAO;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.repository.FoodRepository;
-import com.kafeneio.repository.EditFoodItemsRepository;
 
 @Service
 @Qualifier(value="foodService")
@@ -23,7 +23,7 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	FoodRepository foodRepository;
 	
 	@Inject
-	EditFoodItemsRepository editFoodItemsRepository;
+	FoodDAO foodDao;
 	
 	
 	@Override
@@ -55,8 +55,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	}
 	
 	@Override
-	public List<FoodItems> editFoodItems() {
-		List<FoodItems> items =   editFoodItemsRepository.editFoodItems();
+	public List<FoodItems> editFoodItems(FoodItems foodItems) {
+		// category = foodItems.getFoodCategory();
+		 
+		List<FoodItems> items =   foodDao.editFoodItems(foodItems);
 		return items;
 	}
 	

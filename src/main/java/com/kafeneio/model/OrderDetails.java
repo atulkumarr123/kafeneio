@@ -1,5 +1,7 @@
 package com.kafeneio.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kafeneio.constants.ApplicationConstant;
 @Entity
 @Table(name="KAFENEIO_ORDER_DETAILS")
 public class OrderDetails {
@@ -32,6 +36,10 @@ public class OrderDetails {
 	
 	@Column(name="AMOUNT") 
 	private Double amount;
+	
+	@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
+	@Column(name="creation_date")
+	private Date creationDate;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
@@ -85,6 +93,14 @@ public class OrderDetails {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 	

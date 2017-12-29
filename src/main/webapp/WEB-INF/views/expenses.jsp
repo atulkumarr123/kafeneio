@@ -29,6 +29,8 @@
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 <script src="static/JSlib/bootstrap-tagsinput.js" /></script>
+<script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
+
 
 
 

@@ -10,6 +10,5 @@ import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 
 public interface EditFoodItemsRepository  extends JpaRepository<FoodItems, Long> {
-	@Query(value="select foodItems  from FoodItems foodItems ")
-	List<FoodItems> editFoodItems();
+	
 }

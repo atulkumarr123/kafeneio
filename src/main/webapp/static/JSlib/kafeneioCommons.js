@@ -29,3 +29,14 @@ function writeMOP(data){
 	});
 }
 
+
+function adjustTotalOrder(gridId){
+	var data = $("#"+gridId).jqGrid("getGridParam", "data");
+	var amount = 0;
+	for (var i in data) {
+		var row = data[i];
+		amount=parseInt(amount)+parseInt(row.amount);
+		
+	}	
+	jQuery("#"+gridId).footerData('set',{orderNo:'Total', amount:amount});	
+}

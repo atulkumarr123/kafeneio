@@ -1,11 +1,21 @@
+$(document).ready(function(){
 
+	$(window).on("resize", function () {
+		var newWidth = $("#rawMaterialGrid").closest(".ui-jqgrid").parent().width();
+		$("#rawMaterialGrid").jqGrid("setGridWidth", newWidth, true);
+
+	});
+});
 
 $( document ).ready(function() {
-    $("#expensesGrid").jqGrid({
+    $("#rawMaterialGrid").jqGrid({
         colModel: [
-        	{ name: "item", label: "Item",  align: "center"},
-            { name: "amount", label: "Amount",  align: "center" },
-            { name: "date", label: "Date",  align: "center" },
+        	{ name: "rawMaterialCode", label: "Raw Material Code",  align: "center"},
+            { name: "rawMaterialDesc", label: "Raw Material Description",  align: "center" },
+            { name: "unitDesc", label: "Unit",  align: "center" },
+            { name: "unitValue", label: "Unit",  align: "center", hidden:true},
+            { name: "quantity", label: "Quantity",  align: "center" },
+            { name: "lowerLimit", label: "Lower Limit",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
@@ -24,7 +34,7 @@ $( document ).ready(function() {
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
-        caption: "Add Expenses",       
+        caption: "Add Raw Material",       
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
             if (iCol >= firstButtonColumnIndex) {
@@ -32,7 +42,7 @@ $( document ).ready(function() {
             }
         }
     });
-    grid = $("#expensesGrid"),
+    grid = $("#rawMaterialGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
         var cm = grid.jqGrid('getGridParam','colModel');
         for (var i=0,l=cm.length; i<l; i++) {
@@ -52,80 +62,52 @@ $( document ).ready(function() {
 	});
 	var currentDate = $("#currentDate").val();
 	
-	$('#expenseDateTime').val(currentDate);
-	//alert(currentDate);
-//	$( ".selector" ).datepicker( "setDate", new Date());
-//	$('#datetimepicker3').val(currentDate);
-	/*  $("#setMinDate").click(function () {
-        $('#datetimepicker3').data("DateTimePicker").setMinDate(new Date("june 12, 2013"));
-    });                                
-    $("#setMaxDate").click(function () {
-        $('#datetimepicker3').data("DateTimePicker").setMaxDate(new Date("july 4, 2013"));
-    });
-    $("#show").click(function () {
-        $('#datetimepicker3').data("DateTimePicker").show();
-    });
-    $("#disable").click(function () {
-        $('#datetimepicker3').data("DateTimePicker").disable();
-    });
-    $("#enable").click(function () {
-        $('#datetimepicker3').data("DateTimePicker").enable();
-    });
-    $("#setDate").click(function () {
-        $('#datetimepicker3').data("DateTimePicker").setDate("10/23/2013");
-    });
-    $("#getDate").click(function () {
-        alert($('#datetimepicker3').data("DateTimePicker").getDate());
-    });*/
+	$('#RawMaterialDateTime').val(currentDate);
 
-	$('#addExpensebutton').click(function() {
+	$('#addRawMaterialButton').click(function() {
 	//	alert("in add expenses button");
-		$('#gbox_expensesGrid').show();
-		$('#gbox_searchAndEditExpensesGrid').hide();
-		$('#saveExpensesButton').show();
-		$('#clearExpensesButton').show();
+		$('#gbox_rawMaterialGrid').show();
+		$('#gbox_searchAndEditRawMaterialGrid').hide();
+		$('#saveRawMaterialButton').show();
+		$('#clearRawMaterialButton').show();
 		
-		var isFormFilled = $("#expenses").valid();
+		var isFormFilled = $("#rawMaterial").valid();
 		var valid = validateForm();
 		if(isFormFilled && valid){
-			addExpense();
+			//alert("validating form");
+			addRawMaterial();
 		}
 	});
 
 });
 
 function validateForm(){
-	var amount = $("#amount").val();
-	var valid = true;
-	if(!(/^\d{0,9}(\.\d{0,4})?$/.test(amount))){
-		$("#amount").after('<label id="amount-error" class="error" for="amount">This field is required.</label>');
-		$("#amount-error").text("Enter only digits/decimals");
-		valid = false;
-	}
-	return valid
+		var valid = true;
+	return valid;
 }
 
-function addExpense(){
-	//alert("in add expenses");
-
-	var item = $("#itemDesc").val();
-	//alert(item);
-	var amount = $("#amount").val();
+function addRawMaterial(){
+	var rawMaterialCode = $("#rawMaterialCode").val();
+	var rawMaterialDesc = $("#rawMaterialDesc").val();
+	var unitDesc = $("#unit").find("option:selected").text();
+	var quantity = $("#quantity").val();	
 	var remarks = $("#remarks").val();
-	var date = $("#datetimepicker3").find("input").val();
-	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,date:date, remarks:remarks}, "last");
+	var unitValue = $("#unit").val();
+	var lowerLimit = $("#lowerLimit").val();
+	//var date = $("#datetimepicker3").find("input").val();
+	$("#rawMaterialGrid").jqGrid("addRowData",33 , { unitValue : unitValue, rawMaterialCode : rawMaterialCode, rawMaterialDesc : rawMaterialDesc ,unitDesc : unitDesc, quantity : quantity, remarks:remarks, lowerLimit: lowerLimit}, "last");
 }
 
-function saveExpenses() {
-	
+function saveRawMaterial() {
+
 	var ctx = $("#contextPath").val();
-	var allData = $("#expensesGrid").jqGrid("getGridParam", "data");
+	var allData = $("#rawMaterialGrid").jqGrid("getGridParam", "data");
 	//alert(allData);
 	if(jQuery.isEmptyObject(allData)){
 		  new PNotify({
 	    		 type:'error',
 	    		 title: 'Error',
-	    		 text: 'Please add atleast one expense!'
+	    		 text: 'Please add atleast one Raw Material!'
 		   });
 		  return false;
 	}
@@ -134,50 +116,56 @@ function saveExpenses() {
 	expense["item"]=null;
 	expense["amount"]=null;
 	expense["remarks"]=null;*/
-	
+
+	var rawMaterial = {};
+	rawMaterial["creationDate"] = null;
+	rawMaterial["lastUpdatedDate"]  = null;
+
+	/*rawMaterial["creationDate"] = $("#currentDate").val(); 
+	rawMaterial["lastUpdatedDate"] = $("#lastUpdatedDate").val(); */
 	
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url : ctx+"/expenses",
+	      url : ctx+"/saveRawMaterials",
 	      data: JSON.stringify(allData),
 	      success :function(result) {
-	    	  //alert(JSON.stringify(result));
+//	    	  alert(JSON.stringify(result));
 	    	  new PNotify({
     			  type:'success',
     			  title: 'Success',
     			  text: result.message
 	    	  });
-	    	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	    	  $("#rawMaterialGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 	     },
 	   error:function(result) {
-		  /* alert(JSON.stringify(result.responseJSON.message));*/
+		  // alert(JSON.stringify(result.responseJSON.message));
 		   new PNotify({
 	    		 type:'error',
 	    		 title: 'Error',
 	    		 text: result.responseJSON.message
 		   });
-		   //alert("error"+JSON.stringify(responseText));
+//		   alert("error"+JSON.stringify(result));
 	   }
 	  });
 }
 
 function removeItem(rowid){
-	$('#expensesGrid').jqGrid('delRowData',rowid);
+	$('#rawMaterialGrid').jqGrid('delRowData',rowid);
 }
 
-function clearExpenses(){
-	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+function clearRawMaterial(){
+	  $("#rawMaterialGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 
 }
 
 $( document ).ready(function() {
-	$('#searchAndEditExpensesbutton').click(function() {
-	$('#gbox_expensesGrid').hide();
-	$('#gbox_searchAndEditExpensesGrid').show();
-	$('#saveExpensesButton').hide();
-	$('#clearExpensesButton').hide();
+	$('#searchAndEditRawMaterialbutton').click(function() {
+	$('#gbox_rawMaterialGrid').hide();
+	$('#gbox_searchAndEditRawMaterialGrid').show();
+	$('#saveRawMaterialButton').hide();
+	$('#clearRawMaterialButton').hide();
 
 	//searchAndEdit();
 	});
@@ -188,16 +176,17 @@ $( document ).ready(function() {
 
 
 
-function searchAndEditExpenses(){
+function searchAndEditRawMaterial(){
 //	alert("in search and edit");
-	$("#searchAndEditExpensesGrid").jqGrid('GridUnload');	
+	$("#searchAndEditRawMaterialGrid").jqGrid('GridUnload');	
 	
-	waitingDialog.show('Please wait...');
+	//waitingDialog.show('Please wait...');
 	
 	$.ajax({
-		url :$("#contextPath").val()+"/expensesList",
+		url :$("#contextPath").val()+"/rawMaterialList",
 		success : function(responseText) {
-			EditExpenses(responseText);
+			alert(JSON.stringify(responseText));
+			EditRawMaterial(responseText);
 		},
 		error:function(responseText) {
 			$(function(){
@@ -209,8 +198,8 @@ function searchAndEditExpenses(){
 }
 
 
-function EditExpenses(expenseData){
-	$("#searchAndEditExpensesGrid").jqGrid({
+function EditRawMaterial(expenseData){
+	$("#searchAndEditRawMaterialGrid").jqGrid({
 		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		//datatype : "json",
 		datatype : "local",
@@ -230,7 +219,7 @@ function EditExpenses(expenseData){
           	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
           	  }}
 			],
-			data:expenseData,
+			data:RawMaterialData,
 			footerrow: true,
 			userDataOnFooter : true,
 			rowNum:10,
@@ -245,7 +234,7 @@ function EditExpenses(expenseData){
 			loadonce: true,
 			 onCellSelect: function (rowid,iCol,cellcontent,e) {
 		            if (iCol >= firstButtonColumnIndex) {
-		                removeExpense(rowid);
+		                removeRawMaterial(rowid);
 		            }
 			
 		            else if (iCol == editButton) {
@@ -255,9 +244,9 @@ function EditExpenses(expenseData){
 				}
 
 			},
-			caption: "Search & Edit Expense",
+			caption: "Search & Edit Raw Material",
 			loadComplete:function() {
-				adjustTotalExpense();
+				adjustTotalRawMaterial();
 			}
 	});
 	
@@ -279,15 +268,15 @@ function EditExpenses(expenseData){
 }
 
  function openPopup(rowid){
-	 	 $('#myModalExpenses').modal('show');
+	 	 $('#myModalRawMaterial').modal('show');
 	 
 	 	 
-	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowid);
-	 	 $("#expenseRowId").val(rowid);
+	 	var rowData = $("#searchAndEditRawMaterialGrid").jqGrid("getRowData", rowid);
+	 	 $("#rawMaterialRowId").val(rowid);
 	 	$('#foodItemDescModal').val(rowData.item);
 	 	//alert(rowData.amount);
 	 	$('#amountModal').val(rowData.amount);
-	 	$('#expenseDateTimeModal').val(rowData.creationDate);
+	 	$('#rawMaterialDateTimeModal').val(rowData.creationDate);
 	 	$('#remarksModal').val(rowData.remarks);
  } 
  
@@ -296,18 +285,18 @@ function EditExpenses(expenseData){
 	 var rowId= $("#expenseRowId").val();
 		var ctx = $("#contextPath").val();
 	// alert(rowId);
-	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowId);
+	 	var rowData = $("#searchAndEditRawMaterialGrid").jqGrid("getRowData", rowId);
 	 	rowData.item = $('#foodItemDescModal').val();
 	 	rowData.amount = $('#amountModal').val();
-	 	rowData.creationDate = $('#expenseDateTimeModal').val();
+	 	rowData.creationDate = $('#rawMaterialDateTimeModal').val();
 	 	rowData.remarks = $('#remarksModal').val();
 	 	rowData.editButton = '';
-	 	$("#searchAndEditExpensesGrid").jqGrid("setRowData", rowId, rowData);
+	 	$("#searchAndEditRawMaterialGrid").jqGrid("setRowData", rowId, rowData);
 	   $.ajax({
 		      type: "POST",
 		      contentType : 'application/json; charset=utf-8',
 		      dataType : 'json',
-		      url : ctx+"/report/updateExpenses",
+		      url : ctx+"/report/updateRawMaterial",
 		      data: JSON.stringify(rowData),
 		      success :function(result) {
 		    	  new PNotify({
@@ -315,7 +304,7 @@ function EditExpenses(expenseData){
 	    			  title: 'Success',
 	    			  text: result.message
 		    	  });
-		    	  $( "#cancelExpensesButton").click();
+		    	  $( "#cancelRawMaterialButton").click();
 		    	  
 		     },
 		   error:function(result) {
@@ -330,9 +319,9 @@ function EditExpenses(expenseData){
 		  });
  } 
  
- 
-function adjustTotalOrder(){
-	var data = $("#orderReportGrid").jqGrid("getGridParam", "data");
+/* 
+function adjustTotalRawMaterial(){
+	var data = $("#RawMaterialGrid").jqGrid("getGridParam", "data");
 	var amount = 0;
 	for (var i in data) {
 		var row = data[i];
@@ -373,4 +362,4 @@ function removeExpense(rowid){
 	});
 	
 }
-
+*/

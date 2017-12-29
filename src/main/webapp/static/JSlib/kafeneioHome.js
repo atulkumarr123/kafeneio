@@ -310,6 +310,7 @@ $('#okDiscountButton').click(function() {
 	else{
 		return false;
 	}
+	
 	  $( "#cancelDiscountButton").click();
 
 });
@@ -353,14 +354,13 @@ function calculateDiscount(){
 		//alert((amount * discountPercentage)/100);
 		var discountAmount = Math.floor((amount * discountPercentage)/100);
 		//alert(discountAmount);
-
 		if(isPresent){
 			$("#invoiceGrid").jqGrid("setRowData", -999,  { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount });
+			$('#discountPercentage').val("");
 		}
 		else{
-			$("#invoiceGrid").jqGrid("addRowData",-999 , { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount }, "last");
+			$("#invoiceGrid").jqGrid("addRowData",-999 , { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount }, "last");	
 		}
-
 		adjustTotal();
 	}
 
