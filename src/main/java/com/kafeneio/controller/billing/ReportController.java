@@ -92,8 +92,6 @@ class ReportLoaderController{
 		FoodCategory foodCategory = new FoodCategory();
 		modelMap.put("foodCategoryReport", foodCategory);
 		
-		
-		
 		List<ModeOfPayment> modes  = reportService.findModeOfPayment();
 		
 	  /*ModeOfPayment mode  = new ModeOfPayment();

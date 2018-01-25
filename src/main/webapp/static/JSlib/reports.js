@@ -40,10 +40,7 @@ function searchOrders(){
 	var fromDate = $("#fromDateTimePicker").find("input").val();
 	var toDate = $("#toDateTimePicker").find("input").val();
 	var checked =$('input[name="modeOfPayment"]:checked').serialize();
-	//alert(checked);
-//	$('#pleaseWaitDialog').modal('show');
 	waitingDialog.show('Please wait...');
-
 	$.ajax({
 		url : $("#contextPath").val()+"/report/orderList?fromDate="+fromDate+"&&toDate="+toDate+"&&modes="+modesStr,
 		success : function(responseText) {

@@ -113,7 +113,7 @@ function saveFoodItems() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#foodItemsGrid").jqGrid("getGridParam", "data");
 	var categoryId = $("#category").val();
-	alert(JSON.stringify(allData));
+//	alert(JSON.stringify(allData));
 //	console.log(JSON.stringify(allData));
 //	return false;
 	/*var expense={};
@@ -193,7 +193,6 @@ function searchAndEditFoodItems(){
 	
 	waitingDialog.show('Please wait...');
 
-	
 	$.ajax({
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
@@ -201,7 +200,6 @@ function searchAndEditFoodItems(){
 		url : ctx+"/editFoodItems",
 		data: JSON.stringify(foodItems),
 		success : function(responseText) {
-			//alert(JSON.stringify(responseText));
 			//editFoodItems(responseText);
 			searchAndEdit(responseText);
 
@@ -312,6 +310,39 @@ function updateFoodItem(){
 	 	
 	 //	$("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
 	   /*$.ajax({
+=======
+}
+
+function updateFoodItem(){
+	//alert("in update");
+	
+	 var rowId= $("#foodItemsRowId").val();
+		var ctx = $("#contextPath").val();
+		// alert(rowId);
+	 	var rowData = $("#editFoodItemsGrid").jqGrid("getRowData", rowId);
+	 	rowData.code = $('#code').val();
+	 	rowData.description = $('#description').val();
+	 	//alert($('#status').val());
+	 	rowData.amount = $('#amount').val();
+	 	var statusVal = $('#itemStatusModal').val();
+	 
+	 	
+	 	if(statusVal == '1'){
+	 		statusVal = true;
+			statusVisible = 'Active';
+		}
+		else{
+			statusVal = false;
+			statusVisible = 'Inactive';
+		}
+	 //	rowData.statusVisible= statusVisible;
+	 	rowData.status= statusVal;
+	 	rowData.creationDate = $('#expenseDateTime').val();
+	 	rowData.editButton = '';
+	 	
+	 //	$("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
+	  /* $.ajax({
+>>>>>>> branch 'master' of https://github.com/atulkumarr123/kafeneio.git
 		      type: "POST",
 		      contentType : 'application/json; charset=utf-8',
 		      dataType : 'json',

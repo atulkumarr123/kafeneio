@@ -25,6 +25,7 @@ public class ReportDAO {
 		StringBuffer queryStr = new StringBuffer("select order from Order order where creationDate <= :toDate and creationDate >=:fromDate and order.status.code = '"+ApplicationConstant.SERVED_ORDER+"'");	
 
 		if(modes!=null && !modes.isEmpty()){
+//		if(modes!=null && modes !=""){
 			queryStr.append("and order.modeOfPayment.id in ("+modes+")");
 		}
 		Query query = entityManager.createQuery(queryStr.toString());
