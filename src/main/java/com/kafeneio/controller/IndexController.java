@@ -56,7 +56,7 @@ public class IndexController {
 	  @RequestMapping(value="/restraMenu", method = RequestMethod.GET)
 	  public String getMenu(ModelMap modelMap) {
 		  List<FoodCategory> foodCategoryList = foodService.findFoodCategory();
-		  modelMap.put("foodCategoryList",foodCategoryList);
+//		  modelMap.put("foodCategoryList",foodCategoryList);
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
 		  System.out.println(environment.getProperty("kafeneio.main.title"));
@@ -64,4 +64,21 @@ public class IndexController {
 	  }
 	  
 	  
+}
+
+class IndexRestController{
+
+	@Inject
+	FoodService foodService;
+	
+	  @PreAuthorize("hasRole('ADMIN')")
+	  @RequestMapping(value="/loadRestraMenu", method = RequestMethod.GET)
+	  public String getMenu(ModelMap modelMap) {
+		  List<FoodCategory> foodCategoryList = foodService.findFoodCategory();
+		  modelMap.put("foodCategoryList",foodCategoryList);
+		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
+		  modelMap.put("currentDateTime", format.format(new Date()));
+		  return "restraMenu";
+	  }
+	
 }

@@ -1,6 +1,6 @@
 package com.kafeneio.model;
 
-import java.util.Comparator;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -41,7 +41,7 @@ public class FoodItems{
     @JsonBackReference
  	private FoodCategory foodCategory;
 	@Column(name="amount") 
-	private int amount;
+	private BigDecimal amount;
 
 	public Long getId() {
 		return id;
@@ -74,13 +74,6 @@ public class FoodItems{
 		this.foodCategory = foodCategory;
 	}
 	
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
 	public Date getDate() {
 		return date;
 	}
@@ -92,6 +85,12 @@ public class FoodItems{
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	public BigDecimal getAmount() {
+		return amount;
+	}
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 	
 	

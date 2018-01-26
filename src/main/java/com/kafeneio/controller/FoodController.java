@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafeneio.DTO.FoodItemsDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodCategory;
@@ -32,7 +33,7 @@ public class FoodController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/foodItems", method = RequestMethod.POST)
-	public MessageDTO saveFoodItems(@RequestBody List<FoodItems> foodItems, @RequestParam("categoryId") Long categoryId)
+	public MessageDTO saveFoodItems(@RequestBody List<FoodItemsDto> foodItems, @RequestParam("categoryId") Long categoryId)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		foodItems.stream().forEach(foodItem -> foodItem.setId(null));
 		MessageDTO msgDTO = null;

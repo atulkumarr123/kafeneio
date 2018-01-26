@@ -7,7 +7,7 @@ $( document ).ready(function() {
         	{ name: "foodItemCode", label: "Food Item Code",  align: "center"},
             { name: "foodItemDesc", label: "Food Item Description",  align: "center" },
             { name: "amount", label: "Amount",  align: "center" },
-            { name: "category", label: "Category",  align: "center" },
+            { name: "foodCategory", label: "Category",  align: "center" },
             { name: "status", label: "Status",  align: "center",hidden:true },
             { name: "statusVisible", label: "Status",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
@@ -90,7 +90,7 @@ function addFoodItems(){
 	var foodItemDesc = $("#foodItemDesc").val();
 	//alert(item);
 	var amount = $("#amount").val();
-	var category = $("#category").find("option:selected").text();
+	var foodCategory = $("#category").find("option:selected").text();
 //	var status = $("#status").find("option:selected").text();
 //	alert(status);
 	var status = $("#status").val();
@@ -106,14 +106,15 @@ function addFoodItems(){
 	
 	//foodGridRowId=parseInt(foodGridRowId)+parseInt(1);
 	//var date = $("#datetimepicker3").find("input").val();
-	$("#foodItemsGrid").jqGrid("addRowData",id , { foodItemCode : foodItemCode, foodItemDesc : foodItemDesc, amount : amount , category:category, statusVisible : statusVisible, status : status}, "last");
+	$("#foodItemsGrid").jqGrid("addRowData",id , { foodItemCode : foodItemCode, foodItemDesc : foodItemDesc, amount : amount , foodCategory:foodCategory, statusVisible : statusVisible, status : status}, "last");
 }
 
 function saveFoodItems() {
 	var ctx = $("#contextPath").val();
 	var allData = $("#foodItemsGrid").jqGrid("getGridParam", "data");
 	var categoryId = $("#category").val();
-//	alert(JSON.stringify(allData));
+	allData.foodCategory = null;
+	alert(JSON.stringify(allData));
 //	console.log(JSON.stringify(allData));
 //	return false;
 	/*var expense={};
@@ -177,6 +178,14 @@ function searchAndEditFoodItems(){
 	$("#editFoodItemsGrid").jqGrid('GridUnload');	
 	var ctx = $("#contextPath").val();
 	var status = $("#status").val();
+	if(status == '1'){
+		status = true;
+		statusVisible = 'Active';
+	}
+	else{
+		status = false;
+		statusVisible = 'Inactive';
+	}
 	var category = $("#category").val();
 	var foodItemCode = $("#foodItemCode").val();
 	
@@ -200,7 +209,7 @@ function searchAndEditFoodItems(){
 		url : ctx+"/editFoodItems",
 		data: JSON.stringify(foodItems),
 		success : function(responseText) {
-			//editFoodItems(responseText);
+			alert(JSON.stringify(responseText));
 			searchAndEdit(responseText);
 
 			//$('#outputLabel').text(JSON.stringify(responseText));
@@ -231,8 +240,8 @@ function searchAndEdit(foodItems){
         	{ name: "foodItemCode", label: "Food Item Code",  align: "center"},
             { name: "foodItemDesc", label: "Food Item Description",  align: "center" },
             { name: "amount", label: "Amount",  align: "center" },
-            { name: "category", label: "Category",  align: "center" },
-            { name: "status", label: "Status",  align: "center",hidden:true },
+            { name: "foodCategory.foodDesc", label: "Category",  align: "center" },
+            { name: "status", label: "Status",  align: "center", hidden:true },
             { name: "statusVisible", label: "Status",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
@@ -288,8 +297,8 @@ function updateFoodItem(){
 		var ctx = $("#contextPath").val();
 		// alert(rowId);
 	 	var rowData = $("#editFoodItemsGrid").jqGrid("getRowData", rowId);
-	 	rowData.code = $('#code').val();
-	 	rowData.description = $('#description').val();
+	 	rowData.code = $('#foodItemCode').val();
+	 	rowData.description = $('#foodItemDesc').val();
 	 	//alert($('#status').val());
 	 	rowData.amount = $('#amount').val();
 	 	var statusVal = $('#itemStatusModal').val();
@@ -305,12 +314,11 @@ function updateFoodItem(){
 		}
 	 //	rowData.statusVisible= statusVisible;
 	 	rowData.status= statusVal;
-	 	rowData.creationDate = $('#expenseDateTime').val();
+	 	rowData.creationDate = $('#addMenuItemDateTime').val();
 	 	rowData.editButton = '';
 	 	
 	 //	$("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
 	   /*$.ajax({
-=======
 }
 
 function updateFoodItem(){
@@ -376,8 +384,8 @@ function openPopupFoodItem(rowid){
 	$('#searchedFoodItemsModal').modal('show');
 	var rowData = $("#editFoodItemsGrid").jqGrid("getRowData", rowid);
 	$("#foodItemsRowId").val(rowid);
-	$('#code').val(rowData.code);
-	$('#description').val(rowData.description);
+	$('#foodItemCode').val(rowData.foodItemCode);
+	$('#foodItemDesc').val(rowData.foodItemDesc);
 	//alert(rowData.status);
 	var status = rowData.status;
 	if(status == 'Active'){

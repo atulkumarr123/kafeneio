@@ -83,19 +83,15 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 			rawMaterialDto.setRemarks(rawMaterial.getRemarks());
 			rawMaterialDto.setUnitDesc(rawMaterial.getUnit().getDescription());
 			rawMaterialDto.setUnitValue(rawMaterial.getUnit().getId());
-			
-			dtoList.add(rawMaterialDto);
-			
+			dtoList.add(rawMaterialDto);		
 		});
 		return dtoList;
 	}
 	
-	
 	@Override
 	public MessageDTO updateRawMaterial(RawMaterialDto rawMaterialDto) {
 		MessageDTO msgDTO = new MessageDTO();
-		try{
-			
+		try{			
 			RawMaterials rawMaterial = rawMaterialRepository.findOne(rawMaterialDto.getId());
 			transformDtoToModel(rawMaterialDto, rawMaterial);			
 			rawMaterialRepository.save(rawMaterial);
@@ -106,8 +102,6 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 			msgDTO.setMessage("Some Error Occured");
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
-		return msgDTO;
-		
+		return msgDTO;	
 	}
-	
 }

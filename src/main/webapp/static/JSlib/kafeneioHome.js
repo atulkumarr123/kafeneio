@@ -1,9 +1,21 @@
 $( document ).ready(function() {
-	 //$("#menuChildDiv").hide();
-	 
-	 
-	//$("#menu").click(function(){
-		//reloadGrid();
+	alert(JSON.stringify($("#wholeMenu").val()));
+	var ctx = $("#contextPath").val();
+	$.ajax({
+		url : ctx+"/food/"+foodCategory,
+		success : function(responseText) {
+			alert(JSON.stringify(responseText));
+			writeDivsFromJson(responseText);
+			//$('#outputLabel').text(JSON.stringify(responseText));
+		},
+		error:function(responseText) {
+		//	alert("error"+responseText);
+			$('#outputLabel').text("Error");
+		}	
+	});
+	
+	
+	
 		$("#menuChildDiv").show();
 	//});	 
     // grid = $('#invoiceGrid'), firstButtonColumnIndex, buttonNames={};
@@ -76,11 +88,13 @@ function removeItem(rowid){
 	adjustTotal();
 }
 function getItems(foodCategory){
+	alert(JSON.stringify($("#wholeMenu").val())[0]);
+//	var foodItems = $("#wholeMenu").val().foodCategory;
 	var ctx = $("#contextPath").val();
 	$.ajax({
 		url : ctx+"/food/"+foodCategory,
 		success : function(responseText) {
-			//alert(JSON.stringify(responseText));
+			alert(JSON.stringify(responseText));
 			writeDivsFromJson(responseText);
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
