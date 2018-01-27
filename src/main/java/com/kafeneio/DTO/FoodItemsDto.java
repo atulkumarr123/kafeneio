@@ -6,11 +6,13 @@ import java.util.Date;
 public class FoodItemsDto{
 	private Long id;
 	private boolean status;
+	private String statusVisible;	
 	private Date date;
 	private String foodItemCode;
 	private String foodItemDesc;
- 	private String foodCategory;
-	private BigDecimal amount;
+ 	private Long foodCategoryId;
+ 	private String foodCategoryDesc;
+ 	private BigDecimal amount;
 	
 	public Long getId() {
 		return id;
@@ -42,17 +44,31 @@ public class FoodItemsDto{
 	public void setFoodItemDesc(String foodItemDesc) {
 		this.foodItemDesc = foodItemDesc;
 	}
-	public String getFoodCategory() {
-		return foodCategory;
-	}
-	public void setFoodCategory(String foodCategory) {
-		this.foodCategory = foodCategory;
-	}
 	public BigDecimal getAmount() {
 		return amount;
 	}
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
+	public Long getFoodCategoryId() {
+		return foodCategoryId;
+	}
+	public void setFoodCategoryId(Long foodCategoryId) {
+		this.foodCategoryId = foodCategoryId;
+	}
+	public String getFoodCategoryDesc() {
+		return foodCategoryDesc;
+	}
+	public void setFoodCategoryDesc(String foodCategoryDesc) {
+		this.foodCategoryDesc = foodCategoryDesc;
+	}
+	public String getStatusVisible() {
+		return statusVisible;
+	}
+	public void setStatusVisible(String statusVisible) {
+		this.statusVisible = statusVisible;
+	}
+
+	
 
 }

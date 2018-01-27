@@ -1,5 +1,6 @@
 package com.kafeneio.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,11 +10,11 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.DTO.FoodItemsDto;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
-import com.kafeneio.model.Order;
+import com.kafeneio.repository.FoodRepository;
 
 @Repository
 public class FoodDAO {
@@ -21,22 +22,28 @@ public class FoodDAO {
 	@Inject
 	EntityManager entityManager;
 	
-	public List<FoodItems> editFoodItems(FoodItems foodItems) {
+	@Inject
+	FoodRepository foodRepository;
+	
+	public List<FoodItems> editFoodItems(FoodItemsDto foodItemsDto) {
+		
 		StringBuffer queryStr = new StringBuffer("select foodItems  from FoodItems foodItems");
-		if(foodItems.getFoodCategory() != null && !"".equals(foodItems.getFoodCategory())){
-			FoodCategory category = foodItems.getFoodCategory();
-			queryStr.append(" where foodItems.foodCategory.id = "+category.getId());
+		if(foodItemsDto.getFoodCategoryId() != null && !"".equals(foodItemsDto.getFoodCategoryId())){
+
+			queryStr.append(" where foodItems.foodCategory.id = "+foodItemsDto.getFoodCategoryId());
 		}
-		if(foodItems.isStatus()){
+		if(foodItemsDto.isStatus()){
 			queryStr.append(" and foodItems.status = 1");
 		}
-		if(!foodItems.isStatus()){
+		if(!foodItemsDto.isStatus()){
 			queryStr.append(" and foodItems.status = 0");
 		}
 		
 		Query query = entityManager.createQuery(queryStr.toString());
-		List <FoodItems> orders = query.getResultList();
-		return orders;
+		List<FoodItems> items = query.getResultList();
+			
+		
+		return items;
 	}
 	
 	public List<Expenses> fetchExpenses(Date fromDate, Date toDate) {

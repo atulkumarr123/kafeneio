@@ -40,7 +40,7 @@ function createPendingOrderGrid(pendingOrders){
 			{ name: "orderNo", label: "Order No",  align: "center", width:80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
 			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
-			{ name: "creationDate", label: "Date & Time",  align: "center", width:70},
+//			{ name: "creationDate", label: "Date & Time",  align: "center", width:70},
 			{ name: 'table', label:"Table", width: 120, sortable: false, search: false, align: "center", 
     			formatter:function(cellValue, option){
     				if(cellValue == null  || cellValue == 'undefined') cellValue = '';

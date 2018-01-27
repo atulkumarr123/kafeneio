@@ -1,12 +1,9 @@
 $( document ).ready(function() {
-	alert(JSON.stringify($("#wholeMenu").val()));
 	var ctx = $("#contextPath").val();
 	$.ajax({
-		url : ctx+"/food/"+foodCategory,
+		url : ctx+"/loadRestraMenu/",
 		success : function(responseText) {
-			alert(JSON.stringify(responseText));
-			writeDivsFromJson(responseText);
-			//$('#outputLabel').text(JSON.stringify(responseText));
+			$("#wholeMenu").val(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
 		//	alert("error"+responseText);
@@ -88,8 +85,12 @@ function removeItem(rowid){
 	adjustTotal();
 }
 function getItems(foodCategory){
-	alert(JSON.stringify($("#wholeMenu").val())[0]);
-//	var foodItems = $("#wholeMenu").val().foodCategory;
+//	var foodItemsObj = {"WWP":[{"id":606,"status":true,"date":1512757800000,"foodItemCode":"PASTAARABNVEG","foodItemDesc":"Pasta Arrabiata (Non-Veg) Red Sauce","amount":180},{"id":610,"status":true,"date":1512757800000,"foodItemCode":"MXSSPSTANV","foodItemDesc":"Mix Sauce Pasta (Non Veg)","amount":220},{"id":768,"status":true,"date":1512757800000,"foodItemCode":"FLLDD","foodItemDesc":"Fully Loaded","amount":50},{"id":766,"status":true,"date":1512757800000,"foodItemCode":"AddOns","foodItemDesc":"AddOn-Paneer","amount":30},{"id":605,"status":true,"date":1512757800000,"foodItemCode":"PASTAARABVEG","foodItemDesc":"Pasta Arrabiata (Veg) Red Sauce","amount":160},{"id":608,"status":true,"date":1512757800000,"foodItemCode":"PastaAlfNonVeg","foodItemDesc":"Pasta Alfredo (Non-Veg) White Sauce","amount":180},{"id":609,"status":true,"date":1512757800000,"foodItemCode":"MXSSPSTA","foodItemDesc":"Mix Sauce Pasta (Veg)","amount":200},{"id":611,"status":true,"date":1512757800000,"foodItemCode":"AddOnschk","foodItemDesc":"AddOn-Chicken","amount":40},{"id":772,"status":true,"date":1516893607000,"foodItemCode":"sdfgs","foodItemDesc":"sdfgs","amount":33},{"id":773,"status":false,"date":1516960425000,"foodItemCode":null,"foodItemDesc":null,"amount":2},{"id":774,"status":true,"date":1516971344000,"foodItemCode":"abc","foodItemDesc":"abc","amount":200},{"id":607,"status":true,"date":1512757800000,"foodItemCode":"PastaAlf","foodItemDesc":"Pasta Alfredo (Veg) White Sauce","amount":160}]};
+	var foodItemsObj = JSON.parse($("#wholeMenu").val());
+	var foodItems = foodItemsObj[foodCategory];
+	writeDivsFromJson(foodItems);
+	
+	/*
 	var ctx = $("#contextPath").val();
 	$.ajax({
 		url : ctx+"/food/"+foodCategory,
@@ -102,7 +103,7 @@ function getItems(foodCategory){
 		//	alert("error"+responseText);
 			$('#outputLabel').text("Error");
 		}	
-	});
+	});*/
 }
 function writeDivsFromJson(data){
 	var html = '';

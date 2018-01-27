@@ -16,8 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.utils.CustomDateDeserializer;
 
 @Entity
@@ -34,11 +36,9 @@ public class Order {
 		private Double amount;
 		@Column(name="table_no")
 		private String table;
-//		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
+		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
 		@Column(name="creation_date")
-		private Date creationDate;
-		
-		
+		private Date creationDate;	
 		@Column(name="discount_percentage")
 		private Long discountPercentage;
 		

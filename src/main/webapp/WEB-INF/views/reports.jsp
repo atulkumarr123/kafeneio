@@ -10,13 +10,13 @@
 
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
 <link rel="stylesheet" href="static/css/font-awesome.min-4.7.0.css"></link>
-<link rel="stylesheet" href="static/css/kafeneio.css"></link>
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="./static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
 <link href = "static/css/bootstrap-datetimepicker-4.17.37.min.css" rel = "stylesheet">
 <link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
+<link rel="stylesheet" href="static/css/kafeneio.css"></link>
 
 <script src="static/js/app.js" /></script>
 <script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>

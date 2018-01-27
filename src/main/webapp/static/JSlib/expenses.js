@@ -5,7 +5,7 @@ $( document ).ready(function() {
         colModel: [
         	{ name: "item", label: "Item",  align: "center"},
             { name: "amount", label: "Amount",  align: "center" },
-            { name: "date", label: "Date",  align: "center" },
+            { name: "creationDate", label: "Date",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
@@ -113,7 +113,7 @@ function addExpense(){
 	var amount = $("#amount").val();
 	var remarks = $("#remarks").val();
 	var date = $("#datetimepicker3").find("input").val();
-	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,date:date, remarks:remarks}, "last");
+	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,creationDate:date, remarks:remarks}, "last");
 }
 
 function saveExpenses() {
@@ -280,7 +280,9 @@ function EditExpenses(expenseData){
 
  function openPopup(rowid){
 	 	 $('#myModalExpenses').modal('show');
-	 
+	 	$('#datetimepickerModal').datetimepicker({
+			format: 'DD-MM-YYYY'
+		});
 	 	 
 	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowid);
 	 	 $("#expenseRowId").val(rowid);

@@ -41,11 +41,11 @@ public class FoodController {
 		return msgDTO;
 	}
 	
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/editFoodItems",method=RequestMethod.POST)
-	public List<FoodItems> editFoodItems(@RequestBody FoodItems foodItems)
+	public List<FoodItemsDto> editFoodItems(@RequestBody FoodItemsDto foodItemsDto)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		List<FoodItems> items = foodService.editFoodItems(foodItems);
+		List<FoodItemsDto> items = foodService.editFoodItems(foodItemsDto);
 		return items;
 
 }

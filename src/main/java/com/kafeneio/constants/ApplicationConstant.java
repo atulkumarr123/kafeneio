@@ -15,7 +15,7 @@ public class ApplicationConstant {
 	public static final String NEW_ORDER = "NEW";
 	public static final String SERVED_ORDER = "SERVED";
 	public static final String CANCELLED_ORDER = "CANCELLED";
-
-
+	public static final String ACTIVE = "Active";
+	public static final String INACTIVE = "Inactive";
 
 }

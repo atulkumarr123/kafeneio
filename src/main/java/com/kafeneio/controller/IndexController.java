@@ -3,7 +3,10 @@ package com.kafeneio.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -14,11 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.constants.ApplicationConstant;
-import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodCategory;
-import com.kafeneio.model.ModeOfPayment;
+import com.kafeneio.model.FoodItems;
 import com.kafeneio.service.FoodService;
 
 @Controller
@@ -56,29 +59,33 @@ public class IndexController {
 	  @RequestMapping(value="/restraMenu", method = RequestMethod.GET)
 	  public String getMenu(ModelMap modelMap) {
 		  List<FoodCategory> foodCategoryList = foodService.findFoodCategory();
-//		  modelMap.put("foodCategoryList",foodCategoryList);
+		  modelMap.put("foodCategoryList",foodCategoryList);
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
 		  System.out.println(environment.getProperty("kafeneio.main.title"));
 		  return "restraMenu";
 	  }
 	  
-	  
 }
 
+@RestController
 class IndexRestController{
 
+	public static List<FoodCategory> foodCategoryList = null;
 	@Inject
 	FoodService foodService;
 	
 	  @PreAuthorize("hasRole('ADMIN')")
 	  @RequestMapping(value="/loadRestraMenu", method = RequestMethod.GET)
-	  public String getMenu(ModelMap modelMap) {
-		  List<FoodCategory> foodCategoryList = foodService.findFoodCategory();
-		  modelMap.put("foodCategoryList",foodCategoryList);
-		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
-		  modelMap.put("currentDateTime", format.format(new Date()));
-		  return "restraMenu";
+	  public  Map<String,Set<FoodItems>> loadRestraMenu() {
+		  if(foodCategoryList == null){
+		  foodCategoryList = foodService.findFoodCategory();
+		  }
+		  Map<String,Set<FoodItems>> wholeMenu = new HashMap<String, Set<FoodItems>>();
+		  foodCategoryList.forEach(category->{
+			  wholeMenu.put(category.getFoodCode(), category.getFoodItems());
+		  });
+		  return wholeMenu;
 	  }
 	
 }

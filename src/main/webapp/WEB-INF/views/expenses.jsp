@@ -135,7 +135,7 @@
 							<div class="form-group">
 								<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="date">Date</label>
-									<div class='input-group date' id='datetimepicker3'>
+									<div class='input-group date' id='datetimepickerModal'>
 										<input type='text' class="form-control" id="expenseDateTimeModal"
 											required /> <span class="input-group-addon"><span
 											class="glyphicon glyphicon-calendar"></span> </span>

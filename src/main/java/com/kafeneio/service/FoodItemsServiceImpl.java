@@ -40,7 +40,6 @@ public class FoodItemsServiceImpl extends BaseServiceImpl implements FoodItemsSe
 				foodItems.add(foodItem);
 			});
 			
-			
 			foodItemsRepository.save(foodItems);
 			msgDTO.setMessage("Success");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
@@ -51,5 +50,4 @@ public class FoodItemsServiceImpl extends BaseServiceImpl implements FoodItemsSe
 		}
 		return msgDTO;
 	}
-	
 }

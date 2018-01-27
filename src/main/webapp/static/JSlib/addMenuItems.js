@@ -189,7 +189,7 @@ function searchAndEditFoodItems(){
 	var category = $("#category").val();
 	var foodItemCode = $("#foodItemCode").val();
 	
-	var foodItems={"foodItemCode":$("#foodItemCode").val(),"foodItemDesc":$("#foodItemDesc").val(),"amount":$("#amount").val(),"foodCategory":{id:$("#category").val()},"status":(status==1)?true:false};
+	var foodItems={"foodItemCode":$("#foodItemCode").val(),"foodItemDesc":$("#foodItemDesc").val(),"amount":$("#amount").val(),"foodCategoryId":$("#category").val(),"status":(status==1)?true:false};
 	/*foodItems["status"]=(status==1)?true:false;
 	foodItems["foodCategory"]=null;
 	foodItems["foodItemCode"]=foodItemCode;
@@ -199,9 +199,7 @@ function searchAndEditFoodItems(){
 	foodItems["date"]=null;
 	*/
 	//alert(JSON.stringify(foodItems));
-	
-	waitingDialog.show('Please wait...');
-
+	//waitingDialog.show('Please wait...');
 	$.ajax({
 		type: "POST",
 		contentType : 'application/json; charset=utf-8',
@@ -209,9 +207,9 @@ function searchAndEditFoodItems(){
 		url : ctx+"/editFoodItems",
 		data: JSON.stringify(foodItems),
 		success : function(responseText) {
-			alert(JSON.stringify(responseText));
+			//alert(JSON.stringify(responseText));
 			searchAndEdit(responseText);
-
+			
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
@@ -240,7 +238,7 @@ function searchAndEdit(foodItems){
         	{ name: "foodItemCode", label: "Food Item Code",  align: "center"},
             { name: "foodItemDesc", label: "Food Item Description",  align: "center" },
             { name: "amount", label: "Amount",  align: "center" },
-            { name: "foodCategory.foodDesc", label: "Category",  align: "center" },
+            { name: "foodCategoryDesc", label: "Category",  align: "center" },
             { name: "status", label: "Status",  align: "center", hidden:true },
             { name: "statusVisible", label: "Status",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",

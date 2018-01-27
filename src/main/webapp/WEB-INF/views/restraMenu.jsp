@@ -47,7 +47,7 @@
 								<span class=" icon-bar"></span>
 							</button>
 							<div>
-							<input type = "text" id = "wholeMenu" value= "${foodCategoryList}"/>
+							<input type = "hidden" id = "wholeMenu" value= "${foodCategoryList}"/>
 							
 								<ul class=" nav navbar-nav">
 									<c:forEach items="${foodCategoryList}" var="category">

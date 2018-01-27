@@ -98,3 +98,7 @@ input[type="checkbox"]:checked + label span {
 	margin: 0px 0 20px;
 	border-bottom: 1px solid #eeeeee;
 }
+
+.ui-jqgrid>.ui-jqgrid-pager{
+	height: 50px;	
+}

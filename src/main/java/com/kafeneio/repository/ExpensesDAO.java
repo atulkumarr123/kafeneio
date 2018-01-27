@@ -21,7 +21,7 @@ public class ExpensesDAO {
 	
 	
 	public List<Expenses> fetchExpenses() {
-		Query query = entityManager.createQuery("select expenses from Expenses expenses");
+		Query query = entityManager.createQuery("select expenses from Expenses expenses order by expenses.id desc");
 		List <Expenses> expenses = query.getResultList();
 		return expenses;
 	}
