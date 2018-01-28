@@ -44,8 +44,10 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-2"></div>
-			<div class="col-lg-8">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-10">
+						<div class="page-header-kafeneio" ><label class="control-label"><h3>Expenses</h3></label></div>
+			
 				<div class="widget-content">
 					<fieldset>
 							<div class="form-group">
@@ -86,13 +88,14 @@
 				</div>
 				<table id="expensesGrid"></table>
 				<table id="searchAndEditExpensesGrid"></table>
+				<div id="pager" style="height: 50;"></div>
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveExpenses()" id="saveExpensesButton">Save</button>
 					<button class="btn btn-default" type="button" onclick="clearExpenses()" id= "clearExpensesButton">Clear</button>
 				</div>
 			</div>
-			<div class="col-lg-2"></div>
+			<div class="col-lg-1"></div>
 		</div>
 	</div>
 </form>

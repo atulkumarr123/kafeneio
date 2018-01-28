@@ -1,13 +1,14 @@
 $( document ).ready(function() {
-		getOrders('NEW');
-		getOrders('SERVED');
-		getOrders('CANCELLED');
-		
+		getOrders('NEW',$("#currentDate").val());
+		getOrders('SERVED',$("#currentDate").val());
+		getOrders('CANCELLED',$("#currentDate").val());
+		getOrders('YEST_NEW',$("#yesterdayDate").val());
 });
 
-function getOrders(status){
+function getOrders(status,date){
+	
 	$.ajax({
-		url : $("#contextPath").val()+"/report/getOrderListToday/"+status,
+		url : $("#contextPath").val()+"/report/getOrderList/"+status+"?date="+date,
 		success : function(responseText) {
 			if(status=='NEW'){
 				//alert(JSON.stringify(responseText));
@@ -20,6 +21,9 @@ function getOrders(status){
 			else if(status=='CANCELLED'){
 				createCancelledOrdersGrid(responseText);
 			}
+			else if(status=='YEST_NEW'){
+				createYestPendingOrderGrid(responseText);
+			}
 		},
 		error:function(responseText) {
 			$(function(){
@@ -31,16 +35,14 @@ function getOrders(status){
 
 function createPendingOrderGrid(pendingOrders){
     $("#newOrdersGrid").jqGrid({
-//    	url :  $("#contextPath").val()+"/report/getOrderListToday/NEW",
-//		datatype : "json",
     	datatype : "local",
-//		mtype : 'POST',
     	colModel: [
     		{ name: "id", label: "id", hidden:true},
 			{ name: "orderNo", label: "Order No",  align: "center", width:80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
 			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
-//			{ name: "creationDate", label: "Date & Time",  align: "center", width:70},
+			{ name: "orderTime", label: "Since",  align: "center", width:80,},
+			
 			{ name: 'table', label:"Table", width: 120, sortable: false, search: false, align: "center", 
     			formatter:function(cellValue, option){
     				if(cellValue == null  || cellValue == 'undefined') cellValue = '';
@@ -321,6 +323,109 @@ function createCancelledOrdersGrid(cancelledOrders) {
   
   reInitiateButton = getColumnIndexByName(grid,'reInitiateButton');
 }
+
+
+
+function createYestPendingOrderGrid(pendingOrders){
+    $("#newYestOrdersGrid").jqGrid({
+    	datatype : "local",
+    	colModel: [
+    		{ name: "id", label: "id", hidden:true},
+			{ name: "orderNo", label: "Order No",  align: "center", width:80},
+			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
+			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
+			{ name: "orderTime", label: "Since",  align: "center", width:80,},
+			
+			{ name: 'table', label:"Table", width: 120, sortable: false, search: false, align: "center", 
+    			formatter:function(cellValue, option){
+    				if(cellValue == null  || cellValue == 'undefined') cellValue = '';
+    				return "<div style='display:flex;'><input type='text' name='table' id = 'tableText_"+option.rowId+"' value = '"+cellValue+"' class='form-control' style='font-size: medium;'>&nbsp" +
+    						"<button class='btn btn-default'  style='font-size: small;background: tan;' onclick = 'seatIt("+option.rowId+")' id = 'tableButton_"+option.rowId+"' type='button' ><b>Seat</b></button> </div>"
+    			}},
+    		{ name: 'serve', label:"Serve", width: 80, sortable: false, search: false, align: "center",
+    			formatter:function(){
+    				return "<button class='btn btn-default' style='color:#6060c7;font-size: small;background: tan;' type='button' ><b>Serve</b></button>"
+    			}},
+    		{ name: 'cancel', label:"Cancel", width: 80, sortable: false, search: false, align: "center",
+    			formatter:function(){
+    				return "<button class='btn btn-default' style='color:#c12f2f;font-size: small;background: tan;' type='button' ><b>Cancel</b></button>"
+    		}}
+    			],
+        data: pendingOrders,
+        footerrow: true,
+        userDataOnFooter : true,
+        guiStyle: "bootstrap",
+        iconSet: "fontAwesome",
+        //idPrefix: "gb1_",
+        rownumbers: false,
+        sortname: "invdate",
+        sortorder: "desc",
+        caption: "Yesterday's Pending Orders", 
+        loadonce: true,
+        height: 'auto',
+        onCellSelect: function (rowid,iCol,cellcontent,e) {
+        	//alert("iCol "+iCol);
+            if (iCol == serveButton) {
+            	modeOfPaymentCheck(rowid);
+           
+            }
+            else if (iCol == cancelButton) {
+            	//alert("cancelButton");
+            	cancelThisOrder(rowid);
+            }
+        },
+        
+        subGrid: true,
+        subGridRowExpanded: function (subgridDivId, rowId) {
+            var $subgrid = $("<table id='" + subgridDivId + "_t'></table>"),
+                colModel = $(this).jqGrid("getGridParam", "colModel");
+
+            $subgrid.appendTo("#" + $.jgrid.jqID(subgridDivId));
+            $subgrid.jqGrid({
+                datatype: "local",
+                data: $(this).jqGrid("getLocalRow", rowId).orderDetails,
+                colModel: [
+                    { name: "foodDesc", label:"Item", width: (colModel[2].width) },
+                    { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
+                    { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
+                ],
+                height: "100%",
+                rowNum: 10000,
+                autoencode: true,
+                gridview: true,
+                idPrefix: rowId + "_",
+               /* gridview: true,
+                rowattr: function (rd) {
+                        return {"style": "background-color:#bd7575"};
+                }*/
+            });
+            $subgrid.closest("div.ui-jqgrid-view")
+                .children("div.ui-jqgrid-hdiv")
+                .hide();
+        },
+        
+    
+        
+        
+    });
+    grid = $("#newOrdersGrid"),
+	 getColumnIndexByName = function(grid,columnName) {
+        var cm = grid.jqGrid('getGridParam','colModel');
+        for (var i=0,l=cm.length; i<l; i++) {
+            if (cm[i].name===columnName) {
+                return i; // return the index
+            }
+        }
+        return -1;
+    },
+    
+    serveButton = getColumnIndexByName(grid,'serve');
+    
+    cancelButton = getColumnIndexByName(grid,'cancel');
+  //  alert(serveButton);
+   // alert(cancelButton);
+}
+
 
 function serveThisOrder(orderId, mopId){
 	var ctx = $("#contextPath").val();

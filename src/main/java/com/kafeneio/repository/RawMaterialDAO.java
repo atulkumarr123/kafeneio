@@ -18,7 +18,7 @@ public class RawMaterialDAO {
 	
 	
 	public List<RawMaterials> fetchRawMaterials() {
-		Query query = entityManager.createQuery("select rawMaterial from RawMaterials rawMaterial");
+		Query query = entityManager.createQuery("select rawMaterial from RawMaterials rawMaterial order by rawMaterial.id desc");
 		List <RawMaterials> rawMaterial = query.getResultList();
 		return rawMaterial;
 	}

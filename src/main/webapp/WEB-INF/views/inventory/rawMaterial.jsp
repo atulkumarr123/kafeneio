@@ -73,19 +73,20 @@
 							</div>
 						<div class="form-group">
 							<div class="col-md-6">
-									<label for="prepended-input" class="control-label" name="amount">Quantity</label>
+									<label for="prepended-input" class="control-label" name="quantity">Quantity</label>
 									<input type="text" class="form-control" name="quantity"
 										id="quantity" placeholder="" required>
 								</div>
 							
-							<div class="col-md-6">
-									<label for="prepended-input" class="control-label" name="remarks">Remarks</label>
-									<textarea class="form-control" name="remarks" id="remarks"></textarea>
-								</div>
+							
 								
 								<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="lowerLimit">Lower Limit</label>
-									<textarea class="form-control" name="lowerLimit" id="lowerLimit"></textarea>
+									<input type="text" class="form-control" name="lowerLimit" id="lowerLimit"/>
+								</div>
+								<div class="col-md-6">
+									<label for="prepended-input" class="control-label" name="remarks">Remarks</label>
+									<textarea class="form-control" name="remarks" id="remarks"></textarea>
 								</div>
 								</div>
 								</fieldset>
@@ -113,5 +114,99 @@
 			<div class="col-lg-1"></div>
 		</div>
 	</div>
-</form:form>
 
+
+<div class="container">
+  <div class="modal fade" id="myModalRawMaterial" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Raw Material</h4>
+        </div>
+        <div class="modal-body">
+        <fieldset>
+        				<input type="hidden" id="rawMaterialRowId" name="rawMaterialRowId"/>
+							 <div class="form-group">
+<!-- 								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Item
+										Code</label> <input type="text" name="foodItemCode1" placeholder=""
+										class="form-control" id="foodItemCode1" required>
+								</div>
+ -->
+ 
+ 
+							<div class="col-md-6">
+									<label for="normal-field" class="control-label">Material Code
+										</label> <input type="text" name="rawMaterialDescModal" placeholder=""
+										class="form-control" id="rawMaterialCodeModal" required>
+								</div>
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Material
+										Description</label> <input type="text" name="rawMaterialDescModal"
+										placeholder="" class="form-control" id="rawMaterialDescModal" required>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+				
+					<div class="col-md-6">
+								<label for="prepended-input" class="control-label">Units</label>
+								<form:select path="id" class="form-control" id="unitsModal" required="required">
+									<option value="0">SELECT</option>
+									<form:options items="${unitList}" itemValue="id" itemLabel="description" />
+								</form:select>
+							</div>
+				
+								<!-- <div class="col-md-6">
+									<label for="normal-field" class="control-label">Units
+										</label> <input type="text" name="unitsModal"
+										placeholder="" class="form-control" id="unitsModal" required>
+								</div> -->
+								
+							
+							
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Quantity
+										</label> <input type="text" name="quantityModal" placeholder=""
+										class="form-control" id="quantityModal" required>
+								</div>
+							</div>
+				
+				<div class="form-group">
+				
+								
+							
+							
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Lower limit
+										</label> <input type="text" name="lowerLimitModal" placeholder=""
+										class="form-control" id="lowerLimitModal" required>
+								</div>
+							</div>
+				
+								<div class="col-md-6">
+									<label for="normal-field" class="control-label">Remarks
+										</label> <textarea name="remarksModal"
+										placeholder="" class="form-control" id="remarksModal" required></textarea>
+								</div>
+							
+						</fieldset>
+		 
+		 		 
+		  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "updateRawMaterialButton" onclick="updateRawMaterial()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelRawMaterialButton" >Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</form:form>

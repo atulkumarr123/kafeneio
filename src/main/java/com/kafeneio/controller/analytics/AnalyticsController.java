@@ -40,14 +40,7 @@ public class AnalyticsController {
 		List<OrderDetails> orderDetails = analyticsService.fetchOrders(fromDate, toDate, modes, category,foodItems); 
 		return orderDetails;
 	}
-	/*
-	@PreAuthorize("hasRole('ADMIN')")
-	@RequestMapping(value = "/getOrderListToday/{status}")
-	public List<Order> getOrderListToday(@PathVariable String status) {
-		List<Order> orders = analyticsService.getOrderListToday(status); 
-		return orders;
-	}
-	*/
+
 }
 
 

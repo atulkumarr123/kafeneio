@@ -23,18 +23,19 @@ import com.kafeneio.constants.ApplicationConstant;
 @Table(name="KAFENEIO_RAW_MATERIALS")
 public class RawMaterials extends BaseEntity {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id" ,unique=true,nullable=false )
 	private Long id;
 
-	@Column(name="raw_material_code")
+	@Column(unique = true,name="raw_material_code")
 	private String rawMaterialCode;
 
 	@Column(name="raw_material_desc")
 	private String rawMaterialDesc;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
+	/*@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
 	@Column(name="CREATION_DATE")
 	private Date creationDate;
 	
@@ -42,7 +43,7 @@ public class RawMaterials extends BaseEntity {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
 	@Column(name="last_updated_date")
 	private Date lastUpdatedDate;
-	
+*/	
 	@Column(name="quantity")
 	private BigDecimal quantity;
 	
@@ -65,7 +66,7 @@ public class RawMaterials extends BaseEntity {
 		this.id = id;
 	}
 
-	public Date getCreationDate() {
+	/*public Date getCreationDate() {
 		return creationDate;
 	}
 
@@ -80,7 +81,7 @@ public class RawMaterials extends BaseEntity {
 	public void setLastUpdatedDate(Date lastUpdatedDate) {
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
-
+*/
 	public BigDecimal getQuantity() {
 		return quantity;
 	}
@@ -128,8 +129,5 @@ public class RawMaterials extends BaseEntity {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
-
-	
 	
 }

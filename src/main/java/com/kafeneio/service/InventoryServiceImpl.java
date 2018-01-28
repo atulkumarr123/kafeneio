@@ -83,6 +83,7 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 			rawMaterialDto.setRemarks(rawMaterial.getRemarks());
 			rawMaterialDto.setUnitDesc(rawMaterial.getUnit().getDescription());
 			rawMaterialDto.setUnitValue(rawMaterial.getUnit().getId());
+			rawMaterialDto.setId(rawMaterial.getId());
 			dtoList.add(rawMaterialDto);		
 		});
 		return dtoList;

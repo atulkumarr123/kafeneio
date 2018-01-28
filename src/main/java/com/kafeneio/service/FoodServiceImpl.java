@@ -1,9 +1,13 @@
 package com.kafeneio.service;
 
+import java.security.Policy.Parameters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,8 +17,10 @@ import org.springframework.stereotype.Service;
 import com.kafeneio.DTO.FoodItemsDto;
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.dao.FoodDAO;
+import com.kafeneio.model.ConfigParameters;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
+import com.kafeneio.repository.ConfigParametersRepo;
 import com.kafeneio.repository.FoodItemsRepository;
 import com.kafeneio.repository.FoodRepository;
 
@@ -26,6 +32,8 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	@Inject
 	FoodRepository foodRepository;
 	
+	
+	
 	@Inject
 	FoodItemsRepository foodItemsRepository;
 	
@@ -36,14 +44,10 @@ public class FoodServiceImpl extends BaseServiceImpl implements FoodService{
 	@Override
 	public List<FoodCategory> findFoodCategory() {
 		List<FoodCategory> categories = foodRepository.findFoodCategory("Active");
-		/*Map<String,String> foodCatMap=new HashMap<String,String>();
-		Iterator<FoodCategory> itr=categories.iterator();
-		if(itr.hasNext()){
-			FoodCategory foodCategory = itr.next();
-			foodCatMap.put(foodCategory.getFoodCode(),foodCategory.getFoodDesc());	
-		}*/
 		return categories;
 	}
+
+	
 	@Override
 	public List<Object> switchCaseDemo() {
 		List<Object> values = foodRepository.switchCaseDemo();

@@ -178,7 +178,7 @@ function searchAndEdit(units){
 		datatype : "local",
 		//mtype : 'POST',
 		colModel: [
-			{ name: "id", label: "id",hidden:false},
+			{ name: "id", label: "id",hidden:true},
         	{ name: "code", label: "Units Code",  align: "center"},
             { name: "description", label: "Units Description",  align: "center" },
             { name: "status", label: "Status",  align: "center" },

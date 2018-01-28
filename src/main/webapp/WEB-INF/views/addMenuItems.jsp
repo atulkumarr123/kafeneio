@@ -39,8 +39,9 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-2"></div>
-			<div class="col-lg-8">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-10">
+							<div class="page-header-kafeneio" ><label class="control-label"><h3>Food Items</h3></label></div>
 				<div class="widget-content">
 					<fieldset>
 							<div class="form-group">
@@ -108,7 +109,7 @@
 					<button class="btn btn-default" type="button" onclick="">Clear</button>
 				</div>
 			</div>
-			<div class="col-lg-2"></div>
+			<div class="col-lg-1"></div>
 		</div>
 	</div>
 </form:form>

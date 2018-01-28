@@ -52,6 +52,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 						ModeOfPayment modeOfPayment = modeOfPaymentRepository.findOne(mopId);
 						order.setModeOfPayment(modeOfPayment);
 					}
+					
 					orderRepository.save(order);
 					msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
 					msgDTO.setStatusCode(HttpStatus.OK.value());

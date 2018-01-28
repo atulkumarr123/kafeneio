@@ -34,6 +34,10 @@
 <div class="container">
 		<%@include file="menu.jsp"%>
 </div>
+<input type="hidden" name="currentDate" id="currentDate" value="${currentDate}"/>
+<input type="hidden" name="yesterdayDate" id="yesterdayDate" value="${yesterdayDate}"/>
+
+
 <sec:authorize access="hasRole('ADMIN')">
 	<div class="container" style="display:flex">
 		<div class="row" style="margin: 15px">
@@ -49,6 +53,12 @@
 		<div class="row" style="margin: 15px">
 			<table id="cancelledOrdersGrid"></table>
 		</div>
+		
+	</div>	
+	<div class="container" style="display:flex">
+	<div class="row" style="margin: 15px">
+			<table id="newYestOrdersGrid"></table>
+	</div>
 	</div>	
 </sec:authorize>
 <div class="container">
