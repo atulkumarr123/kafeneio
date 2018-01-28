@@ -56,9 +56,9 @@
 		
 	</div>	
 	<div class="container" style="display:flex">
-	<div class="row" style="margin: 15px">
+		<div class="row" style="margin: 15px">
 			<table id="newYestOrdersGrid"></table>
-	</div>
+		</div>
 	</div>	
 </sec:authorize>
 <div class="container">

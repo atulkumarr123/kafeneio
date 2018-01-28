@@ -78,7 +78,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 		Iterator<OrderDetails> itr = order.getOrderDetails().iterator();	
 		while(itr.hasNext()){
 			OrderDetails orderDetails= itr.next();
-			amount=amount+orderDetails.getAmount();
+			amount=amount+((orderDetails.getAmount()!=null)?orderDetails.getAmount():0);
 			orderDetails.setCreationDate(new Date());
 		}
 

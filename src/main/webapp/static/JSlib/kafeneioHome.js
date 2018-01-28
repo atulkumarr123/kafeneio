@@ -141,6 +141,8 @@ function addItem(id,foodCode, foodItemDesc, amount){
 		}
 	applyGST();
 	adjustTotal();
+	applyGST();
+	adjustTotal();
 	}
 
 function setCaption(){
@@ -407,6 +409,7 @@ function applyGST(){
 				amount=parseInt(amount)+parseInt(rowData.amount);
 		});
 		var amountAfterGST = (amount * 2.5)/100;
+
 		$("#invoiceGrid").jqGrid("addRowData",-1000 , { foodCode:'SGST', quantity:null, foodDesc:'SGST(2.5%)' ,  amount:'+'+amountAfterGST }, "last");	
 		$("#invoiceGrid").jqGrid("addRowData",-1001 , { foodCode:'CGST', quantity:null, foodDesc:'CGST(2.5%)' ,  amount:'+'+amountAfterGST }, "last");	
 		$("#invoiceGrid").jqGrid("addRowData",-1002 , { foodCode:'IGST', quantity:null, foodDesc:'IGST' ,  }, "last");	
