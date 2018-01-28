@@ -5,6 +5,26 @@ $(document).ready(function(){
 		$("#rawMaterialGrid").jqGrid("setGridWidth", newWidth, true);
 
 	});
+	
+	$('#addRawMaterialButton').click(function() {
+			//alert("in add expenses button");
+			$('#gbox_rawMaterialGrid').show();
+			$('#gbox_searchAndEditRawMaterialGrid').hide();
+			$('#saveRawMaterialButton').show();
+			$('#clearRawMaterialButton').show();
+			
+			var isFormFilled = $("#rawMaterial").valid();
+			var valid = validateForm();
+			if(isFormFilled && valid){
+				//alert("validating form");
+				addRawMaterial();
+			}
+		});
+	
+	$('#searchAndEditRawMaterialbutton').click(function() {
+		
+		//searchAndEdit();
+		});
 });
 
 $( document ).ready(function() {
@@ -64,20 +84,7 @@ $( document ).ready(function() {
 	
 	$('#RawMaterialDateTime').val(currentDate);
 
-	$('#addRawMaterialButton').click(function() {
-	//	alert("in add expenses button");
-		$('#gbox_rawMaterialGrid').show();
-		$('#gbox_searchAndEditRawMaterialGrid').hide();
-		$('#saveRawMaterialButton').show();
-		$('#clearRawMaterialButton').show();
-		
-		var isFormFilled = $("#rawMaterial").valid();
-		var valid = validateForm();
-		if(isFormFilled && valid){
-			//alert("validating form");
-			addRawMaterial();
-		}
-	});
+	
 
 });
 
@@ -161,14 +168,7 @@ function clearRawMaterial(){
 }
 
 $( document ).ready(function() {
-	$('#searchAndEditRawMaterialbutton').click(function() {
-	$('#gbox_rawMaterialGrid').hide();
-	$('#gbox_searchAndEditRawMaterialGrid').show();
-	$('#saveRawMaterialButton').hide();
-	$('#clearRawMaterialButton').hide();
-
-	//searchAndEdit();
-	});
+	
 /*   
    $('#gbox_expensesGrid').hide();
 	$('#gbox_searchAndEditExpensesGrid').hide();*/
@@ -177,16 +177,23 @@ $( document ).ready(function() {
 
 
 function searchAndEditRawMaterial(){
+//	alert("Going to hide");
+	$('#gbox_rawMaterialGrid').hide();
+	$('#gbox_searchAndEditRawMaterialGrid').show();
+	$('#saveRawMaterialButton').hide();
+	$('#clearRawMaterialButton').hide();
+	
 //	alert("in search and edit");
+//	$("#rawMaterialGrid").jqGrid('GridUnload');
 	$("#searchAndEditRawMaterialGrid").jqGrid('GridUnload');	
 	
-	//waitingDialog.show('Please wait...');
+	waitingDialog.show('Please wait...');
 	
 	$.ajax({
 		url :$("#contextPath").val()+"/rawMaterialList",
 		success : function(responseText) {
-			alert(JSON.stringify(responseText));
-			EditRawMaterial(responseText);
+			//alert(JSON.stringify(responseText));
+			editRawMaterial(responseText);
 		},
 		error:function(responseText) {
 			$(function(){
@@ -198,7 +205,7 @@ function searchAndEditRawMaterial(){
 }
 
 
-function EditRawMaterial(expenseData){
+function editRawMaterial(rawMaterialData){
 	$("#searchAndEditRawMaterialGrid").jqGrid({
 		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		//datatype : "json",
@@ -206,10 +213,12 @@ function EditRawMaterial(expenseData){
 		//mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
-			{ name: "item", label: "Expense",  align: "center"},
-			{ name: "amount", label: "Amount",  align: "right",template: "number"},
-			{ name: "creationDate", label: "Date",  align: "center" },
-			{ name: "remarks", label: "Remarks",  align: "center" },
+			{ name: "rawMaterialCode", label: "Material Code",  align: "center"},
+			{ name: "rawMaterialDesc", label: "Material Description",  align: "center"},
+			{ name: "quantity", label: "Quantity",  align: "center" },
+			{ name: "lowerLimit", label: "Lower Limit",  align: "center" },
+			{ name: "unitValue", label: "UnitValue",  hidden: true },
+			{ name: "unitDesc", label: "Unit",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
 					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
@@ -219,7 +228,7 @@ function EditRawMaterial(expenseData){
           	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
           	  }}
 			],
-			data:RawMaterialData,
+			data:rawMaterialData,
 			footerrow: true,
 			userDataOnFooter : true,
 			rowNum:10,
@@ -227,7 +236,7 @@ function EditRawMaterial(expenseData){
 			guiStyle: "bootstrap",
 			iconSet: "fontAwesome",
 			pager: '#pager',
-			sortname: 'orderNo',
+			sortname: 'rawMaterialDesc',
 			viewrecords: true,
 			sortorder: "desc",
 			autowidth: true,
@@ -246,11 +255,11 @@ function EditRawMaterial(expenseData){
 			},
 			caption: "Search & Edit Raw Material",
 			loadComplete:function() {
-				adjustTotalRawMaterial();
+//				adjustTotalRawMaterial();
 			}
 	});
 	
-	grid = $("#searchAndEditExpensesGrid"),
+	grid = $("#searchAndEditRawMaterialGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
        var cm = grid.jqGrid('getGridParam','colModel');
        for (var i=0,l=cm.length; i<l; i++) {
@@ -269,40 +278,43 @@ function EditRawMaterial(expenseData){
 
  function openPopup(rowid){
 	 	 $('#myModalRawMaterial').modal('show');
-	 
-	 	 
 	 	var rowData = $("#searchAndEditRawMaterialGrid").jqGrid("getRowData", rowid);
 	 	 $("#rawMaterialRowId").val(rowid);
-	 	$('#foodItemDescModal').val(rowData.item);
+	 	$('#rawMaterialDescModal').val(rowData.rawMaterialDesc);
 	 	//alert(rowData.amount);
-	 	$('#amountModal').val(rowData.amount);
-	 	$('#rawMaterialDateTimeModal').val(rowData.creationDate);
+	 	$('#rawMaterialCodeModal').val(rowData.rawMaterialCode);
+	 	$('#unitsModal').val(rowData.unitValue);
+	 	$('#quantityModal').val(rowData.quantity);
+	 	$('#lowerLimitModal').val(rowData.lowerLimit);
 	 	$('#remarksModal').val(rowData.remarks);
  } 
  
  
- function updateExpense(){
-	 var rowId= $("#expenseRowId").val();
+ function updateRawMaterial(){
+	 
+	 var rowId= $("#rawMaterialRowId").val();
 		var ctx = $("#contextPath").val();
-	// alert(rowId);
 	 	var rowData = $("#searchAndEditRawMaterialGrid").jqGrid("getRowData", rowId);
-	 	rowData.item = $('#foodItemDescModal').val();
-	 	rowData.amount = $('#amountModal').val();
-	 	rowData.creationDate = $('#rawMaterialDateTimeModal').val();
+	 	rowData.rawMaterialDesc = $('#rawMaterialDescModal').val();
+	 	rowData.rawMaterialCode = $('#rawMaterialCodeModal').val();
+	 	rowData.unitValue = $('#unitsModal').val();
+		rowData.unitDesc = $("#unitsModal option:selected").text();
+	 	rowData.lowerLimit = $('#lowerLimitModal').val();
+	 	rowData.quantity = $('#quantityModal').val();
 	 	rowData.remarks = $('#remarksModal').val();
-	 	rowData.editButton = '';
-	 	$("#searchAndEditRawMaterialGrid").jqGrid("setRowData", rowId, rowData);
 	   $.ajax({
 		      type: "POST",
 		      contentType : 'application/json; charset=utf-8',
 		      dataType : 'json',
-		      url : ctx+"/report/updateRawMaterial",
+		      url : ctx+"/updateRawMaterial",
 		      data: JSON.stringify(rowData),
 		      success :function(result) {
+		  	 	$("#searchAndEditRawMaterialGrid").jqGrid("setRowData", rowId, rowData);
 		    	  new PNotify({
 	    			  type:'success',
 	    			  title: 'Success',
 	    			  text: result.message
+	    			  
 		    	  });
 		    	  $( "#cancelRawMaterialButton").click();
 		    	  

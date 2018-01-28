@@ -76,8 +76,11 @@
 					<h5>
 						<b>The Kafeneio</b>
 					</h5>
+					<!-- <h5>
+						GST: 12345678
+					</h5> -->
 					<br>
-					<span style="text-align: left">Customer Copy</span>
+					<span style="text-align: left">Customer Copy <b><i>(07BTQPG0862G1ZL)</i></b></span>
 					<table id="invoiceGrid"></table>
 					 <!-- <h5> <span class="glyphicon glyphicon-telephone"> 011-49148538, 8218349619 </span></h5> -->
 					 <h5><span>Contact:011-49148538, 8218349619</span></h5>

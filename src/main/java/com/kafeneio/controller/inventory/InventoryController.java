@@ -40,7 +40,7 @@ public class InventoryController {
 		return msgDTO;
 	}
 	
-	@RequestMapping(value = "/RawMaterialList")
+	@RequestMapping(value = "/rawMaterialList")
 	public List<RawMaterialDto> fetchRawMaterials() {
 		List<RawMaterialDto> rawMaterials = inventoryService.fetchRawMaterial(); 
 		return rawMaterials;

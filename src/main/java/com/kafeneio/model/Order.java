@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -36,7 +37,7 @@ public class Order {
 		private Double amount;
 		@Column(name="table_no")
 		private String table;
-		@JsonFormat(pattern = ApplicationConstant.DATE_FORMAT)
+		@JsonFormat(pattern = ApplicationConstant.DATE_TIME_FORMAT, timezone = ApplicationConstant.MY_TIME_ZONE)
 		@Column(name="creation_date")
 		private Date creationDate;	
 		@Column(name="discount_percentage")
@@ -55,6 +56,9 @@ public class Order {
 		@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	    @JoinColumn(name="mode_of_payment")
 	 	private ModeOfPayment modeOfPayment ;
+		
+		@Transient
+		private String orderTime;
 
 		
 		public Long getId() {
@@ -89,7 +93,7 @@ public class Order {
 			this.orderDetails = orderDetails;
 		}
 		
-		@JsonDeserialize(using = CustomDateDeserializer.class)
+//		@JsonDeserialize(using = CustomDateDeserializer.class)
 		public Date getCreationDate() {
 			return creationDate;
 		}
@@ -128,6 +132,14 @@ public class Order {
 
 		public void setDiscountPercentage(Long discountPercentage) {
 			this.discountPercentage = discountPercentage;
+		}
+
+		public String getOrderTime() {
+			return orderTime;
+		}
+
+		public void setOrderTime(String orderTime) {
+			this.orderTime = orderTime;
 		}
 
 }

@@ -6,7 +6,7 @@ import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.DTO.RawMaterialDto;
 import com.kafeneio.model.RawMaterials;
 
-public interface InventoryService {
+public interface InventoryService extends BaseService{
 	
 	public MessageDTO saveRawMaterials(List<RawMaterialDto> rawMaterials);
 	

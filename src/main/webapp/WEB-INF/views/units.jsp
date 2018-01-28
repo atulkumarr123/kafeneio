@@ -18,20 +18,15 @@
 <link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
-
-
 <script src="static/js/app.js" /></script>
 <script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
 <script src="static/JSlib/jquery.validate.js"></script>
-
 <script src="static/JSlib/twitter-bootstrap/3.3.7/bootstrap.min.js"></script>
 <script src="static/JSlib/moment-2.10.6.min.js"></script> 
-
 <script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 <script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
-
 
 <script src="static/JSlib/units.js"></script>
 </head>
@@ -41,26 +36,24 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-2"></div>
-			<div class="col-lg-8">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-10">
+				<div class="page-header-kafeneio" ><label class="control-label"><h3>Units</h3></label></div>
 				<div class="widget-content">
-					<fieldset>
-							
+					<fieldset>							
 							<div class="form-group">
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Unit
 										Code</label> <input type="text" name="unitCode" 
 										placeholder="" class="form-control"
 										id="unitCode" required>
-								</div>
-							
+								</div>							
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Unit
 										Description</label> <input type="text" name="unitDesc" 
 										placeholder="" class="form-control"
 										id="unitDesc" required>
-								</div>
-							
+								</div>							
 							</div>
 				 		<div class="form-group">
 							<div class="col-md-6">
@@ -70,9 +63,7 @@
 									<option value="0">Inactive</option>
 								</form:select>
 						 	</div>
-									
-						</div> 
-						
+						</div> 					
 					</fieldset>
 					<div class="form-actions">
 						<div>
@@ -83,13 +74,14 @@
 				</div>
 				<table id="unitsGrid"></table>
 				<table id="editUnitsGrid"></table>
+				<div id="pager" style="height: 50;"></div>
 				<br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button" id="saveUnitButton" onclick="saveUnits()">Save</button>
 					<button class="btn btn-default" type="button" onclick="reloadUnitGrid()">Clear</button>
 				</div>
 			</div>
-			<div class="col-lg-2"></div>
+			<div class="col-lg-1"></div>
 		</div>
 	</div>
 </form:form>

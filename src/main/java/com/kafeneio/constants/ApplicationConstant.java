@@ -17,5 +17,6 @@ public class ApplicationConstant {
 	public static final String CANCELLED_ORDER = "CANCELLED";
 	public static final String ACTIVE = "Active";
 	public static final String INACTIVE = "Inactive";
+	public static final String MY_TIME_ZONE="Asia/Kolkata";
 
 }

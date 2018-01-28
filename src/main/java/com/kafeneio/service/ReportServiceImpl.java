@@ -66,9 +66,22 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 	}
 	
 	@Override
-	public List<Order> getOrderListToday(String status) {
+	public List<Order> getOrderList(String status,String date) {
 		List<Order> orders = null;
-			orders = orderDao.getOrderListToday(status);
+		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
+		try{
+			Date tempDate = format.parse(date);
+			orders = orderDao.getOrderList(status,tempDate);
+			if(status.equals(ApplicationConstant.NEW_ORDER)){
+				orders.forEach(order->{
+					DateFormat format1 = new SimpleDateFormat(ApplicationConstant.TIME_FORMAT);
+					String time = format1.format(order.getCreationDate());
+					order.setOrderTime(time);
+				});
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return orders;
 	}
 

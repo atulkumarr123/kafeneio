@@ -23,6 +23,8 @@ import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.FoodItems;
 import com.kafeneio.service.FoodService;
+import com.kafeneio.service.IndexService;
+import com.kafeneio.utils.AppUtils;
 
 @Controller
 @RequestMapping
@@ -34,24 +36,29 @@ public class IndexController {
 	
 	@Inject
 	FoodService foodService;
+	@Inject
+	IndexService indexService;
+	
+	
+	public static Map<String,String> configParameters = null;
 	
 	  @RequestMapping(value="/home", method = RequestMethod.GET)
 	  public String getHomePage(ModelMap modelMap) {
-		 /* DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
-		  modelMap.put("currentDateTime", format.format(new Date()));
-		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
-		  System.out.println(environment.getProperty("kafeneio.main.title"));*/
-		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_FORMAT).format(new Date()));
+		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT).format(new Date()));
+		  modelMap.put("yesterdayDate", AppUtils.getYesterday());
+		  AppUtils.getYesterday();
 		  return "index";
 	  }
 	  
 	  @RequestMapping(value="/", method = RequestMethod.GET)
 	  public String getIndexPage(ModelMap modelMap) {
-		 /* DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
-		  modelMap.put("currentDateTime", format.format(new Date()));
-		  //modelMap.put("currentDateTime", ApplicationConstant.DATE_TIME_FORMAT);
-		  System.out.println(environment.getProperty("kafeneio.main.title"));*/
-		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_FORMAT).format(new Date()));
+		  if(configParameters == null){
+//			  configParameters = indexService.getConfigParameters();
+		  }
+		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT).format(new Date()));
+		  modelMap.put("yesterdayDate", AppUtils.getYesterday());
+
+		  AppUtils.getYesterday();
 		  return "index";
 	  }
 
@@ -62,7 +69,7 @@ public class IndexController {
 		  modelMap.put("foodCategoryList",foodCategoryList);
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
-		  System.out.println(environment.getProperty("kafeneio.main.title"));
+//		  modelMap.putAll(configParameters);
 		  return "restraMenu";
 	  }
 	  
@@ -72,12 +79,16 @@ public class IndexController {
 class IndexRestController{
 
 	public static List<FoodCategory> foodCategoryList = null;
+	
 	@Inject
 	FoodService foodService;
+	
+	
 	
 	  @PreAuthorize("hasRole('ADMIN')")
 	  @RequestMapping(value="/loadRestraMenu", method = RequestMethod.GET)
 	  public  Map<String,Set<FoodItems>> loadRestraMenu() {
+		 
 		  if(foodCategoryList == null){
 		  foodCategoryList = foodService.findFoodCategory();
 		  }

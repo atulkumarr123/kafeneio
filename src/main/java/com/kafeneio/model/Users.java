@@ -21,6 +21,8 @@ import com.kafeneio.constants.ApplicationConstant;
 @Table(name="KAFENEIO_USERS")
 public class Users extends BaseEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id" ,unique=true,nullable=false )

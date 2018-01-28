@@ -45,13 +45,13 @@ public class OrderDAO {
 		return orders;
 	}
 	
-	public List<Order> getOrderListToday(String status) {
-		Date today = new Date();
-		Date todayMorning = DateUtils.truncate(today, Calendar.DATE);
-		Date todayEvening = DateUtils.addSeconds(DateUtils.addMinutes(DateUtils.addHours(todayMorning, 23), 59), 59);
+	public List<Order> getOrderList(String status,Date date) {
+		status = status.equalsIgnoreCase("STATUS_NEW")?ApplicationConstant.NEW_ORDER:status;
+		Date morning = DateUtils.truncate(date, Calendar.DATE);
+		Date evening = DateUtils.addSeconds(DateUtils.addMinutes(DateUtils.addHours(morning, 23), 59), 59);
 		Query query =  entityManager.createQuery("select ord from Order ord where ord.status.code=:status and ord.creationDate  between :fromDate and :toDate order by id desc");
-		query.setParameter("fromDate", todayMorning);
-		query.setParameter("toDate", todayEvening);
+		query.setParameter("fromDate", morning);
+		query.setParameter("toDate", evening);
 		query.setParameter("status", status);
 		List <Order> orders = query.getResultList();
 		return orders;

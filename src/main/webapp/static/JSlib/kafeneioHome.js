@@ -66,9 +66,15 @@ function reloadGrid(){
 	$("#invoiceGrid").jqGrid('setCaption','');
 }
 function removeItem(rowid){
+	if(rowid == -1000 || rowid == -1001 || rowid == -1002 ){
+	new PNotify({ type:'error', title: 'Nopes!', text: 'Can not remove the GST!'});
+		return false;
+	}
+
+
 	if(validateExistingBeforeRemoval(rowid)){
-		  new PNotify({ type:'info', title: 'Info', text: 'Can not remove items after discount applied, Please remove discount to removeitems!'});
-		  return false;
+		new PNotify({ type:'info', title: 'Info', text: 'Can not remove items after discount applied, Please remove discount to removeitems!'});
+		return false;
 	}
 	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowid);
 	//alert(rowData.amount);
@@ -82,6 +88,7 @@ function removeItem(rowid){
 	else{
 		$('#invoiceGrid').jqGrid('delRowData',rowid);
 	}
+	applyGST();
 	adjustTotal();
 }
 function getItems(foodCategory){
@@ -133,6 +140,8 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
 	adjustTotal();
+	applyGST();
+	adjustTotal();
 	}
 
 function setCaption(){
@@ -165,6 +174,9 @@ function validateExistingGrid(){
 }
 
 function validateExistingBeforeRemoval(rowId){
+	
+	
+	
 	var isDiscApplied = false;
 	var rowData = $("#invoiceGrid").jqGrid("getRowData", rowId);
 	if(rowData.foodCode != 'DSCNT'){
@@ -206,7 +218,7 @@ function adjustTotal(){
 		if(rowData.quantity != null && rowData.quantity != ''){
 			quantity=parseInt(quantity)+parseInt(rowData.quantity);
 		}
-		amount=parseInt(amount)+parseInt(rowData.amount);
+		amount=parseFloat(amount)+parseFloat(rowData.amount);
 	});
 
 	jQuery("#invoiceGrid").footerData('set',{foodDesc:'Total',quantity:quantity ,  amount:amount});
@@ -219,12 +231,12 @@ function generateBill() {
 	if(!validateOrder()){
 		return false;
 	}
-	
 	openModeOfPaymentPopup(null); //Here order is getting passed as NULL, Since Order is not yet created
 	
 }
 
 function saveOrderWithModeOfPayment(){
+	
 	var mopId = $('select[id = modeOfPayment]').val();
 	saveOrder(mopId);
 }
@@ -376,9 +388,27 @@ function calculateDiscount(){
 		else{
 			$("#invoiceGrid").jqGrid("addRowData",-999 , { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount }, "last");	
 		}
+		applyGST();
 		adjustTotal();
 	}
 
 }
 
 
+
+function applyGST(){
+	$('#invoiceGrid').jqGrid('delRowData',-1000);
+	$('#invoiceGrid').jqGrid('delRowData',-1001);
+	$('#invoiceGrid').jqGrid('delRowData',-1002);
+	
+		var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
+		var amount=0;
+		$.each(allData, function(i, item){
+			var rowData = $("#invoiceGrid").jqGrid("getRowData", item.id);
+				amount=parseInt(amount)+parseInt(rowData.amount);
+		});
+		var amountAfterGST = (amount * 2.5)/100;
+		$("#invoiceGrid").jqGrid("addRowData",-1000 , { foodCode:'SGST', quantity:null, foodDesc:'SGST' ,  amount:'+'+amountAfterGST }, "last");	
+		$("#invoiceGrid").jqGrid("addRowData",-1001 , { foodCode:'CGST', quantity:null, foodDesc:'CGST' ,  amount:'+'+amountAfterGST }, "last");	
+		$("#invoiceGrid").jqGrid("addRowData",-1002 , { foodCode:'IGST', quantity:null, foodDesc:'IGST' ,  }, "last");	
+}
