@@ -57,8 +57,12 @@ public class Order {
 	    @JoinColumn(name="mode_of_payment")
 	 	private ModeOfPayment modeOfPayment ;
 		
+		@Column(name = "reason")
+		private String reason;
+		
 		@Transient
 		private String orderTime;
+		
 
 		
 		public Long getId() {
@@ -140,6 +144,14 @@ public class Order {
 
 		public void setOrderTime(String orderTime) {
 			this.orderTime = orderTime;
+		}
+
+		public String getReason() {
+			return reason;
+		}
+
+		public void setReason(String reason) {
+			this.reason = reason;
 		}
 
 }

@@ -53,12 +53,13 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 
 
 	@Override
-	public MessageDTO cancel(Long orderId) {
+	public MessageDTO cancel(Long orderId, String reason) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{
 			Order order = orderRepository.findOne(orderId);
 			OrderStatus cancelledStatus = orderStatusRepository.findByCode(ApplicationConstant.CANCELLED_ORDER);
 			order.setStatus(cancelledStatus);
+			order.setReason(reason);
 			msgDTO.setMessage("Order "+order.getOrderNo()+" cancelled successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
 		}

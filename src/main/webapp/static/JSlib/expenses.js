@@ -291,6 +291,17 @@ function EditExpenses(expenseData){
 	 	$('#amountModal').val(rowData.amount);
 	 	$('#expenseDateTimeModal').val(rowData.creationDate);
 	 	$('#remarksModal').val(rowData.remarks);
+	 	
+	 	
+	 	 $('#myModal').modal('show');
+		 
+	 	 
+		 /*	var rowData = $("#expenseReportGrid").jqGrid("getRowData", rowid);
+		 	 $("#expenseRowId").val(rowid);
+		 	$('#foodItemDesc').val(rowData.item);
+		 	$('#amount').val(rowData.amount);
+		 	$('#expenseDateTime').val(rowData.creationDate);
+		 	$('#remarks').val(rowData.remarks);*/
  } 
  
  

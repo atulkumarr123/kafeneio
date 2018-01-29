@@ -103,8 +103,7 @@
 <div class="container">
   <div class="modal fade" id="myModalExpenses" role="dialog">
     <div class="modal-dialog">
-    
-      <!-- Modal content-->
+
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -114,14 +113,14 @@
         <fieldset>
         				<input type="hidden" id="expenseRowId" name="expenseRowId"/>
 							 <div class="form-group">
-<!-- 								<div class="col-md-6">
+								<!-- <div class="col-md-6">
 									<label for="normal-field" class="control-label">Item
 										Code</label> <input type="text" name="foodItemCode1" placeholder=""
 										class="form-control" id="foodItemCode1" required>
-								</div>
- -->
+								</div> -->
+
 								<div class="col-md-6">
-									<label for="normal-field" class="control-label">Item
+									<label for="normal-field" class="control-label">Expense
 										Description</label> <input type="text" name="fodItemDesc"
 										placeholder="" class="form-control" id="foodItemDescModal" required>
 								</div>
@@ -149,8 +148,8 @@
 							
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Remarks
-										</label> <input type="text" name="remarks" placeholder=""
-										class="form-control" id="remarksModal" required>
+										</label> <textarea name="remarks" placeholder=""
+										class="form-control" id="remarksModal" required></textarea>
 								</div>
 	
 							

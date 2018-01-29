@@ -13,7 +13,7 @@ public interface OrderService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public MessageDTO serve(Long orderId, Long mopId);
 	@PreAuthorize("hasRole('ADMIN')")
-	public MessageDTO cancel(Long orderId);
+	public MessageDTO cancel(Long orderId, String reason);
 	@PreAuthorize("hasRole('ADMIN')")
 	public MessageDTO reInitiate(Long orderId);
 	@PreAuthorize("hasRole('ADMIN')")

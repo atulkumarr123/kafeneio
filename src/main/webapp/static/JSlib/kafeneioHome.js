@@ -88,7 +88,7 @@ function removeItem(rowid){
 	else{
 		$('#invoiceGrid').jqGrid('delRowData',rowid);
 	}
-	applyGST();
+//	applyGST();
 	adjustTotal();
 }
 function getItems(foodCategory){
@@ -139,9 +139,7 @@ function addItem(id,foodCode, foodItemDesc, amount){
 	if(!increaseIfPresent(foodCode,amount)){
 	 $("#invoiceGrid").jqGrid("addRowData",id , { foodCode:foodCode, foodDesc:foodItemDesc , quantity:1 ,  amount:amount  }, "last");
 		}
-	applyGST();
-	adjustTotal();
-	applyGST();
+	//applyGST();
 	adjustTotal();
 	}
 
@@ -244,7 +242,6 @@ function saveOrderWithModeOfPayment(){
 
 
 function saveOrder(mopId){
-	
 	var ctx = $("#contextPath").val();
 	var allData = $("#invoiceGrid").jqGrid("getGridParam", "data");
 	var orderNo = $("#orderNumber").val();
@@ -255,6 +252,7 @@ function saveOrder(mopId){
 	order["creation_date"]=null;
 	order["orderDetails"]=allData;
 	order["discountPercentage"]=discountPercentage;
+	$("#discountPercentage").val('');
 	var localUrl = ctx+"/generateBill";
 	if(mopId != null){
 		localUrl = ctx+"/generateBill?mopId="+mopId;
@@ -389,7 +387,7 @@ function calculateDiscount(){
 		else{
 			$("#invoiceGrid").jqGrid("addRowData",-999 , { foodCode:'DSCNT', quantity:null, foodDesc:'Discount' ,  amount:'-'+discountAmount }, "last");	
 		}
-		applyGST();
+		//applyGST();
 		adjustTotal();
 	}
 

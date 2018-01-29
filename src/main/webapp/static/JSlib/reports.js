@@ -20,6 +20,9 @@ $( document ).ready(function() {
     $('#toDateTimePicker').datetimepicker({
     	 format: $("#dateTimeFormatCalendar").val()	
    });
+    $('#toDateTimePicker').datetimepicker({
+   	 format: $("#dateTimeFormatCalendar").val()	
+  });
     
     $("#fromReportDate").val($("#fromDateTime").val());
     $("#toReportDate").val($("#toDateTime").val());
@@ -161,15 +164,15 @@ function expensesReport(expenseData){
 			{ name: "item", label: "Expense",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
 			{ name: "creationDate", label: "Date",  align: "center" },
-			{ name: "remarks", label: "Remarks",  align: "center" },
-			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
+			{ name: "remarks", label: "Remarks",  align: "center" }
+			/*{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
 					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
 				}},
             { name: 'decrease', label:"", width: 30, sortable: false, search: false, align: "center",
           	  formatter:function(){
           	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
-          	  }}
+          	  }}*/
 			],
 			data:expenseData,
 			footerrow: true,

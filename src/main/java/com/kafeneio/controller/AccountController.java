@@ -23,6 +23,7 @@ public class AccountController extends BaseRestController {
 		return  ResponseEntity.ok(createSuccessResponse(ResponseKeyName.ACCOUNT_DETAILS,accountDto));
 	}
 	
+	
 	@RequestMapping(value = "/getAccountDetails", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAccountDetailsOfUser(@RequestParam (value="user_id",required=true)Long user_id){
 		AccountDTO accountDto=accountService.getUserAccountDetails(user_id);

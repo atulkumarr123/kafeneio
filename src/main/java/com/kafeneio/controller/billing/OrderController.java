@@ -34,8 +34,8 @@ public class OrderController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/cancel/{orderId}")
-	public MessageDTO cancel(@PathVariable Long orderId) {
-		MessageDTO msgDTO = orderService.cancel(orderId);
+	public MessageDTO cancel(@PathVariable Long orderId,@RequestParam(value = "reason" , required = true) String reason) {
+		MessageDTO msgDTO = orderService.cancel(orderId,reason);
 		return msgDTO;
 	}
 	

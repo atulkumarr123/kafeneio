@@ -78,7 +78,9 @@ function createPendingOrderGrid(pendingOrders){
             }
             else if (iCol == cancelButton) {
             	//alert("cancelButton");
-            	cancelThisOrder(rowid);
+            	 $('#reasonForCancellationModal').modal('show');
+            	 $('#rowIdOnModal').val(rowid);
+            	
             }
         },
         
@@ -255,11 +257,11 @@ function createCancelledOrdersGrid(cancelledOrders) {
 			{ name: "orderNo", label: "Order No",  align: "center",  width: 80},
 			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 80},
 			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
-			{ name: "amount", label: "Amt",  align: "right",template: "number",  width: 90},
-			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
+			{ name: "reason", label: "Reason",  align: "left",  width: 270},
+		/*	{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
     			formatter:function(){
     				return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
-    		}}
+    		}}*/
     			],
         data: cancelledOrders,
        
@@ -370,8 +372,8 @@ function createYestPendingOrderGrid(pendingOrders){
            
             }
             else if (iCol == cancelButton) {
-            	//alert("cancelButton");
-            	cancelThisOrder(rowid);
+            	 $('#reasonForCancellationModal').modal('show');
+            	 $('#rowIdOnModal').val(rowid);
             }
         },
         
@@ -448,11 +450,18 @@ function serveThisOrder(orderId, mopId){
 }
 
 
-function cancelThisOrder(rowid){
+function cancelThisOrder(){
 	//alert("cancelled called");
+	var reason = $("#reasonForCancellation").val();
+	if(reason == '' || reason == 'undefined' || reason == null){	
+		$("#reasonForCancellation-error").text("Please enter a reason for cancellation");
+		$("#reasonForCancellation-error").show();
+		return false;
+	}
 	var ctx = $("#contextPath").val();
+	var rowid = $("#rowIdOnModal").val();
 	$.ajax({
-		url : ctx+"/order/cancel/"+rowid,
+		url : ctx+"/order/cancel/"+rowid+"?reason="+reason,
 		success : function(responseText) {
 			location.reload();
 		},
@@ -462,6 +471,8 @@ function cancelThisOrder(rowid){
 			});
 		}	
 	});
+	
+	$('#reasonForCancellationModal').hide();
 }
 
 function reInitiateThisOrder(rowid){
@@ -534,4 +545,8 @@ function modeOfPaymentCheck(rowid){
 	});
 }
 
+function closeCancellation(){
+	$("#reasonForCancellation-error").hide();
+	$("#reasonForCancellation").val('');
 
+}

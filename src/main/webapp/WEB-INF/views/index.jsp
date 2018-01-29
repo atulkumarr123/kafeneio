@@ -104,6 +104,36 @@
   
 </div>
 
+<div class="container">
+  <div class="modal fade" id="reasonForCancellationModal" role="dialog">
+    <div class="modal-dialog">
+ <input type="hidden" id="rowIdOnModal" name="rowIdOnModal"/>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Reason of Cancellation</h4>
+        </div>
+        <div class="modal-body">
+        				<input type="hidden" id="reasonRowId" name="reasonRowId"/>
+								<div class="col-md-12">
+									<label for="normal-field" class="control-label">Reason of Cancellation
+										</label> <textarea name="reasonForCancellation" placeholder=""
+										class="form-control" id="reasonForCancellation" required></textarea>
+										<label id="reasonForCancellation-error" style="color:red" for="reasonForCancellation"></label>
+								</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  id= "updateReasonButton" onclick="cancelThisOrder()">OK</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="closeCancellationReasonBtn" onclick="closeCancellation()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
 </body>
 </html>
 
