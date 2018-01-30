@@ -59,6 +59,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 				}
 		}
 		catch(Exception exception){
+			exception.printStackTrace();
 			msgDTO.setMessage("Error");
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
@@ -79,13 +80,14 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 		while(itr.hasNext()){
 			OrderDetails orderDetails= itr.next();
 			amount=amount+((orderDetails.getAmount()!=null)?orderDetails.getAmount():0);
-			orderDetails.setCreationDate(new Date());
+			orderDetails.setCreationDate(new Date());	
 		}
-
 		//order.setOrderNo(orderNo);
 		order.setCreationDate(new Date());
 		order.setAmount(amount);
-		
+		if(order.getGstAmount() != null){
+		order.setAmount(Double.sum(order.getAmount(),order.getGstAmount()));
+		}
 	}
 
 	public Long getOrderNo(){

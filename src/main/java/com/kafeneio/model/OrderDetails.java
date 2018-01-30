@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -46,6 +47,10 @@ public class OrderDetails {
     @JsonBackReference
  	private Order order;
 
+	@Transient
+	private Double gstAmount;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -101,6 +106,14 @@ public class OrderDetails {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public Double getGstAmount() {
+		return gstAmount;
+	}
+
+	public void setGstAmount(Double gstAmount) {
+		this.gstAmount = gstAmount;
 	}
 	
 	

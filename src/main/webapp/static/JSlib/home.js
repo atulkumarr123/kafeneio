@@ -97,7 +97,7 @@ function createPendingOrderGrid(pendingOrders){
                     { name: "foodDesc", label:"Item", width: (colModel[2].width) },
                     { name: "quantity", label:"Qty", width: (colModel[3].width/3), align:"right"},
                     { name: "amount", label:"Amount", width: (colModel[3].width*2)/3, align:"right"}
-                ],
+                    ],
                 height: "100%",
                 rowNum: 10000,
                 autoencode: true,

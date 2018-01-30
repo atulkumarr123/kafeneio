@@ -1,5 +1,6 @@
 package com.kafeneio.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -19,9 +20,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kafeneio.constants.ApplicationConstant;
-import com.kafeneio.utils.CustomDateDeserializer;
 
 @Entity
 @Table(name="KAFENEIO_ORDER")
@@ -59,6 +58,9 @@ public class Order {
 		
 		@Column(name = "reason")
 		private String reason;
+		
+		@Column(name = "gst_amount")
+		private Double  gstAmount;
 		
 		@Transient
 		private String orderTime;
@@ -154,4 +156,12 @@ public class Order {
 			this.reason = reason;
 		}
 
+		public Double getGstAmount() {
+			return gstAmount;
+		}
+
+		public void setGstAmount(Double gstAmount) {
+			this.gstAmount = gstAmount;
+		}
+	
 }

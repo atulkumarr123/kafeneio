@@ -13,6 +13,7 @@ import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
+import com.kafeneio.model.OrderDetails;
 import com.kafeneio.repository.ModeOfPaymentRepository;
 import com.kafeneio.repository.OrderDAO;
 import com.kafeneio.repository.OrderRepository;
@@ -77,6 +78,12 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 					DateFormat format1 = new SimpleDateFormat(ApplicationConstant.TIME_FORMAT);
 					String time = format1.format(order.getCreationDate());
 					order.setOrderTime(time);
+					if(order.getGstAmount() != null){
+					OrderDetails orderDetail = new OrderDetails();
+					orderDetail.setFoodDesc("GST");
+					orderDetail.setAmount(order.getGstAmount());
+					order.getOrderDetails().add(orderDetail);
+					}
 				});
 			}
 		} catch (ParseException e) {
