@@ -2,11 +2,15 @@ package com.kafeneio.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,6 +29,11 @@ public class Expenses {
 	private Double amount;
 	@Column(name="remarks")
 	private String remarks;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="expense_type")
+ 	private ExpenseType expenseType;
+	
 	@Column(name="item")
 	private String item;
 //	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm a")
@@ -61,6 +70,12 @@ public class Expenses {
 	}
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	public ExpenseType getExpenseType() {
+		return expenseType;
+	}
+	public void setExpenseType(ExpenseType expenseType) {
+		this.expenseType = expenseType;
 	}
 	
 	

@@ -5,6 +5,8 @@ $( document ).ready(function() {
         colModel: [
         	{ name: "item", label: "Item",  align: "center"},
             { name: "amount", label: "Amount",  align: "center" },
+            { name: "expenseType", label: "Type",  align: "center", hidden : true },
+            { name: "type", label: "Type",  align: "center" },
             { name: "creationDate", label: "Date",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
@@ -112,8 +114,10 @@ function addExpense(){
 	//alert(item);
 	var amount = $("#amount").val();
 	var remarks = $("#remarks").val();
+	var type = $("#type").find("option:selected").text();
 	var date = $("#datetimepicker3").find("input").val();
-	$("#expensesGrid").jqGrid("addRowData",33 , { item : item, amount : amount ,creationDate:date, remarks:remarks}, "last");
+	var expenseType = $("#type").val();
+	$("#expensesGrid").jqGrid("addRowData",33 , {expenseType : expenseType, item : item, amount : amount , type : type, creationDate:date, remarks:remarks , }, "last");
 }
 
 function saveExpenses() {
@@ -129,13 +133,11 @@ function saveExpenses() {
 		   });
 		  return false;
 	}
-	//alert(JSON.stringify(allData));
+	alert(JSON.stringify(allData));
 	/*var expense={};
 	expense["item"]=null;
 	expense["amount"]=null;
 	expense["remarks"]=null;*/
-	
-	
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',

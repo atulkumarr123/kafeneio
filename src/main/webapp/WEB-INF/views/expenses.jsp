@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html class="js">
 <head>
 <title><spring:message code="kafeneio.main.title"/></title>
@@ -16,10 +16,7 @@
 <link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 <link href="static/css/bootstrap-tagsinput.css" rel="stylesheet"></link>
-
-
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
-
 <script src="static/js/app.js" /></script>
 <script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
 <script src="static/JSlib/jquery.validate.js"></script>
@@ -30,14 +27,9 @@
 <script src="static/JSlib/pnotify.custom.js" /></script>
 <script src="static/JSlib/bootstrap-tagsinput.js" /></script>
 <script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
-
-
-
-
-
 <script src="static/JSlib/expenses.js"></script>
 </head>
-<form action="" name="expenses" id = "expenses">
+<form:form action="" id = "expenses" commandName = "expenseType">
  <input type="hidden" name="currentDate" id="currentDate" value="${currentDate}"/>
 	<div class="container">
 		<%@include file="menu.jsp"%>
@@ -47,7 +39,6 @@
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10">
 						<div class="page-header-kafeneio" ><label class="control-label"><h3>Expenses</h3></label></div>
-			
 				<div class="widget-content">
 					<fieldset>
 							<div class="form-group">
@@ -56,7 +47,15 @@
 										Description</label> <input type="text" name="itemDesc" 
 										placeholder="" class="form-control"
 										id="itemDesc" required>
-								</div>
+								</div>						
+								<div class="col-md-6">
+								<label for="prepended-input" class="control-label">Expenses Type</label>
+								<form:select path="id" class="form-control" id="type"
+									required="required">
+									<option value="0">SELECT</option>
+									<form:options items="${expenseTypeList}" itemValue="id" itemLabel="description" />
+								</form:select>
+							</div>
 								<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="amount">Amount</label>
 									<input type="text" class="form-control" name="amount"
@@ -98,8 +97,7 @@
 			<div class="col-lg-1"></div>
 		</div>
 	</div>
-</form>
-
+</form:form>
 <div class="container">
   <div class="modal fade" id="myModalExpenses" role="dialog">
     <div class="modal-dialog">
@@ -118,22 +116,17 @@
 										Code</label> <input type="text" name="foodItemCode1" placeholder=""
 										class="form-control" id="foodItemCode1" required>
 								</div> -->
-
 								<div class="col-md-6">
 									<label for="normal-field" class="control-label">Expense
 										Description</label> <input type="text" name="fodItemDesc"
 										placeholder="" class="form-control" id="foodItemDescModal" required>
 								</div>
-
 							<div class="col-md-6">
 									<label for="normal-field" class="control-label">Amount
 										</label> <input type="text" name="amount" placeholder=""
 										class="form-control" id="amountModal" required>
 								</div>
-	
 							</div>
-
-
 							<div class="form-group">
 								<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="date">Date</label>
@@ -144,27 +137,18 @@
 									</div>
 								</div>
 							</div>
-							
-							
 								<div class="col-md-6">
-									<label for="normal-field" class="control-label">Remarks
+									<label for  ="normal-field" class="control-label">Remarks
 										</label> <textarea name="remarks" placeholder=""
 										class="form-control" id="remarksModal" required></textarea>
 								</div>
-	
-							
-						</fieldset>
-		 
-		 		 
-		  
+						</fieldset>  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default"  id= "updateExpensesButton" onclick="updateExpense()">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelExpensesButton" >Close</button>
         </div>
       </div>
-      
     </div>
   </div>
-  
 </div>

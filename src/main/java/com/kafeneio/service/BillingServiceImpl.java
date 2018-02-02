@@ -22,9 +22,9 @@ import com.kafeneio.repository.OrderStatusRepository;
 @Service
 public class BillingServiceImpl extends BaseServiceImpl implements BillingService{
 	
-	
 	@Inject
 	OrderRepository orderRepository;
+	
 	@Inject
 	OrderStatusRepository orderStatusRepository;
 
@@ -38,7 +38,6 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	public synchronized MessageDTO saveOrder(Order order, Long mopId){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
-			
 			order.setOrderNo(this.getOrderNo());
 				if(isOrderExist(order.getOrderNo())){
 					msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
@@ -54,7 +53,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 					}
 					
 					orderRepository.save(order);
-					msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
+					msgDTO.setMessage("Order"+order.getOrderNo()+" saved Successfully!");
 					msgDTO.setStatusCode(HttpStatus.OK.value());
 				}
 		}
@@ -89,7 +88,6 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 		order.setAmount(Double.sum(order.getAmount(),order.getGstAmount()));
 		}
 	}
-
 	public Long getOrderNo(){
 		Long orderNo = orderDao.findOrderNo();
 		orderNo=(orderNo!=null)?(orderNo+1):ApplicationConstant.BASE_ORDER_NO;
