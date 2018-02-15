@@ -8,10 +8,10 @@ import javax.inject.Inject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.kafeneio.DTO.ExpensesDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.model.ExpenseType;
 import com.kafeneio.model.Expenses;
-import com.kafeneio.model.ExpensesDto;
 import com.kafeneio.model.RawMaterials;
 import com.kafeneio.repository.ExpensesDAO;
 import com.kafeneio.repository.ExpensesRepository;
@@ -37,17 +37,13 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 			expensesDto.forEach(expenseDto -> {
 				Expenses expenses = new Expenses();
 				expenses.setAmount(expenseDto.getAmount());
-				expenses.setCreationDate(new Date());
+				expenses.setCreationDate(expenseDto.getCreationDate());
 				expenses.setItem(expenseDto.getItem());
 				expenses.setRemarks(expenseDto.getRemarks());
-				
-				ExpenseType expenseType = expensesTypeRepository.findOne(expenseDto.getExpenseType());
+				ExpenseType expenseType = expensesTypeRepository.findOne(expenseDto.getExpenseTypeId());
 				expenses.setExpenseType(expenseType);
-				
 				expensesList.add(expenses);	
-			
 			});
-			
 			//expensesDto.stream().forEach(expense -> expense.setCreationDate(new Date()));
 			expensesRepository.save(expensesList);
 			msgDTO.setMessage("Expenses Saved");
@@ -61,9 +57,18 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 	}
 
 	@Override
-	public MessageDTO updateExpense(Expenses expenses) {
+	public MessageDTO updateExpense(ExpensesDto expensesDto) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{
+			Expenses expenses = new Expenses();
+			expenses.setAmount(expensesDto.getAmount());
+			expenses.setCreationDate(expensesDto.getCreationDate());
+			ExpenseType expenseType = expensesTypeRepository.findOne(expensesDto.getExpenseTypeId());
+			expenses.setExpenseType(expenseType);
+			expenses.setId(expensesDto.getId());
+			expenses.setItem(expensesDto.getItem());
+			expenses.setRemarks(expensesDto.getRemarks());
+			
 			expensesRepository.save(expenses);
 			msgDTO.setMessage("Expenses Updated");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
@@ -73,7 +78,6 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 		return msgDTO;
-		
 	}
 
 	@Override
@@ -92,10 +96,24 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 	}
 
 	@Override
-	public List<Expenses> fetchExpenses() {
+	public List<ExpensesDto> fetchExpenses() {
 		List<Expenses> expenses = null;
 		expenses = expensesDAO.fetchExpenses();
-		return expenses;
+		List<ExpensesDto> dtoList = new ArrayList<ExpensesDto>();
+		expenses.forEach(expense -> {
+		ExpensesDto dto = new ExpensesDto();
+		dto.setAmount(expense.getAmount());
+		
+		dto.setCreationDate(expense.getCreationDate());
+		dto.setExpenseTypeDesc(expense.getExpenseType().getDescription());
+		dto.setId(expense.getId());
+		dto.setItem(expense.getItem());
+		dto.setExpenseTypeId(expense.getExpenseType().getId());
+		dto.setExpenseTypeDesc(expense.getExpenseType().getDescription());
+		dto.setRemarks(expense.getRemarks());
+		dtoList.add(dto);
+		});
+		return dtoList;
 	}
 
 	@Override

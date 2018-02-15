@@ -1,9 +1,8 @@
 package com.kafeneio.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,15 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kafeneio.constants.ApplicationConstant;
 
 
 @Entity
-@Table(name="KAFENEIO_RAW_MATERIALS")
+@Table(name="RAW_MATERIALS")
 public class RawMaterials extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -53,11 +51,15 @@ public class RawMaterials extends BaseEntity {
 	@Column(name="lower_limit")
 	private BigDecimal lowerLimit;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="units_id")
     @JsonBackReference
  	private Units unit;
 
+	@Column
+	@OneToMany(targetEntity=Inventory.class, mappedBy="rawMaterial", fetch=FetchType.EAGER)
+	private List<Inventory> inventory;
+	
 	public Long getId() {
 		return id;
 	}
@@ -66,22 +68,6 @@ public class RawMaterials extends BaseEntity {
 		this.id = id;
 	}
 
-	/*public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public Date getLastUpdatedDate() {
-		return lastUpdatedDate;
-	}
-
-	public void setLastUpdatedDate(Date lastUpdatedDate) {
-		this.lastUpdatedDate = lastUpdatedDate;
-	}
-*/
 	public BigDecimal getQuantity() {
 		return quantity;
 	}
@@ -129,5 +115,14 @@ public class RawMaterials extends BaseEntity {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	
+	public List<Inventory> getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(List<Inventory> inventory) {
+		this.inventory = inventory;
+	}
+
 	
 }

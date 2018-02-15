@@ -2,16 +2,22 @@ package com.kafeneio.service;
 
 import java.util.List;
 
+import com.kafeneio.DTO.InventoryDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.DTO.RawMaterialDto;
-import com.kafeneio.model.RawMaterials;
 
 public interface InventoryService extends BaseService{
 	
-	public MessageDTO saveRawMaterials(List<RawMaterialDto> rawMaterials);
+	public MessageDTO saveInventoryItems(List<InventoryDto> inventoryItems);
 	
 	public List<RawMaterialDto> fetchRawMaterial();
 
+	public List<InventoryDto> fetchInventory();
+
 	public MessageDTO updateRawMaterial(RawMaterialDto rawMaterialDto);
+
+	public MessageDTO saveRawMaterials(List<RawMaterialDto> rawMaterials);
+
+	MessageDTO deleteRawMaterial(Long id);
 
 }

@@ -1,4 +1,7 @@
 package com.kafeneio.service;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -35,16 +38,16 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	OrderDAO orderDao;
 	
 	@Override
-	public synchronized MessageDTO saveOrder(Order order, Long mopId){
+	public synchronized MessageDTO saveOrder(Order order, Long mopId, String date){
 		MessageDTO msgDTO = new MessageDTO();
 		try{
-			order.setOrderNo(this.getOrderNo());
+			order.setOrderNo(this.getOrderNo(date));
 				if(isOrderExist(order.getOrderNo())){
 					msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
 					msgDTO.setStatusCode(HttpStatus.ALREADY_REPORTED.value());
 				}
 				else{
-					populateOrder(order);
+					populateOrder(order,date);
 					OrderStatus orderStatus = orderStatusRepository.findByCode(ApplicationConstant.NEW_ORDER);
 					order.setStatus(orderStatus);
 					if(mopId != null){
@@ -73,23 +76,29 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 		else return false;
 	}
 
-	private void populateOrder(Order order) {
+	private void populateOrder(Order order, String date) throws ParseException {
 		double amount = 0;
+		//order.setOrderNo(orderNo);
+		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
+		if((date!=null && !date.isEmpty())){
+			order.setCreationDate(format.parse(date));
+		}
+		else{
+			order.setCreationDate(new Date());
+		}
 		Iterator<OrderDetails> itr = order.getOrderDetails().iterator();	
 		while(itr.hasNext()){
 			OrderDetails orderDetails= itr.next();
 			amount=amount+((orderDetails.getAmount()!=null)?orderDetails.getAmount():0);
-			orderDetails.setCreationDate(new Date());	
+			orderDetails.setCreationDate(order.getCreationDate());	
 		}
-		//order.setOrderNo(orderNo);
-		order.setCreationDate(new Date());
 		order.setAmount(amount);
 		if(order.getGstAmount() != null){
-		order.setAmount(Double.sum(order.getAmount(),order.getGstAmount()));
+			order.setAmount(Double.sum(order.getAmount(),order.getGstAmount()));
 		}
 	}
-	public Long getOrderNo(){
-		Long orderNo = orderDao.findOrderNo();
+	public Long getOrderNo(String date) throws ParseException{
+		Long orderNo = orderDao.findOrderNo(date);
 		orderNo=(orderNo!=null)?(orderNo+1):ApplicationConstant.BASE_ORDER_NO;
 		return orderNo;
 	}

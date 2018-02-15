@@ -102,3 +102,8 @@ input[type="checkbox"]:checked + label span {
 .ui-jqgrid>.ui-jqgrid-pager{
 	height: 50px;	
 }
+.profitOnReport{
+	text-align: center;
+    background: white;
+    border-radius: 5px;
+}

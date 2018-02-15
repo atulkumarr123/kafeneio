@@ -1,5 +1,6 @@
 package com.kafeneio.controller.billing;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,15 +36,21 @@ public class BillingController {
 	
 	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
-	public MessageDTO generateBill(@RequestBody Order order, @RequestParam(value = "mopId", required = false) Long mopId)
+	public MessageDTO generateBill(@RequestBody Order order, @RequestParam(value = "mopId", required = false) Long mopId,
+	@RequestParam(value = "date", required = true) String date)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		MessageDTO msgDTO = billingService.saveOrder(order, mopId);
+		MessageDTO msgDTO = billingService.saveOrder(order, mopId, date);
 		return msgDTO;
 	}
 	@RequestMapping(value="/maxOrderNo",method=RequestMethod.GET)
-	public Long getNextOrderNo()
+	public Long getNextOrderNo( @RequestParam(value = "date", required = true) String date)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-		Long maxOrderNo = billingService.getOrderNo();
+		Long maxOrderNo = null;
+		try {
+			maxOrderNo = billingService.getOrderNo(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return maxOrderNo;
 	}
 }

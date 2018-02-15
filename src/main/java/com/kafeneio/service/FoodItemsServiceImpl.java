@@ -50,4 +50,23 @@ public class FoodItemsServiceImpl extends BaseServiceImpl implements FoodItemsSe
 		}
 		return msgDTO;
 	}
+
+	@Override
+	public List<FoodItemsDto> fetchFoodItems() {
+		List<FoodItems> itemsList =   foodRepository.fetchFoodItems();
+		List<FoodItemsDto> dtoList = new ArrayList<FoodItemsDto>();
+		itemsList.forEach(foodItem ->{
+			FoodItemsDto dto = new FoodItemsDto();
+			dto.setAmount(foodItem.getAmount());
+			dto.setDate(foodItem.getDate());
+			dto.setFoodCategoryDesc(foodItem.getFoodCategory().getFoodDesc());
+			dto.setFoodItemCode(foodItem.getFoodItemCode());
+			dto.setFoodItemDesc(foodItem.getFoodItemDesc());
+			dto.setId(foodItem.getId());
+			dto.setStatus(foodItem.isStatus());
+			
+			dtoList.add(dto);
+		});	
+		return dtoList;
+	}
 }

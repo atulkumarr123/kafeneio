@@ -1,18 +1,26 @@
 package com.kafeneio.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="KAFENEIO_UNITS")
-public class Units {
+public class Units extends BaseEntity {
 	
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		@Id
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		@Column(name="id" ,unique=true,nullable=false )
@@ -25,6 +33,7 @@ public class Units {
 		private boolean status;
 		@Column(name="creation_date")
 		private Date date;
+		
 		
 		public Long getId() {
 			return id;
@@ -56,5 +65,5 @@ public class Units {
 		public void setStatus(boolean status) {
 			this.status = status;
 		}
-		
+			
 }

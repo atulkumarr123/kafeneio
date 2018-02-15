@@ -18,6 +18,7 @@
 <link href="static/css/app.css" rel="stylesheet"></link>
 <link href="static/css/theme.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="static/css/free-jqgrid/4.14.1/ui.jqgrid.min.css">
+<link href = "static/css/bootstrap-datetimepicker-4.17.37.min.css" rel = "stylesheet">
 <link href = "static/css/ui/1.10.4/jquery-ui.css" rel = "stylesheet">
 <link href="static/css/pnotify.custom.css" rel="stylesheet"></link>
 <link rel="stylesheet" href="static/css/kafeneio.css"></link>
@@ -25,7 +26,9 @@
 <script src="static/js/app.js" /></script>
 <script src="static/JSlib/jquery/1.12.4/jquery.min.js"></script>
 <script src="static/JSlib/twitter-bootstrap/3.3.7/bootstrap.min.js"></script>
+<script src="static/JSlib/moment-2.10.6.min.js"></script> 
 <script src="static/JSlib/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
+<script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
 <script  src="static/JSlib/home.js"></script>
@@ -35,6 +38,8 @@
 		<%@include file="menu.jsp"%>
 </div>
 <input type="hidden" name="currentDate" id="currentDate" value="${currentDate}"/>
+<input type="hidden" name="currentDateTime" id="currentDateTime" value="${currentDateTime}"/>
+<input type="hidden" name="dateTimeFormatCalendar" id="dateTimeFormatCalendar" value="${dateTimeFormatCalendar}"/> 
 <input type="hidden" name="yesterdayDate" id="yesterdayDate" value="${yesterdayDate}"/>
 
 
@@ -55,9 +60,20 @@
 		</div>
 		
 	</div>	
+	<div class="page-header-kafeneio" ></div>
+	
 	<div class="container" style="display:flex">
 		<div class="row" style="margin: 15px">
+		<div class='input-group date' id='datetimepicker' style="width: 253px;text-align: center;">
+								<input type='text' class="form-control" id="orderDateTime" required/> <span
+									class="input-group-addon"><span onclick="reloadGrid();"
+									class="glyphicon glyphicon-calendar"></span> </span>
+									<span>&nbsp</span><button class="btn btn-default" type="button" onclick="prevOrders()">Search Orders</button>
+		</div>
+		<br>
 			<table id="newYestOrdersGrid"></table>
+			<div id="pager" style="height: 50;"></div>
+			
 		</div>
 	</div>	
 </sec:authorize>

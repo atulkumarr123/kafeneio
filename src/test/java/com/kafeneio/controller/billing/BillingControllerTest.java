@@ -69,7 +69,7 @@ public class BillingControllerTest {
 		rawMaterials.add(rawMaterialDto);
 		rawMaterials.add(rawMaterialDto1);
 		
-		MessageDTO msgDTO = inventoryService.saveRawMaterials(rawMaterials);
+//		MessageDTO msgDTO = inventoryService.saveRawMaterials(rawMaterials);
 		
 	}
 

@@ -59,6 +59,13 @@ $( document ).ready(function() {
         return -1;
     },
     firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
+    
+    $('#datetimepicker').datetimepicker({
+   	 format: $("#dateTimeFormatCalendar").val()
+   	 
+   });
+    var currentDateTime = $("#currentDateTime").val();
+	$('#orderDateTime').val(currentDateTime);
 });
 
 function reloadGrid(){
@@ -146,12 +153,13 @@ function addItem(id,foodCode, foodItemDesc, amount){
 function setCaption(){
 	//alert("going to set caption");
 	var ctx = $("#contextPath").val();
+	var date = $("#datetimepicker").find("input").val();
 	$.ajax({
-		url : ctx+"/maxOrderNo",
+		url : ctx+"/maxOrderNo?date="+date,
 		success : function(responseText) {
 			//alert(JSON.stringify(responseText));
 			$("#orderNumber").val(responseText);
-			$("#invoiceGrid").jqGrid('setCaption',responseText+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"+$("#currentDateTime").val());
+			$("#invoiceGrid").jqGrid('setCaption',responseText+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp"+date);
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
@@ -260,11 +268,12 @@ function saveOrder(mopId){
 			allData.splice(i,i+3);
 		}
 	}
+	var date = $("#datetimepicker").find("input").val();
 	order["gstAmount"] = getGSTAmount();
 	$("#discountPercentage").val('');
-	var localUrl = ctx+"/generateBill";
+	var localUrl = ctx+"/generateBill?date="+date;
 	if(mopId != null){
-		localUrl = ctx+"/generateBill?mopId="+mopId;
+		localUrl = ctx+"/generateBill?mopId="+mopId+"&&date="+date;
 	}
 	//alert(JSON.stringify(allData));
 	   $.ajax({

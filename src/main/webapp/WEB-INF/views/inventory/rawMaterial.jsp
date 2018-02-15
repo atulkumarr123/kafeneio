@@ -113,7 +113,6 @@
 			</div>
 			<div class="col-lg-1"></div>
 		</div>
-	</div>
 
 
 <div class="container">

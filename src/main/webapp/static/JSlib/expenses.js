@@ -1,12 +1,11 @@
 
-
 $( document ).ready(function() {
     $("#expensesGrid").jqGrid({
         colModel: [
         	{ name: "item", label: "Item",  align: "center"},
             { name: "amount", label: "Amount",  align: "center" },
-            { name: "expenseType", label: "Type",  align: "center", hidden : true },
-            { name: "type", label: "Type",  align: "center" },
+            { name: "expenseTypeId", label: "Type",  align: "center", hidden : true },
+            { name: "expenseTypeDesc", label: "Type",  align: "center" },
             { name: "creationDate", label: "Date",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
@@ -103,25 +102,28 @@ function validateForm(){
 		$("#amount").after('<label id="amount-error" class="error" for="amount">This field is required.</label>');
 		$("#amount-error").text("Enter only digits/decimals");
 		valid = false;
+		
+	}
+	if($("#type").val() == null || $("#type").val() == '' || $("#type").val() == '0' || $("#type").val() == undefined){
+		$("#type").after('<label id="type-error" class="error" for="type">This field is required.</label>');
+		valid = false;
 	}
 	return valid
 }
 
 function addExpense(){
 	//alert("in add expenses");
-
 	var item = $("#itemDesc").val();
-	//alert(item);
+	//alert($("#type").val());
 	var amount = $("#amount").val();
 	var remarks = $("#remarks").val();
-	var type = $("#type").find("option:selected").text();
+	var expenseTypeDesc = $("#type").find("option:selected").text();
 	var date = $("#datetimepicker3").find("input").val();
-	var expenseType = $("#type").val();
-	$("#expensesGrid").jqGrid("addRowData",33 , {expenseType : expenseType, item : item, amount : amount , type : type, creationDate:date, remarks:remarks , }, "last");
+	var expenseTypeId = $("#type").val();
+	$("#expensesGrid").jqGrid("addRowData",33 , {expenseTypeId : expenseTypeId, item : item, amount : amount , expenseTypeDesc : expenseTypeDesc, creationDate:date, remarks:remarks , }, "last");
 }
 
 function saveExpenses() {
-	
 	var ctx = $("#contextPath").val();
 	var allData = $("#expensesGrid").jqGrid("getGridParam", "data");
 	//alert(allData);
@@ -133,7 +135,7 @@ function saveExpenses() {
 		   });
 		  return false;
 	}
-	alert(JSON.stringify(allData));
+	//alert(JSON.stringify(allData));
 	/*var expense={};
 	expense["item"]=null;
 	expense["amount"]=null;
@@ -171,7 +173,6 @@ function removeItem(rowid){
 
 function clearExpenses(){
 	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
-
 }
 
 $( document ).ready(function() {
@@ -207,9 +208,7 @@ function searchAndEditExpenses(){
 			});
 		}	
 	});
-	
 }
-
 
 function EditExpenses(expenseData){
 	$("#searchAndEditExpensesGrid").jqGrid({
@@ -221,6 +220,8 @@ function EditExpenses(expenseData){
 			{ name: "id", label: "id",hidden:true},
 			{ name: "item", label: "Expense",  align: "center"},
 			{ name: "amount", label: "Amount",  align: "right",template: "number"},
+		    { name: "expenseTypeId", label: "expenseTypeId",  align: "center", hidden : true },
+	        { name: "expenseTypeDesc", label: "Type",  align: "center" },
 			{ name: "creationDate", label: "Date",  align: "center" },
 			{ name: "remarks", label: "Remarks",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
@@ -252,17 +253,14 @@ function EditExpenses(expenseData){
 			
 		            else if (iCol == editButton) {
 					//alert("reInitiateButton");
-					openPopup(rowid);
-					
+					openPopup(rowid);	
 				}
-
 			},
 			caption: "Search & Edit Expense",
 			loadComplete:function() {
 				adjustTotalExpense();
 			}
 	});
-	
 	grid = $("#searchAndEditExpensesGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
        var cm = grid.jqGrid('getGridParam','colModel');
@@ -275,28 +273,21 @@ function EditExpenses(expenseData){
    },
 		editButton = getColumnIndexByName(grid,'editButton');
    firstButtonColumnIndex = getColumnIndexByName(grid,'decrease');
-   
 	waitingDialog.hide();
-
 }
-
  function openPopup(rowid){
 	 	 $('#myModalExpenses').modal('show');
 	 	$('#datetimepickerModal').datetimepicker({
 			format: 'DD-MM-YYYY'
 		});
-	 	 
 	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowid);
 	 	 $("#expenseRowId").val(rowid);
 	 	$('#foodItemDescModal').val(rowData.item);
-	 	//alert(rowData.amount);
+	 	//alert(rowData.type);
 	 	$('#amountModal').val(rowData.amount);
 	 	$('#expenseDateTimeModal').val(rowData.creationDate);
 	 	$('#remarksModal').val(rowData.remarks);
-	 	
-	 	
-	 	 $('#myModal').modal('show');
-		 
+	 	$('#typeModal').val(rowData.expenseTypeId);		 
 	 	 
 		 /*	var rowData = $("#expenseReportGrid").jqGrid("getRowData", rowid);
 		 	 $("#expenseRowId").val(rowid);
@@ -306,16 +297,17 @@ function EditExpenses(expenseData){
 		 	$('#remarks').val(rowData.remarks);*/
  } 
  
- 
  function updateExpense(){
 	 var rowId= $("#expenseRowId").val();
 		var ctx = $("#contextPath").val();
-	// alert(rowId);
+//		alert( $('#typeModal').val());
 	 	var rowData = $("#searchAndEditExpensesGrid").jqGrid("getRowData", rowId);
 	 	rowData.item = $('#foodItemDescModal').val();
 	 	rowData.amount = $('#amountModal').val();
 	 	rowData.creationDate = $('#expenseDateTimeModal').val();
 	 	rowData.remarks = $('#remarksModal').val();
+	 	rowData.expenseTypeDesc = $("#typeModal option:selected").text();
+	 	rowData.expenseTypeId = $('#typeModal').val();
 	 	rowData.editButton = '';
 	 	$("#searchAndEditExpensesGrid").jqGrid("setRowData", rowId, rowData);
 	   $.ajax({

@@ -97,7 +97,6 @@
 			<div class="col-lg-1"></div>
 		</div>
 	</div>
-</form:form>
 <div class="container">
   <div class="modal fade" id="myModalExpenses" role="dialog">
     <div class="modal-dialog">
@@ -136,7 +135,18 @@
 											class="glyphicon glyphicon-calendar"></span> </span>
 									</div>
 								</div>
+								
+									<div class="col-md-6">
+								<label for="prepended-input" class="control-label">Expenses Type</label>
+								<form:select path="id" class="form-control" id="typeModal"
+									required="required">
+									<option value="0">SELECT</option>
+									<form:options items="${expenseTypeList}" itemValue="id" itemLabel="description" />
+								</form:select>
 							</div>
+								
+							</div>
+							
 								<div class="col-md-6">
 									<label for  ="normal-field" class="control-label">Remarks
 										</label> <textarea name="remarks" placeholder=""
@@ -152,3 +162,4 @@
     </div>
   </div>
 </div>
+</form:form>

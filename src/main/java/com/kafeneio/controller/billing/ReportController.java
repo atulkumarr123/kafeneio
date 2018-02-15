@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafeneio.DTO.ExpensesDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.exception.KafeneioException;
+import com.kafeneio.model.ExpenseType;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.FoodCategory;
 import com.kafeneio.model.ModeOfPayment;
@@ -61,9 +63,9 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/updateExpenses", method = RequestMethod.POST)
-	public MessageDTO updateExpenses(@RequestBody Expenses expenses)
+	public MessageDTO updateExpenses(@RequestBody ExpensesDto expensesDto)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
-			MessageDTO msgDTO = expensesService.updateExpense(expenses);
+			MessageDTO msgDTO = expensesService.updateExpense(expensesDto);
 			return msgDTO;
 	}
 }
@@ -76,6 +78,9 @@ class ReportLoaderController{
 	
 	@Inject
 	FoodService foodService;
+	
+	@Inject
+	ExpensesService expenseService; 
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/reports")
@@ -107,6 +112,12 @@ class ReportLoaderController{
 		toDate = toDate + " 12:00 AM";
 		modelMap.put("fromDateTime", fromDate);
 		modelMap.put("toDateTime", toDate);
+		
+		List<ExpenseType> expenseTypeList = expenseService.findExpenseType();
+		  modelMap.put("expenseTypeList",expenseTypeList);
+			ExpenseType expenseType = new ExpenseType();
+			modelMap.put("foodCategoryReport", expenseType);
+		
 		return "reports";
 	}
 

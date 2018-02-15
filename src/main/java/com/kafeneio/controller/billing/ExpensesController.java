@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafeneio.DTO.ExpensesDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.ExpenseType;
 import com.kafeneio.model.Expenses;
-import com.kafeneio.model.ExpensesDto;
 import com.kafeneio.service.ExpensesService;
 
 @RestController
@@ -38,8 +38,8 @@ public class ExpensesController {
 	}
 	
 	@RequestMapping(value = "/expensesList")
-	public List<Expenses> fetchExpenses() {
-		List<Expenses> expenses = expensesService.fetchExpenses(); 
+	public List<ExpensesDto> fetchExpenses() {
+		List<ExpensesDto> expenses = expensesService.fetchExpenses(); 
 		return expenses;
 	}
 	

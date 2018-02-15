@@ -9,4 +9,6 @@ public interface FoodItemsService {
 	
 	
 	public MessageDTO saveFoodItems(List<FoodItemsDto> foodItems,Long categoryId);
+
+	public List<FoodItemsDto> fetchFoodItems();
 }

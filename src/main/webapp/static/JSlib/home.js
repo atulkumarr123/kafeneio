@@ -1,10 +1,22 @@
 $( document ).ready(function() {
-		getOrders('NEW',$("#currentDate").val());
-		getOrders('SERVED',$("#currentDate").val());
-		getOrders('CANCELLED',$("#currentDate").val());
-		getOrders('YEST_NEW',$("#yesterdayDate").val());
+	getOrders('NEW',$("#currentDateTime").val());
+	getOrders('SERVED',$("#currentDateTime").val());
+	getOrders('CANCELLED',$("#currentDateTime").val());
+//	getOrders('YEST_NEW',$("#yesterdayDate").val());
+
+
+	$('#datetimepicker').datetimepicker({
+		 format: $("#dateTimeFormatCalendar").val()
+	});
+	var currentDate = $("#currentDate").val();
+	$('#datetimepicker').val(currentDate);
 });
 
+function prevOrders(){
+	var status = 'PREV_NEW';
+	var date = $("#datetimepicker").find("input").val();
+	getOrders(status,date);
+}
 function getOrders(status,date){
 	
 	$.ajax({
@@ -21,8 +33,10 @@ function getOrders(status,date){
 			else if(status=='CANCELLED'){
 				createCancelledOrdersGrid(responseText);
 			}
-			else if(status=='YEST_NEW'){
+			else if(status=='PREV_NEW'){
+				waitingDialog.show('Please wait...');
 				createYestPendingOrderGrid(responseText);
+				waitingDialog.hide();
 			}
 		},
 		error:function(responseText) {
@@ -67,7 +81,11 @@ function createPendingOrderGrid(pendingOrders){
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
-        caption: "Pending Orders", 
+        caption: 'Pending Orders',
+        	/*'<div class="container" style="display:flex">'+
+        	'<div>Pending Orders</div>'+ '&nbsp'+
+        	'<div class="input-group date" id="datetimepicker" style="width: 253px;text-align: center;"><input type="text" class="form-control" id="currentDateTime" required/> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span> </div>'+
+        	'</div>',*/
         loadonce: true,
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
@@ -329,6 +347,7 @@ function createCancelledOrdersGrid(cancelledOrders) {
 
 
 function createYestPendingOrderGrid(pendingOrders){
+	$("#newYestOrdersGrid").jqGrid('GridUnload');	
     $("#newYestOrdersGrid").jqGrid({
     	datatype : "local",
     	colModel: [
@@ -353,18 +372,35 @@ function createYestPendingOrderGrid(pendingOrders){
     				return "<button class='btn btn-default' style='color:#c12f2f;font-size: small;background: tan;' type='button' ><b>Cancel</b></button>"
     		}}
     			],
-        data: pendingOrders,
+    			
+    			
+    			data:pendingOrders,
+    			footerrow: true,
+    			userDataOnFooter : true,
+    			rowNum:10,
+    			rowList:[10,20,30],
+    			guiStyle: "bootstrap",
+    			iconSet: "fontAwesome",
+    			pager: '#pager',
+    			sortname: 'orderNo',
+    			viewrecords: true,
+    			sortorder: "desc",
+    			caption: "Pending Orders for previous dates",
+    			
+       /* data: pendingOrders,
         footerrow: true,
         userDataOnFooter : true,
+        rowNum:10,
+		rowList:[10,20,30],
         guiStyle: "bootstrap",
         iconSet: "fontAwesome",
         //idPrefix: "gb1_",
-        rownumbers: false,
-        sortname: "invdate",
+//        rownumbers: false,
+        sortname: 'orderNo',
         sortorder: "desc",
-        caption: "Yesterday's Pending Orders", 
-        loadonce: true,
-        height: 'auto',
+        caption: "Pending Orders for previous dates", 
+//        loadonce: true,
+        height: 'auto',*/
         onCellSelect: function (rowid,iCol,cellcontent,e) {
         	//alert("iCol "+iCol);
             if (iCol == serveButton) {

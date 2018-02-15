@@ -37,6 +37,10 @@
 <input type="hidden" name="dateTimeFormatCalendar" id="dateTimeFormatCalendar" value="${dateTimeFormatCalendar}"/> 
 <input type="hidden" name="toDateTime" id="toDateTime" value="${toDateTime}"/> 
 <input type="hidden" name="fromDateTime" id="fromDateTime" value="${fromDateTime}"/> 
+<input type="hidden" name="totalAmount" id="totalAmount" value="0"/> 
+<input type="hidden" name="totalExpenses" id="totalExpenses" value="0"/> 
+
+
 	<div class="container">
 		<%@include file="menu.jsp"%>
 	</div>
@@ -89,6 +93,15 @@
 							</div>
 							</div>
 							
+							<%-- <div class="col-md-6">
+								<label for="prepended-input" class="control-label">Expenses Type</label>
+								<form:select path="id" class="form-control" id="type"
+									required="required">
+									<option value="0">SELECT</option>
+									<form:options items="${expenseTypeList}" itemValue="id" itemLabel="description" />
+								</form:select>
+							</div>
+							 --%>
 						</div>
 					</fieldset>
 					<div class="form-actions">
@@ -101,18 +114,24 @@
 				</div>
 				
 
-
+				<div class="row">
+				<div class="col-md-6">
 				<table id="orderReportGrid"></table>
-				 <div id="pager" style="height: 50;"></div>
-				<br>
-				
+				 <div id="orderPager" style="height: 50;"></div>
+				</div>
+				<div class="col-md-6">
 				<table id="expenseReportGrid"></table>
-				 <div id="pager" style="height: 50;"></div>
-				<br>
+				 <div id="expensesPager" style="height: 50;"></div>
+				</div>
+				</div>
 				
-				<!-- <table id="application-list"></table>
-				 <div id="application-list-pager" style="height: 50;"></div>
-				 <br> -->
+				 <br>
+				 <div class="row">
+				 <div class="col-md-2"></div>
+				 <div id = "profitOnReport" class="col-md-8 profitOnReport"></div>
+				 <div class="col-md-2"></div>
+				 </div> 
+				 <br>
 				<div style="text-align: left;">
 					<button class="btn btn-default" type="button"  onclick="saveExpenses()">Export to Excel</button>
 					<button class="btn btn-default" type="button" onclick="">Generate PDF</button>

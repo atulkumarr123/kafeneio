@@ -1,41 +1,42 @@
 $(document).ready(function(){
 
 	$(window).on("resize", function () {
-		var newWidth = $("#rawMaterialGrid").closest(".ui-jqgrid").parent().width();
-		$("#rawMaterialGrid").jqGrid("setGridWidth", newWidth, true);
+		var newWidth = $("#inventoryGrid").closest(".ui-jqgrid").parent().width();
+		$("#inventoryGrid").jqGrid("setGridWidth", newWidth, true);
 
 	});
 	
-	$('#addRawMaterialButton').click(function() {
+	$('#addInventoryButton').click(function() {
 			//alert("in add expenses button");
-			$('#gbox_rawMaterialGrid').show();
-			$('#gbox_searchAndEditRawMaterialGrid').hide();
-			$('#saveRawMaterialButton').show();
-			$('#clearRawMaterialButton').show();
+			$('#gbox_inventoryGrid').show();
+			$('#gbox_searchAndEditInventoryGrid').hide();
+			$('#saveInventoryButton').show();
+			$('#clearInventoryButton').show();
 			
-			var isFormFilled = $("#rawMaterial").valid();
+			var isFormFilled = $("#inventory").valid();
 			var valid = validateForm();
 			if(isFormFilled && valid){
 				//alert("validating form");
-				addRawMaterial();
+				addInventory();
 			}
 		});
 	
-	$('#searchAndEditRawMaterialbutton').click(function() {
+	$('#searchAndEditInventorybutton').click(function() {
 		
 		//searchAndEdit();
 		});
 });
 
 $( document ).ready(function() {
-    $("#rawMaterialGrid").jqGrid({
+    $("#inventoryGrid").jqGrid({
         colModel: [
-        	{ name: "rawMaterialCode", label: "Raw Material Code",  align: "center"},
-            { name: "rawMaterialDesc", label: "Raw Material Description",  align: "center" },
-            { name: "unitDesc", label: "Unit",  align: "center" },
-            { name: "unitValue", label: "Unit",  align: "center", hidden:true},
+        	{ name: "foodItemsId", label: "Food Items",  align: "center", hidden : true},
+        	{ name: "foodItemsDesc", label: "Food Items",  align: "center"},
+            { name: "rawMaterialId", label: "Raw Material",  align: "center", hidden : true },
+            { name: "rawMaterialDesc", label: "Raw Material",  align: "center" },
+            { name: "unitsDesc", label: "Unit",  align: "center" },
+            { name: "unitsId", label: "Unit",  align: "center", hidden:true},
             { name: "quantity", label: "Quantity",  align: "center" },
-            { name: "lowerLimit", label: "Lower Limit",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
@@ -54,7 +55,7 @@ $( document ).ready(function() {
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
-        caption: "Add Raw Material",       
+        caption: "Add Inventory Item",       
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
             if (iCol >= firstButtonColumnIndex) {
@@ -62,7 +63,7 @@ $( document ).ready(function() {
             }
         }
     });
-    grid = $("#rawMaterialGrid"),
+    grid = $("#inventoryGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
         var cm = grid.jqGrid('getGridParam','colModel');
         for (var i=0,l=cm.length; i<l; i++) {
@@ -82,9 +83,7 @@ $( document ).ready(function() {
 	});
 	var currentDate = $("#currentDate").val();
 	
-	$('#RawMaterialDateTime').val(currentDate);
-
-	
+	$('#inventoryDateTime').val(currentDate);
 
 });
 
@@ -93,28 +92,32 @@ function validateForm(){
 	return valid;
 }
 
-function addRawMaterial(){
-	var rawMaterialCode = $("#rawMaterialCode").val();
-	var rawMaterialDesc = $("#rawMaterialDesc").val();
-	var unitDesc = $("#unit").find("option:selected").text();
+
+function addInventory(){
+	//alert($("#foodItems").val());
+	//alert($("#rawMaterialonInv").val());
+	//alert($("#unitsOnInv").val());
+	var foodItemsId = $("#foodItems").val();
+	var foodItemsDesc = $("#foodItems").find("option:selected").text();
+	var rawMaterialId = $("#rawMaterialonInv").val();
+	var rawMaterialDesc = $("#rawMaterialonInv").find("option:selected").text();
+	var unitsDesc = $("#unitsOnInv").find("option:selected").text();
 	var quantity = $("#quantity").val();	
 	var remarks = $("#remarks").val();
-	var unitValue = $("#unit").val();
-	var lowerLimit = $("#lowerLimit").val();
+	var unitsId = $("#unitsOnInv").val();
 	//var date = $("#datetimepicker3").find("input").val();
-	$("#rawMaterialGrid").jqGrid("addRowData",33 , { unitValue : unitValue, rawMaterialCode : rawMaterialCode, rawMaterialDesc : rawMaterialDesc ,unitDesc : unitDesc, quantity : quantity, remarks:remarks, lowerLimit: lowerLimit}, "last");
-}
+	$("#inventoryGrid").jqGrid("addRowData",33 , { rawMaterialId: rawMaterialId, rawMaterialDesc: rawMaterialDesc, foodItemsId: foodItemsId, foodItemsDesc: foodItemsDesc, unitsDesc : unitsDesc, unitsId : unitsId, quantity : quantity, remarks:remarks}, "last");
+	}
 
-function saveRawMaterial() {
-
+function saveInventory() {
 	var ctx = $("#contextPath").val();
-	var allData = $("#rawMaterialGrid").jqGrid("getGridParam", "data");
+	var allData = $("#inventoryGrid").jqGrid("getGridParam", "data");
 	//alert(allData);
 	if(jQuery.isEmptyObject(allData)){
 		  new PNotify({
 	    		 type:'error',
 	    		 title: 'Error',
-	    		 text: 'Please add atleast one Raw Material!'
+	    		 text: 'Please add atleast one Inventory!'
 		   });
 		  return false;
 	}
@@ -135,7 +138,7 @@ function saveRawMaterial() {
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url : ctx+"/saveRawMaterials",
+	      url : ctx+"/saveInventoryItems",
 	      data: JSON.stringify(allData),
 	      success :function(result) {
 //	    	  alert(JSON.stringify(result));
@@ -144,7 +147,7 @@ function saveRawMaterial() {
     			  title: 'Success',
     			  text: result.message
 	    	  });
-	    	  $("#rawMaterialGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	    	  $("#inventoryGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 	     },
 	   error:function(result) {
 		  // alert(JSON.stringify(result.responseJSON.message));
@@ -159,11 +162,11 @@ function saveRawMaterial() {
 }
 
 function removeItem(rowid){
-	$('#rawMaterialGrid').jqGrid('delRowData',rowid);
+	$('#inventoryGrid').jqGrid('delRowData',rowid);
 }
 
-function clearRawMaterial(){
-	  $("#rawMaterialGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+function clearInventory(){
+	  $("#inventoryGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 
 }
 
@@ -176,24 +179,24 @@ $( document ).ready(function() {
 
 
 
-function searchAndEditRawMaterial(){
+function searchAndEditInventory(){
 //	alert("Going to hide");
-	$('#gbox_rawMaterialGrid').hide();
-	$('#gbox_searchAndEditRawMaterialGrid').show();
-	$('#saveRawMaterialButton').hide();
-	$('#clearRawMaterialButton').hide();
+	$('#gbox_inventoryGrid').hide();
+	$('#gbox_searchAndEditInventoryGrid').show();
+	$('#saveInventoryButton').hide();
+	$('#clearInventoryButton').hide();
 	
 //	alert("in search and edit");
 //	$("#rawMaterialGrid").jqGrid('GridUnload');
-	$("#searchAndEditRawMaterialGrid").jqGrid('GridUnload');	
+	$("#searchAndEditInventoryGrid").jqGrid('GridUnload');	
 	
 	waitingDialog.show('Please wait...');
 	
 	$.ajax({
-		url :$("#contextPath").val()+"/rawMaterialList",
+		url :$("#contextPath").val()+"/inventoryList",
 		success : function(responseText) {
-			//alert(JSON.stringify(responseText));
-			editRawMaterial(responseText);
+			alert(JSON.stringify(responseText));
+			editInventory(responseText);
 		},
 		error:function(responseText) {
 			$(function(){
@@ -205,20 +208,19 @@ function searchAndEditRawMaterial(){
 }
 
 
-function editRawMaterial(rawMaterialData){
-	$("#searchAndEditRawMaterialGrid").jqGrid({
-		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
-		//datatype : "json",
+function editInventory(inventoryData){
+	$("#searchAndEditInventoryGrid").jqGrid({
 		datatype : "local",
 		//mtype : 'POST',
 		colModel: [
-			{ name: "id", label: "id",hidden:true},
-			{ name: "rawMaterialCode", label: "Material Code",  align: "center"},
-			{ name: "rawMaterialDesc", label: "Material Description",  align: "center"},
-			{ name: "quantity", label: "Quantity",  align: "center" },
-			{ name: "lowerLimit", label: "Lower Limit",  align: "center" },
-			{ name: "unitValue", label: "UnitValue",  hidden: true },
-			{ name: "unitDesc", label: "Unit",  align: "center" },
+			{ name: "foodItemsId", label: "Food Items",  align: "center", hidden : true},
+        	{ name: "foodItemsDesc", label: "Food Items",  align: "center"},
+            { name: "rawMaterialId", label: "Raw Material",  align: "center", hidden : true },
+            { name: "rawMaterialDesc", label: "Raw Material",  align: "center" },
+            { name: "unitsDesc", label: "Unit",  align: "center" },
+            { name: "unitsId", label: "Unit",  align: "center", hidden:true},
+            { name: "quantity", label: "Quantity",  align: "center" },
+            { name: "remarks", label: "Remarks",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
 					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Edit</b></button>"
@@ -228,7 +230,7 @@ function editRawMaterial(rawMaterialData){
           	      return "<span  style='cursor:pointer; display: inline-block;' class='ui-icon ui-icon-circle-minus'></span>"
           	  }}
 			],
-			data:rawMaterialData,
+			data:inventoryData,
 			footerrow: true,
 			userDataOnFooter : true,
 			rowNum:10,
@@ -236,14 +238,14 @@ function editRawMaterial(rawMaterialData){
 			guiStyle: "bootstrap",
 			iconSet: "fontAwesome",
 			pager: '#pager',
-			sortname: 'rawMaterialDesc',
+			sortname: 'inventoryDesc',
 			viewrecords: true,
 			sortorder: "desc",
 			autowidth: true,
 			loadonce: true,
 			 onCellSelect: function (rowid,iCol,cellcontent,e) {
 		            if (iCol >= firstButtonColumnIndex) {
-		                removeRawMaterial(rowid);
+		                removeInventory(rowid);
 		            }
 			
 		            else if (iCol == editButton) {
@@ -253,13 +255,13 @@ function editRawMaterial(rawMaterialData){
 				}
 
 			},
-			caption: "Search & Edit Raw Material",
+			caption: "Search & Edit Inventory Item",
 			loadComplete:function() {
 //				adjustTotalRawMaterial();
 			}
 	});
 	
-	grid = $("#searchAndEditRawMaterialGrid"),
+	grid = $("#searchAndEditInventoryGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
        var cm = grid.jqGrid('getGridParam','colModel');
        for (var i=0,l=cm.length; i<l; i++) {

@@ -3,8 +3,6 @@ package com.kafeneio.DTO;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.kafeneio.model.Units;
-
 public class RawMaterialDto {
 
 	private Long id;

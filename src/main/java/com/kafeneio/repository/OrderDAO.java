@@ -1,5 +1,8 @@
 package com.kafeneio.repository;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +26,9 @@ public class OrderDAO {
 	EntityManager entityManager;
 	
 	
-	public Long findOrderNo() {
-		Date today = new Date();
+	public Long findOrderNo(String date) throws ParseException {
+		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
+		Date today = format.parse(date);
 		Date todayMorning = DateUtils.truncate(today, Calendar.DATE);
 		Date todayEvening = DateUtils.addSeconds(DateUtils.addMinutes(DateUtils.addHours(todayMorning, 23), 59), 59);
 		Query query =  entityManager.createQuery("select MAX(orderNo) from Order order where order.creationDate  between :fromDate and :toDate");
@@ -46,7 +50,7 @@ public class OrderDAO {
 	}
 	
 	public List<Order> getOrderList(String status,Date date) {
-		status = status.equalsIgnoreCase("STATUS_NEW")?ApplicationConstant.NEW_ORDER:status;
+		status = status.equalsIgnoreCase("PREV_NEW")?ApplicationConstant.NEW_ORDER:status;
 		Date morning = DateUtils.truncate(date, Calendar.DATE);
 		Date evening = DateUtils.addSeconds(DateUtils.addMinutes(DateUtils.addHours(morning, 23), 59), 59);
 		Query query =  entityManager.createQuery("select ord from Order ord where ord.status.code=:status and ord.creationDate  between :fromDate and :toDate order by id desc");

@@ -44,10 +44,17 @@ public class IndexController {
 	
 	  @RequestMapping(value="/home", method = RequestMethod.GET)
 	  public String getHomePage(ModelMap modelMap) {
-		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT).format(new Date()));
-		  modelMap.put("yesterdayDate", AppUtils.getYesterday());
-		  AppUtils.getYesterday();
+		  homePage(modelMap);
 		  return "index";
+	  }
+
+	  private void homePage(ModelMap modelMap) {
+		  modelMap.put("currentDateTime", new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT).format(new Date()));
+		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_FORMAT).format(new Date()));
+		  modelMap.put("yesterdayDate", AppUtils.getYesterday());
+		  modelMap.put("dateTimeFormatCalendar", ApplicationConstant.DATE_TIME_FORMAT_CALENDAR);
+
+		  AppUtils.getYesterday();
 	  }
 	  
 	  @RequestMapping(value="/", method = RequestMethod.GET)
@@ -55,10 +62,7 @@ public class IndexController {
 		  if(configParameters == null){
 //			  configParameters = indexService.getConfigParameters();
 		  }
-		  modelMap.put("currentDate", new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT).format(new Date()));
-		  modelMap.put("yesterdayDate", AppUtils.getYesterday());
-
-		  AppUtils.getYesterday();
+		  homePage(modelMap);
 		  return "index";
 	  }
 
@@ -69,6 +73,9 @@ public class IndexController {
 		  modelMap.put("foodCategoryList",foodCategoryList);
 		  DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		  modelMap.put("currentDateTime", format.format(new Date()));
+		  modelMap.put("currentDateTime", format.format(new Date()));
+		  modelMap.put("dateTimeFormatCalendar", ApplicationConstant.DATE_TIME_FORMAT_CALENDAR);
+
 //		  modelMap.putAll(configParameters);
 		  return "restraMenu";
 	  }
