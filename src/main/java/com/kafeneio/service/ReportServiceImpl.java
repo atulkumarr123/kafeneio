@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.model.ExpenseType;
 import com.kafeneio.model.Expenses;
 import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
@@ -52,14 +53,14 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService{
 	
 	
 	@Override
-	public List<Expenses> fetchExpenses(String fromDate, String toDate) {
+	public List<Expenses> fetchExpenses(String fromDate, String toDate, Long expenseType) {
 		List<Expenses> expenses = null;
 		DateFormat format = new SimpleDateFormat(ApplicationConstant.DATE_TIME_FORMAT);
 		Date fromDate1;
 		try {
 			fromDate1 = format.parse(fromDate);
 			Date toDate1 = format.parse(toDate);
-			expenses = reportDao.fetchExpenses(fromDate1, toDate1);
+			expenses = reportDao.fetchExpenses(fromDate1, toDate1, expenseType);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

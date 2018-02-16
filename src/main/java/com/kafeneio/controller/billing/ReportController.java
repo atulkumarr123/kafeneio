@@ -50,8 +50,9 @@ public class ReportController {
 	
 	@RequestMapping(value = "/expenseList")
 	public List<Expenses> fetchExpenses(@RequestParam(value = "fromDate", required = true) String fromDate, 
-			@RequestParam(value="toDate", required=true)String toDate) {
-			List<Expenses> expenses = reportService.fetchExpenses(fromDate, toDate); 
+			@RequestParam(value="toDate", required=true)String toDate,
+			@RequestParam(value="expenseType", required=true)Long expenseType) {
+			List<Expenses> expenses = reportService.fetchExpenses(fromDate, toDate,expenseType); 
 			return expenses;
 	}
 	

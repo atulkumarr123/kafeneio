@@ -7,7 +7,7 @@
 
 <html class="js">
 <head>
-<title>Inventory</title>
+<title>Inventory Rules</title>
 
 <title><spring:message code="kafeneio.main.title"/></title>
 <link rel="stylesheet" href="static/css/bootstrap.css"></link>
@@ -44,10 +44,12 @@
 		<div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10">
-						<div class="page-header-kafeneio" ><label class="control-label"><h3>Inventory</h3></label></div>
+						<div class="page-header-kafeneio" ><label class="control-label"><h3>Inventory Rules</h3></label></div>
 			
 				<div class="widget-content">
 					<fieldset>
+					<input type="hidden" id="inventoryRowId" name="inventoryRowId"/>
+						
 							<div class="form-group">
 								
 						 <div class="col-md-6">
@@ -127,7 +129,7 @@
 								
 						 <div class="col-md-6">
 								<label for="prepended-input" class="control-label">Food Item</label>
-								<form:select path="id" class="form-control" id="foodItem" required="required">
+								<form:select path="id" class="form-control" id="foodItemModalInv" required="required">
 									<option value="0">SELECT</option>
 									<form:options items="${foodItemsList}" itemValue="id" itemLabel="foodItemDesc" />
 								</form:select>
@@ -135,7 +137,7 @@
 						 	
 							 <div class="col-md-6">
 								<label for="prepended-input" class="control-label">Raw Material</label>
-								<form:select path="id" class="form-control" id="rawMaterial" required="required">
+								<form:select path="id" class="form-control" id="rawMaterialModalInv" required="required">
 									<option value="0">SELECT</option>
 									<form:options items="${rawMaterialList}" itemValue="id" itemLabel="rawMaterialDesc" />
 								</form:select>
@@ -146,7 +148,7 @@
 						
 						<div class="col-md-6">
 								<label for="prepended-input" class="control-label">Units</label>
-								<form:select path="id" class="form-control" id="units" required="required">
+								<form:select path="id" class="form-control" id="unitsModalInv" required="required">
 									<option value="0">SELECT</option>
 									<form:options items="${unitList}" itemValue="id" itemLabel="description" />
 								</form:select>
@@ -154,13 +156,13 @@
 							
 							<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="quantity">Quantity</label>
-									<input type="text" class="form-control" name="quantity"
+									<input type="text" class="form-control" id="quantityModalInv"
 										id="quantity" placeholder="" required>
 								</div>
 								
 							<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="remarks">Remarks</label>
-									<textarea class="form-control" name="remarks" id="remarks"></textarea>
+									<textarea class="form-control" name="remarks" id="remarksModalInv"></textarea>
 								</div>
 								</div>
 								</fieldset>

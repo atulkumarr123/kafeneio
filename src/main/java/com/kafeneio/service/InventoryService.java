@@ -16,6 +16,8 @@ public interface InventoryService extends BaseService{
 
 	public MessageDTO updateRawMaterial(RawMaterialDto rawMaterialDto);
 
+	public MessageDTO updateInventory(InventoryDto inventoryDto);
+	
 	public MessageDTO saveRawMaterials(List<RawMaterialDto> rawMaterials);
 
 	MessageDTO deleteRawMaterial(Long id);

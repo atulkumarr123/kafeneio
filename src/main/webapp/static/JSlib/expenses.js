@@ -195,10 +195,14 @@ function searchAndEditExpenses(){
 //	alert("in search and edit");
 	$("#searchAndEditExpensesGrid").jqGrid('GridUnload');	
 	
+	var date = $("#datetimepicker3").find("input").val();
+	var expenseType = $("#type").val();
+	
+	
 	waitingDialog.show('Please wait...');
 	
 	$.ajax({
-		url :$("#contextPath").val()+"/expensesList",
+		url :$("#contextPath").val()+"/expensesList?date="+date+"&expenseType="+expenseType,
 		success : function(responseText) {
 			EditExpenses(responseText);
 		},

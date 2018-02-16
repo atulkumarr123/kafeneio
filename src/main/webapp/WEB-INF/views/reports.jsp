@@ -93,7 +93,7 @@
 							</div>
 							</div>
 							
-							<%-- <div class="col-md-6">
+							<div class="col-md-6">
 								<label for="prepended-input" class="control-label">Expenses Type</label>
 								<form:select path="id" class="form-control" id="type"
 									required="required">
@@ -101,7 +101,7 @@
 									<form:options items="${expenseTypeList}" itemValue="id" itemLabel="description" />
 								</form:select>
 							</div>
-							 --%>
+							
 						</div>
 					</fieldset>
 					<div class="form-actions">

@@ -148,6 +148,25 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 	}
 	
 	@Override
+	public MessageDTO updateInventory(InventoryDto inventoryDto) {
+		MessageDTO msgDTO = new MessageDTO();
+		try{			
+			Inventory inventory = inventoryRepository.findOne(inventoryDto.getId());
+			transformDtoToModelInv(inventoryDto, inventory);			
+			inventoryRepository.save(inventory);
+			msgDTO.setMessage("Inventory Updated");
+			msgDTO.setStatusCode(HttpStatus.OK.value());
+		}
+		catch(Exception exception){
+			msgDTO.setMessage("Some Error Occured");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		}
+		return msgDTO;	
+	}
+	
+	
+	
+	@Override
 	public MessageDTO deleteRawMaterial(Long id) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{
@@ -197,5 +216,18 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 		rawMaterial.setUnit(unit);
 		rawMaterial.setRemarks(rawMaterial.getRemarks());
 		return rawMaterial;
+	}
+	
+	
+	private Inventory transformDtoToModelInv(InventoryDto inventoryDto, Inventory inventory) {
+		inventory.setQuantity(inventoryDto.getQuantity());
+		FoodItems foodItems = foodItemsRepository.findOne(inventoryDto.getFoodItemsId());
+		inventory.setFoodItems(foodItems);
+		RawMaterials rawMaterial = rawMaterialRepository.findOne(inventoryDto.getRawMaterialId());
+		inventory.setRawMaterial(rawMaterial);
+		Units unit = unitRepository.findOne(inventoryDto.getUnitsId());
+		inventory.setUnit(unit);
+		inventory.setRemarks(inventoryDto.getRemarks());
+		return inventory;
 	}
 }

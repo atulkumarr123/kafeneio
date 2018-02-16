@@ -96,9 +96,9 @@ public class ExpensesServiceImpl extends BaseServiceImpl implements ExpensesServ
 	}
 
 	@Override
-	public List<ExpensesDto> fetchExpenses() {
+	public List<ExpensesDto> fetchExpenses(Date date, Long type) {
 		List<Expenses> expenses = null;
-		expenses = expensesDAO.fetchExpenses();
+		expenses = expensesDAO.fetchExpenses(date,type);
 		List<ExpensesDto> dtoList = new ArrayList<ExpensesDto>();
 		expenses.forEach(expense -> {
 		ExpensesDto dto = new ExpensesDto();

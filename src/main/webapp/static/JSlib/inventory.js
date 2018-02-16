@@ -195,7 +195,7 @@ function searchAndEditInventory(){
 	$.ajax({
 		url :$("#contextPath").val()+"/inventoryList",
 		success : function(responseText) {
-			alert(JSON.stringify(responseText));
+			//alert(JSON.stringify(responseText));
 			editInventory(responseText);
 		},
 		error:function(responseText) {
@@ -213,6 +213,7 @@ function editInventory(inventoryData){
 		datatype : "local",
 		//mtype : 'POST',
 		colModel: [
+			{ name: "id", label: "Id",  align: "center", hidden : true},
 			{ name: "foodItemsId", label: "Food Items",  align: "center", hidden : true},
         	{ name: "foodItemsDesc", label: "Food Items",  align: "center"},
             { name: "rawMaterialId", label: "Raw Material",  align: "center", hidden : true },
@@ -279,46 +280,45 @@ function editInventory(inventoryData){
 }
 
  function openPopup(rowid){
-	 	 $('#myModalRawMaterial').modal('show');
-	 	var rowData = $("#searchAndEditRawMaterialGrid").jqGrid("getRowData", rowid);
-	 	 $("#rawMaterialRowId").val(rowid);
-	 	$('#rawMaterialDescModal').val(rowData.rawMaterialDesc);
-	 	//alert(rowData.amount);
-	 	$('#rawMaterialCodeModal').val(rowData.rawMaterialCode);
-	 	$('#unitsModal').val(rowData.unitValue);
-	 	$('#quantityModal').val(rowData.quantity);
-	 	$('#lowerLimitModal').val(rowData.lowerLimit);
-	 	$('#remarksModal').val(rowData.remarks);
+	 	 $('#myModalInventory').modal('show');
+	 	var rowData = $("#searchAndEditInventoryGrid").jqGrid("getRowData", rowid);
+	 	 $("#inventoryRowId").val(rowid);
+	 	 $('#rawMaterialModalInv').val(rowData.rawMaterialId);
+	 	$('#foodItemModalInv').val(rowData.foodItemsId);
+	 	$('#unitsModalInv').val(rowData.unitsId);
+	 	$('#quantityModalInv').val(rowData.quantity);
+	 	$('#remarksModalInv').val(rowData.remarks);
  } 
  
  
- function updateRawMaterial(){
+ function updateInventory(){
 	 
-	 var rowId= $("#rawMaterialRowId").val();
+	 var rowId= $("#inventoryRowId").val();
 		var ctx = $("#contextPath").val();
-	 	var rowData = $("#searchAndEditRawMaterialGrid").jqGrid("getRowData", rowId);
-	 	rowData.rawMaterialDesc = $('#rawMaterialDescModal').val();
-	 	rowData.rawMaterialCode = $('#rawMaterialCodeModal').val();
-	 	rowData.unitValue = $('#unitsModal').val();
-		rowData.unitDesc = $("#unitsModal option:selected").text();
-	 	rowData.lowerLimit = $('#lowerLimitModal').val();
-	 	rowData.quantity = $('#quantityModal').val();
-	 	rowData.remarks = $('#remarksModal').val();
+	 	var rowData = $("#searchAndEditInventoryGrid").jqGrid("getRowData", rowId);
+	 	rowData.rawMaterialId = $('#rawMaterialModalInv').val();
+	 	rowData.rawMaterialDesc = $("#rawMaterialModalInv").find("option:selected").text();
+	 	rowData.foodItemsId = $('#foodItemModalInv').val();
+	 	rowData.foodItemsDesc = $("#foodItemModalInv").find("option:selected").text();
+	 	rowData.unitsId = $('#unitsModalInv').val();
+		rowData.unitsDesc = $("#unitsModalInv").find("option:selected").text();
+	 	rowData.quantity = $('#quantityModalInv').val();
+	 	rowData.remarks = $('#remarksModalInv').val();
 	   $.ajax({
 		      type: "POST",
 		      contentType : 'application/json; charset=utf-8',
 		      dataType : 'json',
-		      url : ctx+"/updateRawMaterial",
+		      url : ctx+"/updateInventory",
 		      data: JSON.stringify(rowData),
 		      success :function(result) {
-		  	 	$("#searchAndEditRawMaterialGrid").jqGrid("setRowData", rowId, rowData);
+		  	 	$("#searchAndEditInventoryGrid").jqGrid("setRowData", rowId, rowData);
 		    	  new PNotify({
 	    			  type:'success',
 	    			  title: 'Success',
 	    			  text: result.message
 	    			  
 		    	  });
-		    	  $( "#cancelRawMaterialButton").click();
+		    	  $( "#cancelInventoryButton").click();
 		    	  
 		     },
 		   error:function(result) {

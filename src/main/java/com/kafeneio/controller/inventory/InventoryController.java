@@ -70,6 +70,13 @@ public class InventoryController {
 		return msgDTO;
 	}
 	
+	@RequestMapping(value = "/updateInventory", method = RequestMethod.POST)
+	public MessageDTO updateInventory(@RequestBody InventoryDto inventoryDto)
+			throws KafeneioException, com.kafeneio.exception.BadRequestException {
+		MessageDTO msgDTO = inventoryService.updateInventory(inventoryDto);
+		return msgDTO;
+	}
+	
 	@RequestMapping(value = "/deleteRawMaterial/{id}")
 	public MessageDTO deleteRawMaterial(@PathVariable Long id) {
 		MessageDTO msgDTO = inventoryService.deleteRawMaterial(id); 
@@ -123,7 +130,7 @@ class InventoryLoaderController{
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@RequestMapping(value = "/inventory")
+	@RequestMapping(value = "/inventoryRules")
 	public String inventory(ModelMap modelMap)
 			throws KafeneioException, com.kafeneio.exception.BadRequestException {
 		List<Units> unitList = unitsService.findUnits();

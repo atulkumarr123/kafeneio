@@ -140,14 +140,12 @@ function searchExpenses(){
 	
 	var fromDate = $("#fromDateTimePicker").find("input").val();
 	var toDate = $("#toDateTimePicker").find("input").val();
-	var expenseType = $("#expenseType").find("option:selected").text();
-
-//	alert($("#expenseType").find("option:selected").text());
-	
+	var expenseType = $("#type").val();
+		
 	waitingDialog.show('Please wait...');
 
 	$.ajax({
-		url :$("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
+		url :$("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate+"&&expenseType="+expenseType,
 		success : function(responseText) {
 			expensesReport(responseText);
 		},

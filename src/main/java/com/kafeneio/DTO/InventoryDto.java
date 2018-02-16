@@ -1,6 +1,7 @@
 package com.kafeneio.DTO;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class InventoryDto {
 
@@ -13,6 +14,8 @@ public class InventoryDto {
 	private String unitsDesc;
 	private BigDecimal quantity;
 	private String remarks;
+	private Date creationDate;
+	private Date lastUpdatedDate;
 	
 	public Long getId() {
 		return id;
@@ -67,6 +70,18 @@ public class InventoryDto {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
 }

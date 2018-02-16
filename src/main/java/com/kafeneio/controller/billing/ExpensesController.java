@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.DTO.ExpensesDto;
@@ -20,7 +22,6 @@ import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.ExpenseType;
-import com.kafeneio.model.Expenses;
 import com.kafeneio.service.ExpensesService;
 
 @RestController
@@ -38,8 +39,9 @@ public class ExpensesController {
 	}
 	
 	@RequestMapping(value = "/expensesList")
-	public List<ExpensesDto> fetchExpenses() {
-		List<ExpensesDto> expenses = expensesService.fetchExpenses(); 
+	public List<ExpensesDto> fetchExpenses(@RequestParam(value="date", required=true) @DateTimeFormat(pattern=ApplicationConstant.DATE_FORMAT) Date date,
+			@RequestParam(value="expenseType", required=true) Long type) {
+		List<ExpensesDto> expenses = expensesService.fetchExpenses(date,type); 
 		return expenses;
 	}
 	

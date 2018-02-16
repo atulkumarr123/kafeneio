@@ -39,12 +39,17 @@ public class ReportDAO {
 		return orders;
 	}
 	
-	public List<Expenses> fetchExpenses(Date fromDate, Date toDate) {
-		Query query = entityManager.createQuery("select expenses from Expenses expenses where creation_date <= :toDate and creation_date >=:fromDate");
+	public List<Expenses> fetchExpenses(Date fromDate, Date toDate, Long expenseType) {
+		StringBuffer queryStr =  new StringBuffer("select expenses from Expenses expenses where creation_date <= :toDate and creation_date >=:fromDate ");
+		if(expenseType != null && expenseType != 0){
+			queryStr.append("and expenses.expenseType.id in ( "+expenseType+")");
+		}
+		Query query = entityManager.createQuery(queryStr.toString());
 //		int pageNumber = 1;
 //		int pageSize = 10;
 		query.setParameter("toDate", toDate);
 		query.setParameter("fromDate", fromDate);
+//		query.setParameter("expenseType", expenseType);
 //		query.setFirstResult((pageNumber-1) * pageSize); 
 //		query.setMaxResults(pageSize);
 		List <Expenses> expenses = query.getResultList();

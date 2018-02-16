@@ -22,8 +22,8 @@
 							id="reports" style="color: white">Reports</a></li>
 						 <li><a href="${pageContext.request.contextPath}/rawMaterial"
 							id="rawMaterial" style="color: white">Raw Material</a></li>
-						  <%-- <li><a href="${pageContext.request.contextPath}/inventory"
-							id="inventory" style="color: white">Inventory</a></li> --%>
+						  <li><a href="${pageContext.request.contextPath}/inventoryRules"
+							id="inventory" style="color: white">Inventory Rules</a></li> 
 						  <li><a href="${pageContext.request.contextPath}/salesAnalytics"
 							id="salesAnalytics" style="color: white">Analytics</a></li>
 					</ul>

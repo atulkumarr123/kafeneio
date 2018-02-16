@@ -17,7 +17,7 @@ public interface ReportService {
 	
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<Expenses> fetchExpenses(String fromDate, String toDate);
+	public List<Expenses> fetchExpenses(String fromDate, String toDate, Long expenseType);
 
 	public List<ModeOfPayment> findModeOfPayment();
 }
