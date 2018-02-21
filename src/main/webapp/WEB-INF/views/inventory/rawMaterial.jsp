@@ -81,7 +81,7 @@
 							
 								
 								<div class="col-md-6">
-									<label for="prepended-input" class="control-label" name="lowerLimit">Lower Limit</label>
+									<label for="prepended-input" class="control-label" name="lowerLimit">Notification Limit</label>
 									<input type="text" class="form-control" name="lowerLimit" id="lowerLimit"/>
 								</div>
 								<div class="col-md-6">
@@ -154,7 +154,7 @@
 				
 					<div class="col-md-6">
 								<label for="prepended-input" class="control-label">Units</label>
-								<form:select path="id" class="form-control" id="unitsModal" required="required">
+								<form:select path="id" class="form-control" id="unitsModal" required="required" disabled="true">
 									<option value="0">SELECT</option>
 									<form:options items="${unitList}" itemValue="id" itemLabel="description" />
 								</form:select>
@@ -181,7 +181,7 @@
 							
 							
 								<div class="col-md-6">
-									<label for="normal-field" class="control-label">Lower limit
+									<label for="normal-field" class="control-label">Notification Limit
 										</label> <input type="text" name="lowerLimitModal" placeholder=""
 										class="form-control" id="lowerLimitModal" required>
 								</div>

@@ -1,4 +1,5 @@
 package com.kafeneio.service;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Service;
 import com.kafeneio.DTO.InventoryDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.DTO.RawMaterialDto;
+import com.kafeneio.enums.AppConstant;
+import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.FoodItems;
-import com.kafeneio.model.Inventory;
+import com.kafeneio.model.InventoryRules;
+import com.kafeneio.model.Order;
 import com.kafeneio.model.RawMaterials;
 import com.kafeneio.model.Units;
 import com.kafeneio.repository.FoodItemsRepository;
@@ -50,10 +54,10 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 	public MessageDTO saveInventoryItems(List<InventoryDto> inventoryDtoList) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{
-		List<Inventory> inventoryList = new ArrayList<Inventory>();
+		List<InventoryRules> inventoryList = new ArrayList<InventoryRules>();
 		inventoryDtoList.forEach(inventoryDto -> {
-			Inventory inventory = new Inventory();
-			Inventory inventoryItem = transformDtoToModel(inventoryDto, inventory);
+			InventoryRules inventory = new InventoryRules();
+			InventoryRules inventoryItem = transformDtoToModel(inventoryDto, inventory);
 			inventoryList.add(inventoryItem);	
 		});
 			inventoryRepository.save(inventoryList);
@@ -69,7 +73,7 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 	}
 
 
-	private Inventory transformDtoToModel(InventoryDto inventoryDto, Inventory inventory) {
+	private InventoryRules transformDtoToModel(InventoryDto inventoryDto, InventoryRules inventory) {
 		inventory.setCreationDate(new Date());
 		inventory.setLastUpdatedDate(new Date());
 		inventory.setQuantity(inventoryDto.getQuantity());
@@ -110,7 +114,7 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 	
 	@Override
 	public List<InventoryDto> fetchInventory() {
-		List<Inventory> inventoryList = null;
+		List<InventoryRules> inventoryList = null;
 		List<InventoryDto> dtoList = new ArrayList<InventoryDto>();
 		inventoryList = inventoryDao.fetchInventory();
 		inventoryList.forEach(inventory -> {
@@ -151,7 +155,7 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 	public MessageDTO updateInventory(InventoryDto inventoryDto) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{			
-			Inventory inventory = inventoryRepository.findOne(inventoryDto.getId());
+			InventoryRules inventory = inventoryRepository.findOne(inventoryDto.getId());
 			transformDtoToModelInv(inventoryDto, inventory);			
 			inventoryRepository.save(inventory);
 			msgDTO.setMessage("Inventory Updated");
@@ -219,7 +223,7 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 	}
 	
 	
-	private Inventory transformDtoToModelInv(InventoryDto inventoryDto, Inventory inventory) {
+	private InventoryRules transformDtoToModelInv(InventoryDto inventoryDto, InventoryRules inventory) {
 		inventory.setQuantity(inventoryDto.getQuantity());
 		FoodItems foodItems = foodItemsRepository.findOne(inventoryDto.getFoodItemsId());
 		inventory.setFoodItems(foodItems);
@@ -229,5 +233,48 @@ public class InventoryServiceImpl extends BaseServiceImpl implements InventorySe
 		inventory.setUnit(unit);
 		inventory.setRemarks(inventoryDto.getRemarks());
 		return inventory;
+	}
+	@Override
+	public List<MessageDTO> reduceRawMaterials(Order order) throws KafeneioException{
+		List<MessageDTO> msgDTOList = new ArrayList<MessageDTO>();
+	// 1. get the objects of orderDetails.	
+	// 2. Loop over on this list.
+		try{
+		order.getOrderDetails().forEach(orderDetail ->{
+			// 3. get food item code.
+			String code = orderDetail.getFoodCode();
+			// 4. fetch food item object.
+			
+			FoodItems foodItem = foodItemsRepository.findByFoodItemCode(code);
+			// 5. fetch rules corresponding to this food item.
+			List<InventoryRules> rules = inventoryRepository.findByFoodItems(foodItem);
+			// 6. Loop over on the list of rules.
+			rules.forEach(rule ->{
+				// 7. Fetch raw material object based on the rule id of each rule.
+				RawMaterials rawMaterial = rule.getRawMaterial();
+				// 8. Change the quantity of Raw Material decreasing it by the defined quantity in rule object.
+				int numberOfItems = orderDetail.getQuantity().intValue();
+				rawMaterial.setQuantity(rawMaterial.getQuantity().subtract(rule.getQuantity().multiply(new BigDecimal(numberOfItems))));
+				rawMaterialRepository.save(rawMaterial);
+				if(rawMaterial.getQuantity().compareTo(rawMaterial.getLowerLimit()) == -1 || rawMaterial.getQuantity().compareTo(rawMaterial.getLowerLimit()) == 0){
+					MessageDTO msgDTO = new MessageDTO();
+					msgDTO.setMessage(rawMaterial.getRawMaterialDesc() +" "+rawMaterial.getQuantity() +" "+ rawMaterial.getUnit().getDescription());
+					msgDTO.setStatusCode(HttpStatus.OK.value());
+					msgDTO.setMessageType(AppConstant.INFO);
+					msgDTOList.add(msgDTO);
+				}
+			});
+			
+		});
+		}
+		catch(Exception e){
+			/*MessageDTO msgDTO = new MessageDTO();
+			msgDTO.setMessage("Some Error Occured While Reducing the Inventory");
+			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			msgDTO.setMessageType(AppConstant.ERROR);
+			msgDTOList.add(msgDTO);*/
+			throw new KafeneioException("Some Error Occured While Reducing the Inventory",e);
+		}
+	return msgDTOList;	
 	}
 }

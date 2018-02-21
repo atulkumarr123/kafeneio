@@ -117,7 +117,7 @@ function saveInventory() {
 		  new PNotify({
 	    		 type:'error',
 	    		 title: 'Error',
-	    		 text: 'Please add atleast one Inventory!'
+	    		 text: 'Please add atleast one Rule!'
 		   });
 		  return false;
 	}
@@ -133,7 +133,7 @@ function saveInventory() {
 
 	/*rawMaterial["creationDate"] = $("#currentDate").val(); 
 	rawMaterial["lastUpdatedDate"] = $("#lastUpdatedDate").val(); */
-	
+	$("#saveInventoryButton").attr("disabled", true);
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
@@ -148,6 +148,8 @@ function saveInventory() {
     			  text: result.message
 	    	  });
 	    	  $("#inventoryGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	    	  $("#saveInventoryButton").attr("disabled", false);
+	    	  
 	     },
 	   error:function(result) {
 		  // alert(JSON.stringify(result.responseJSON.message));
@@ -157,6 +159,7 @@ function saveInventory() {
 	    		 text: result.responseJSON.message
 		   });
 //		   alert("error"+JSON.stringify(result));
+		   $("#saveInventoryButton").attr("disabled", false);
 	   }
 	  });
 }

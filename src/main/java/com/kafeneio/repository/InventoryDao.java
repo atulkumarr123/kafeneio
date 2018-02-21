@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.kafeneio.model.Inventory;
+import com.kafeneio.model.InventoryRules;
 import com.kafeneio.model.RawMaterials;
 
 @Repository
@@ -18,9 +18,9 @@ public class InventoryDao {
 	EntityManager entityManager;
 	
 	
-	public List<Inventory> fetchInventory() {
+	public List<InventoryRules> fetchInventory() {
 		Query query = entityManager.createQuery("select inventory from Inventory inventory order by inventory.id desc");
-		List <Inventory> inventory = query.getResultList();
+		List <InventoryRules> inventory = query.getResultList();
 		return inventory;
 	}
 }

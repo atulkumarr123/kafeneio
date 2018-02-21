@@ -16,6 +16,12 @@ import com.kafeneio.constants.ApplicationConstant;
 @MappedSuperclass
 public class BaseEntity implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ApplicationConstant.DATE_FORMAT)
 	@Column(name="CREATION_DATE")
 	private Date creationDate;
@@ -36,8 +42,12 @@ public class BaseEntity implements Serializable{
     @JoinColumn(name="last_updated_by")
 	private Users lastUpdatedBy;
 
-
-
+	@Column(name = "version")
+	private String version;
+	
+	
+//	private Long branchId;
+	
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -82,6 +92,18 @@ public class BaseEntity implements Serializable{
 
 	public void setLastUpdatedBy(Users lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
+	}
+
+
+
+	public String getVersion() {
+		return version;
+	}
+
+
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 }

@@ -140,6 +140,9 @@ function saveExpenses() {
 	expense["item"]=null;
 	expense["amount"]=null;
 	expense["remarks"]=null;*/
+	
+	$("#saveExpensesButton").attr("disabled", true);
+
 	   $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
@@ -154,7 +157,9 @@ function saveExpenses() {
     			  text: result.message
 	    	  });
 	    	  $("#expensesGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
-	     },
+	    		$("#saveExpensesButton").attr("disabled", false);
+
+	      },
 	   error:function(result) {
 		  /* alert(JSON.stringify(result.responseJSON.message));*/
 		   new PNotify({
@@ -162,6 +167,7 @@ function saveExpenses() {
 	    		 title: 'Error',
 	    		 text: result.responseJSON.message
 		   });
+		   $("#saveExpensesButton").attr("disabled", false);
 		   //alert("error"+JSON.stringify(responseText));
 	   }
 	  });

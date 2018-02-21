@@ -168,8 +168,8 @@ function createServedOrdersGrid(servedOrders){
 			{ name: "discountPercentage", label: "Disc(%)",  align: "center", width:70},
 			{ name: "amount", label: "Amt",  align: "right",template: "number", width: 90},
 			{ name: 'reInitiateButton', label:"ReInitiate", width: 80, sortable: false, search: false, align: "center",
-				formatter:function(){
-					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' ><b>Initiate</b></button>"
+				formatter:function(cellValue, option){
+					return "<button class='btn btn-default' style='color:green;font-size: small;background: tan;' type='button' onclick = 'reInitiateThisOrder("+option.rowId+")'><b>Initiate</b></button>"
 				}}
 			],
 			data: servedOrders,
@@ -191,8 +191,8 @@ function createServedOrdersGrid(servedOrders){
 			onCellSelect: function (rowid,iCol,cellcontent,e) {
 				//alert("iCol "+iCol);
 				if (iCol == reInitiateButton) {
-					//alert("reInitiateButton");
-					reInitiateThisOrder(rowid);
+//					alert("reInitiateButton");
+//					reInitiateThisOrder(rowid);
 
 				}
 
@@ -475,13 +475,43 @@ function serveThisOrder(orderId, mopId){
 	$.ajax({
 		url : localUrl,	
 		success : function(responseText) {
-			location.reload();
+			var isMsgFromInventory = false;
+			var messageContent = "";
+			var items = null;
+			for (var i in responseText) {
+				var msg = responseText[i];
+				if(msg.messageType == 'INFO'){
+					isMsgFromInventory = true;
+					if(items == null){
+						items = msg.message;
+					}
+					else{
+						items = items +'<br>'+msg.message;
+					}
+				}
+			}
+			messageContent = messageContent + items;
+			if(isMsgFromInventory && messageContent != null){
+				swal.queue([{
+					title: 'Inventory Down Warning!',
+					type:'warning',
+					confirmButtonText: 'Ok',
+					html: messageContent,
+					showLoaderOnConfirm: true,
+					preConfirm: () => {
+						location.reload();
+					}
+				}])
+			}	
+			else{
+				location.reload();
+			}
 		},
 		error:function(responseText) {
 			$(function(){
 				new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
 			});
-		}	
+		}
 	});
 }
 

@@ -1,8 +1,10 @@
 package com.kafeneio.DTO;
 
-public class MessageDTO {
+import com.kafeneio.enums.AppConstant;
 
+public class MessageDTO {
 	private String message;
+	private AppConstant messageType;
 	private int statusCode;
 	public String getMessage() {
 		return message;
@@ -16,5 +18,12 @@ public class MessageDTO {
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
+	public AppConstant getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(AppConstant messageType) {
+		this.messageType = messageType;
+	}
+	
 	
 }

@@ -31,6 +31,7 @@
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
+<script src="static/JSlib/sweetalert2.all.js" /></script>
 <script  src="static/JSlib/home.js"></script>
 </head>
 <body>

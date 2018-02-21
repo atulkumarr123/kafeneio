@@ -5,6 +5,8 @@ import java.util.List;
 import com.kafeneio.DTO.InventoryDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.DTO.RawMaterialDto;
+import com.kafeneio.exception.KafeneioException;
+import com.kafeneio.model.Order;
 
 public interface InventoryService extends BaseService{
 	
@@ -21,5 +23,7 @@ public interface InventoryService extends BaseService{
 	public MessageDTO saveRawMaterials(List<RawMaterialDto> rawMaterials);
 
 	MessageDTO deleteRawMaterial(Long id);
+
+	public List<MessageDTO> reduceRawMaterials(Order order) throws KafeneioException;
 
 }

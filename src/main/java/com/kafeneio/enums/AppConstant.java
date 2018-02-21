@@ -22,7 +22,11 @@ public enum AppConstant {
 	ROLE_TYPE_ADMIN("ADMIN"),
 	ROLE_TYPE_USER("USER"),
 	ADMIN_TAX(10),
-	TDS_TAX(2);
+	TDS_TAX(2),
+	INFO("info"),
+	SUCCESS("success"),
+	WARNING("warning"),
+	ERROR("error");
 	
 	private  int intValue=0;
 	private  String stringValue=null;

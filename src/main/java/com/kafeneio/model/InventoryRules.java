@@ -15,8 +15,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "Inventory")
-public class Inventory extends BaseEntity {
+@Table(name = "Inventory_Rules")
+public class InventoryRules extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

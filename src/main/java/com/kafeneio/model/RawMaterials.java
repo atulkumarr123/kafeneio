@@ -57,8 +57,8 @@ public class RawMaterials extends BaseEntity {
  	private Units unit;
 
 	@Column
-	@OneToMany(targetEntity=Inventory.class, mappedBy="rawMaterial", fetch=FetchType.EAGER)
-	private List<Inventory> inventory;
+	@OneToMany(targetEntity=InventoryRules.class, mappedBy="rawMaterial", fetch=FetchType.EAGER)
+	private List<InventoryRules> inventory;
 	
 	public Long getId() {
 		return id;
@@ -116,11 +116,11 @@ public class RawMaterials extends BaseEntity {
 		this.remarks = remarks;
 	}
 	
-	public List<Inventory> getInventory() {
+	public List<InventoryRules> getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(List<Inventory> inventory) {
+	public void setInventory(List<InventoryRules> inventory) {
 		this.inventory = inventory;
 	}
 

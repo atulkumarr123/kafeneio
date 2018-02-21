@@ -20,11 +20,8 @@
 							id="expenses" style="color: white">Expenses</a></li>
 						<li><a href="${pageContext.request.contextPath}/reports"
 							id="reports" style="color: white">Reports</a></li>
-						 <li><a href="${pageContext.request.contextPath}/rawMaterial"
-							id="rawMaterial" style="color: white">Raw Material</a></li>
-						  <li><a href="${pageContext.request.contextPath}/inventoryRules"
-							id="inventory" style="color: white">Inventory Rules</a></li> 
-						  <li><a href="${pageContext.request.contextPath}/salesAnalytics"
+						 
+						   <li><a href="${pageContext.request.contextPath}/salesAnalytics"
 							id="salesAnalytics" style="color: white">Analytics</a></li>
 					</ul>
 				</li>
@@ -34,10 +31,14 @@
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Masters<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li ><a href="${pageContext.request.contextPath}/units"
-							id="units" style="color:white">Setup Units</a></li>
 						<li><a href="${pageContext.request.contextPath}/addMenuItems"
 							id="menuStore" style="color:white">Setup Menu Store</a></li>
+							<li ><a href="${pageContext.request.contextPath}/units"
+							id="units" style="color:white">Setup Units</a></li>
+							<li><a href="${pageContext.request.contextPath}/rawMaterial"
+							id="rawMaterial" style="color: white">Raw Material</a></li>
+						 <li><a href="${pageContext.request.contextPath}/inventoryRules"
+							id="inventory" style="color: white">Inventory Rules</a></li> 
 						
 					</ul>
 				</li>

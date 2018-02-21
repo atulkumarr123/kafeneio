@@ -1,20 +1,14 @@
 package com.kafeneio.model;
 
-import java.util.Date;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="KAFENEIO_UNITS")
+@Table(name="UNITS")
 public class Units extends BaseEntity {
 	
 		/**
@@ -31,9 +25,6 @@ public class Units extends BaseEntity {
 		private String description;
 		@Column(name="status")
 		private boolean status;
-		@Column(name="creation_date")
-		private Date date;
-		
 		
 		public Long getId() {
 			return id;
@@ -52,12 +43,6 @@ public class Units extends BaseEntity {
 		}
 		public void setDescription(String description) {
 			this.description = description;
-		}
-		public Date getDate() {
-			return date;
-		}
-		public void setDate(Date date) {
-			this.date = date;
 		}
 		public boolean isStatus() {
 			return status;

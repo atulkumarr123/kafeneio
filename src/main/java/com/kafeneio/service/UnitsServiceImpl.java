@@ -24,7 +24,7 @@ public class UnitsServiceImpl extends BaseServiceImpl implements UnitsService{
 		MessageDTO msgDTO = new MessageDTO();
 		try{
 			for(Units unit : units){
-				unit.setDate(new Date());
+				unit.setCreationDate(new Date());
 			}
 			
 			unitsRepository.save(units);

@@ -27,9 +27,9 @@ public class OrderController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/serve/{orderId}")
-	public MessageDTO serve(@PathVariable Long orderId, @RequestParam(value = "mopId", required = false) Long mopId) {
-		MessageDTO msgDTO = orderService.serve(orderId, mopId);
-		return msgDTO;
+	public List<MessageDTO> serve(@PathVariable Long orderId, @RequestParam(value = "mopId", required = false) Long mopId) {
+		List<MessageDTO> msgList = orderService.serve(orderId, mopId);
+		return msgList;
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")

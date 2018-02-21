@@ -1,4 +1,6 @@
 package com.kafeneio.service;
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.enums.AppConstant;
+import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderStatus;
@@ -29,9 +33,12 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 	@Inject
 	ModeOfPaymentRepository modeOfPaymentRepository;
 
+	@Inject 
+	InventoryService inventoryService;
+	
 	@Override
-	public MessageDTO serve(Long orderId, Long mopId){
-		MessageDTO msgDTO = new MessageDTO();
+	public List<MessageDTO> serve(Long orderId, Long mopId){
+		List<MessageDTO> msgDTOList = null;
 		try{
 			Order order = orderRepository.findOne(orderId);
 			OrderStatus servedStatus = orderStatusRepository.findByCode(ApplicationConstant.SERVED_ORDER);
@@ -40,15 +47,36 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 				ModeOfPayment modeOfPayment = modeOfPaymentRepository.findOne(mopId);
 				order.setModeOfPayment(modeOfPayment);
 			}
-			msgDTO.setMessage("Order "+order.getOrderNo()+" served successfully!");
+			orderRepository.save(order);
+			// 1. Call inventory service to reduce raw materials corresponding to food items of this order.
+			 msgDTOList = inventoryService.reduceRawMaterials(order);
+			 MessageDTO msgDTO = new MessageDTO();
+			 msgDTO.setMessage("Order "+order.getOrderNo()+" served successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
-	
+			msgDTO.setMessageType(AppConstant.SUCCESS);
+			msgDTOList.add(msgDTO);
 		}
 		catch(Exception exception){
-			msgDTO.setMessage("Error");
-			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			if(exception instanceof KafeneioException){
+				KafeneioException kafeException = (KafeneioException)exception;
+				String message = kafeException.getMessage();
+				setInternalServerErrorMsg(msgDTOList, message);
+			}
+			else{
+				String message = "Some Error";
+				setInternalServerErrorMsg(msgDTOList, message);
+			}
 		}
-		return msgDTO;
+		return msgDTOList;
+	}
+
+
+	private void setInternalServerErrorMsg(List<MessageDTO> msgDTOList, String message) {
+		MessageDTO msgDTO = new MessageDTO();
+		msgDTO.setMessage(message);
+		msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		msgDTO.setMessageType(AppConstant.ERROR);
+		msgDTOList.add(msgDTO);
 	}
 
 

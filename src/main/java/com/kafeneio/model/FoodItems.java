@@ -50,8 +50,8 @@ public class FoodItems{
 
 	@Column
 	@JsonIgnore
-	@OneToMany(targetEntity=Inventory.class, mappedBy="foodItems", fetch=FetchType.EAGER)
-	private List<Inventory> inventory ;
+	@OneToMany(targetEntity=InventoryRules.class, mappedBy="foodItems", fetch=FetchType.EAGER)
+	private List<InventoryRules> inventory ;
 
 	
 	public Long getId() {
@@ -103,10 +103,10 @@ public class FoodItems{
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
-	public List<Inventory> getInventory() {
+	public List<InventoryRules> getInventory() {
 		return inventory;
 	}
-	public void setInventory(List<Inventory> inventory) {
+	public void setInventory(List<InventoryRules> inventory) {
 		this.inventory = inventory;
 	}
 	
