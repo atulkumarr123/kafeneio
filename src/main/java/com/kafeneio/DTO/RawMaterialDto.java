@@ -10,8 +10,8 @@ public class RawMaterialDto {
 	private String rawMaterialDesc;
 	private Date creationDate;
 	private Date lastUpdatedDate;
-	private BigDecimal quantity;
-	private BigDecimal lowerLimit;
+	private String quantity;
+	private String lowerLimit;
  	private String unitDesc;
  	private Long unitValue;
  	private String remarks;
@@ -27,18 +27,6 @@ public class RawMaterialDto {
 	}
 	public void setLastUpdatedDate(Date lastUpdatedDate) {
 		this.lastUpdatedDate = lastUpdatedDate;
-	}
-	public BigDecimal getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(BigDecimal quantity) {
-		this.quantity = quantity;
-	}
-	public BigDecimal getLowerLimit() {
-		return lowerLimit;
-	}
-	public void setLowerLimit(BigDecimal lowerLimit) {
-		this.lowerLimit = lowerLimit;
 	}
 	public Long getId() {
 		return id;
@@ -75,6 +63,18 @@ public class RawMaterialDto {
 	}
 	public void setUnitValue(Long unitValue) {
 		this.unitValue = unitValue;
+	}
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	public String getLowerLimit() {
+		return lowerLimit;
+	}
+	public void setLowerLimit(String lowerLimit) {
+		this.lowerLimit = lowerLimit;
 	}
 	
  	

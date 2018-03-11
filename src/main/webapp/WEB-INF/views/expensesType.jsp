@@ -28,7 +28,7 @@
 <script src="static/JSlib/pnotify.custom.js" /></script>
 <script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
 
-<script src="static/JSlib/units.js"></script>
+<script src="static/JSlib/expensesType.js"></script>
 </head>
  <form:form action="" id = "unitForm" commandName="units">
 	<div class="container">
@@ -38,21 +38,21 @@
 		<div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-10">
-				<div class="page-header-kafeneio" ><label class="control-label"><h3>Units</h3></label></div>
+				<div class="page-header-kafeneio" ><label class="control-label"><h3>Expenses Type</h3></label></div>
 				<div class="widget-content">
 					<fieldset>							
 							<div class="form-group">
 								<div class="col-md-6">
-									<label for="normal-field" class="control-label">Unit
-										Code</label> <input type="text" name="unitCode" 
+									<label for="normal-field" class="control-label">Expenses Type
+										Code</label> <input type="text" name="expensesTypeCode" 
 										placeholder="" class="form-control"
-										id="unitCode" required>
+										id="expensesTypeCode" required>
 								</div>							
 								<div class="col-md-6">
-									<label for="normal-field" class="control-label">Unit
-										Description</label> <input type="text" name="unitDesc" 
+									<label for="normal-field" class="control-label">Expenses Type
+										Description</label> <input type="text" name="expensesTypeDesc" 
 										placeholder="" class="form-control"
-										id="unitDesc" required>
+										id="expensesTypeDesc" required>
 								</div>							
 							</div>
 				 		<div class="form-group">
@@ -67,18 +67,18 @@
 					</fieldset>
 					<div class="form-actions">
 						<div>
-							<button class="btn btn-default" id= "addUnitsbutton" type="button" >Add</button>
-							<button class="btn btn-default" id= "searchUnitsbutton" type="button" onclick = "searchAndEditUnits()" >Search & Edit</button>
+							<button class="btn btn-default" id= "addExpenseTypeButton" type="button" >Add</button>
+							<button class="btn btn-default" id= "searchExpenseTypeButton" type="button" onclick = "searchAndEditExpenseType()" >Search & Edit</button>
 						</div>
 					</div>
 				</div>
-				<table id="unitsGrid"></table>
-				<table id="editUnitsGrid"></table>
+				<table id="expenseTypeGrid"></table>
+				<table id="editExpenseTypeGrid"></table>
 				<div id="pager" style="height: 50;"></div>
 				<br>
 				<div style="text-align: left;">
-					<button class="btn btn-default" type="button" id="saveUnitButton" onclick="saveUnits()">Save</button>
-					<button class="btn btn-default" type="button" onclick="reloadUnitGrid()">Clear</button>
+					<button class="btn btn-default" type="button" id="saveExpenseTypeButton" onclick="saveExpenseType()">Save</button>
+					<button class="btn btn-default" type="button" onclick="reloadExpenseTypeGrid()">Clear</button>
 				</div>
 			</div>
 			<div class="col-lg-1"></div>
@@ -88,31 +88,29 @@
 
 <div class="container">
   <!-- Modal -->
-  <div class="modal fade" id="unitsModal" role="dialog">
+  <div class="modal fade" id="expenseTypeModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Unit</h4>
+          <h4 class="modal-title">Edit Expense Type</h4>
         </div>
         <div class="modal-body">
         <fieldset>
-						<input type="hidden" id="unitRowId" name="unitRowId" />
+						<input type="hidden" id="expenseTypeRowId" name="unitRowId" />
 						<div class="form-group">
 							<div class="col-md-6">
-								<label for="normal-field" class="control-label">Unit
-									Code</label> <input type="text" name="code" placeholder=""
-									class="form-control" id="code" required>
+								<label for="normal-field" class="control-label">Expense Type
+									Code</label> <input type="text" name="expenseTypeCodeModal" placeholder=""
+									class="form-control" id="expenseTypeCodeModal" required>
 							</div>
-
 							<div class="col-md-6">
-								<label for="normal-field" class="control-label">Unit
-									Description</label> <input type="text" name="description"
-									placeholder="" class="form-control" id="description" required>
+								<label for="normal-field" class="control-label">Expense Type
+									Description</label> <input type="text" name="expenseTypeDescriptionModal"
+									placeholder="" class="form-control" id="expenseTypeDescriptionModal" required>
 							</div>
-
 							<div class="col-md-6">
 								<label for="prepended-input" class="control-label">
 								Status</label> 
@@ -122,20 +120,14 @@
 									<option value="0">Inactive</option>
 								</select>
 							</div>
-							
 						</div>
 					</fieldset>
-		 
-		 		 
-		  
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default"  id= "updateUnitButton" onclick="updateUnit()">Update</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelUnitButton" >Close</button>
+          <button type="button" class="btn btn-default"  id= "updateExpenseTypeButton" onclick="updateExpenseType()">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelExpenseTypeButton" >Close</button>
         </div>
       </div>
-      
     </div>
   </div>
-  
 </div>

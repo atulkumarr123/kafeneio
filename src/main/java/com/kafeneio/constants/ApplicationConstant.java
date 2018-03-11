@@ -18,5 +18,7 @@ public class ApplicationConstant {
 	public static final String ACTIVE = "Active";
 	public static final String INACTIVE = "Inactive";
 	public static final String MY_TIME_ZONE="Asia/Kolkata";
+	public static final String ADD="ADD";
+	public static final String SUBTRACT="SUBTRACT";
 
 }

@@ -70,7 +70,7 @@
 							 
 							</div>
 						<div class="form-group">
-						
+						<%-- 
 						<div class="col-md-6">
 								<label for="prepended-input" class="control-label">Units</label>
 								<form:select path="id" class="form-control" id="unitsOnInv" required="required">
@@ -78,7 +78,7 @@
 									<form:options items="${unitList}" itemValue="id" itemLabel="description" />
 								</form:select>
 							</div>
-							
+							 --%>
 							<div class="col-md-6">
 									<label for="prepended-input" class="control-label" name="quantity">Quantity</label>
 									<input type="text" class="form-control" name="quantity"

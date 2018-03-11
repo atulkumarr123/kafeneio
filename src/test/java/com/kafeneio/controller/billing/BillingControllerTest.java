@@ -55,15 +55,15 @@ public class BillingControllerTest {
 		List<RawMaterialDto> rawMaterials = new ArrayList<RawMaterialDto>();
 		RawMaterialDto rawMaterialDto = new RawMaterialDto();
 		rawMaterialDto.setCreationDate(new Date());
-		rawMaterialDto.setLowerLimit(new BigDecimal(5));
-		rawMaterialDto.setQuantity(new BigDecimal(5));
+		rawMaterialDto.setLowerLimit(new String());
+		rawMaterialDto.setQuantity(new String());
 		rawMaterialDto.setRawMaterialCode("BRD");
 //		rawMaterialDto.setUnit(new Units());		
 
 		RawMaterialDto rawMaterialDto1 = new RawMaterialDto();
 		rawMaterialDto.setCreationDate(new Date());
-		rawMaterialDto.setLowerLimit(new BigDecimal(6));
-		rawMaterialDto.setQuantity(new BigDecimal(6));
+		rawMaterialDto.setLowerLimit(new String());
+		rawMaterialDto.setQuantity(new String());
 		rawMaterialDto.setRawMaterialCode("BUN");
 
 		rawMaterials.add(rawMaterialDto);

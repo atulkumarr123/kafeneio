@@ -1,26 +1,35 @@
 package com.kafeneio.service;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.constants.ApplicationConstant;
+import com.kafeneio.model.FoodItems;
+import com.kafeneio.model.InventoryRules;
 import com.kafeneio.model.ModeOfPayment;
 import com.kafeneio.model.Order;
 import com.kafeneio.model.OrderDetails;
 import com.kafeneio.model.OrderStatus;
+import com.kafeneio.repository.FoodItemsRepository;
+import com.kafeneio.repository.InventoryRepository;
 import com.kafeneio.repository.ModeOfPaymentRepository;
 import com.kafeneio.repository.OrderDAO;
 import com.kafeneio.repository.OrderRepository;
 import com.kafeneio.repository.OrderStatusRepository;
+import com.kafeneio.repository.RawMaterialRepository;
 
 @Service
 public class BillingServiceImpl extends BaseServiceImpl implements BillingService{
@@ -35,12 +44,32 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 	ModeOfPaymentRepository modeOfPaymentRepository;
 	
 	@Inject
+	FoodItemsRepository foodItemsRepository;
+	
+	@Inject 
+	InventoryRepository inventoryRepository;
+	
+	@Inject 
+	RawMaterialRepository rawMaterialRepository;
+	
+	
+	@Inject
 	OrderDAO orderDao;
+	
+	private final Logger logger =
+			LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public synchronized MessageDTO saveOrder(Order order, Long mopId, String date){
+		
 		MessageDTO msgDTO = new MessageDTO();
 		try{
+			logger.info("Going to check inventory");
+			msgDTO = checkInventory(order);
+			if(msgDTO.getStatusCode() == HttpStatus.INSUFFICIENT_STORAGE.value()){
+				logger.info("Inventory down...");
+				return msgDTO;
+			}
 			order.setOrderNo(this.getOrderNo(date));
 				if(isOrderExist(order.getOrderNo())){
 					msgDTO.setMessage("Order <b>"+order.getOrderNo()+"</b> already taken, Change the order Number!");
@@ -56,7 +85,7 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 					}
 					
 					orderRepository.save(order);
-					msgDTO.setMessage("Order"+order.getOrderNo()+" saved Successfully!");
+					msgDTO.setMessage("Order "+order.getOrderNo()+" saved Successfully!");
 					msgDTO.setStatusCode(HttpStatus.OK.value());
 				}
 		}
@@ -65,6 +94,26 @@ public class BillingServiceImpl extends BaseServiceImpl implements BillingServic
 			msgDTO.setMessage("Error");
 			msgDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
+		return msgDTO;
+	}
+
+	private MessageDTO checkInventory(Order order) {
+		MessageDTO msgDTO = new MessageDTO();
+		Set<OrderDetails> setOfdetails = order.getOrderDetails();
+		setOfdetails.forEach(orderDetail -> {
+			String foodCode = orderDetail.getFoodCode();
+			FoodItems foodItem = foodItemsRepository.findByFoodItemCode(foodCode);
+			List<InventoryRules> rules = inventoryRepository.findByFoodItems(foodItem);
+			rules.forEach(rule -> {
+				BigDecimal availableQuantity = rule.getRawMaterial().getQuantity();
+
+				if (availableQuantity.compareTo(rule.getQuantity().multiply(new BigDecimal(orderDetail.getQuantity()))) < 0){
+					msgDTO.setMessage(rule.getRawMaterial().getRawMaterialDesc()+ " is not available in the inventory,<br> Please update the inventory");
+					msgDTO.setStatusCode(HttpStatus.INSUFFICIENT_STORAGE.value());
+				}
+			});
+		});
+
 		return msgDTO;
 	}
 

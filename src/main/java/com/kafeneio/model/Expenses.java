@@ -30,7 +30,7 @@ public class Expenses {
 	@Column(name="remarks")
 	private String remarks;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="expense_type")
  	private ExpenseType expenseType;
 	

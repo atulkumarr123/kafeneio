@@ -10,9 +10,9 @@ public class InventoryDto {
 	private String foodItemsDesc;
 	private Long rawMaterialId;
 	private String rawMaterialDesc;
-	private Long unitsId;
+	/*private Long unitsId;
 	private String unitsDesc;
-	private BigDecimal quantity;
+	*/private BigDecimal quantity;
 	private String remarks;
 	private Date creationDate;
 	private Date lastUpdatedDate;
@@ -47,7 +47,7 @@ public class InventoryDto {
 	public void setRawMaterialDesc(String rawMaterialDesc) {
 		this.rawMaterialDesc = rawMaterialDesc;
 	}
-	public Long getUnitsId() {
+	/*public Long getUnitsId() {
 		return unitsId;
 	}
 	public void setUnitsId(Long unitsId) {
@@ -59,7 +59,7 @@ public class InventoryDto {
 	public void setUnitsDesc(String unitsDesc) {
 		this.unitsDesc = unitsDesc;
 	}
-	public BigDecimal getQuantity() {
+	*/public BigDecimal getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(BigDecimal quantity) {

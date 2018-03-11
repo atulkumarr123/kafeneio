@@ -519,6 +519,13 @@ function serveThisOrder(orderId, mopId){
 function cancelThisOrder(){
 	//alert("cancelled called");
 	var reason = $("#reasonForCancellation").val();
+	var isUpdateInventory = $('input[name="isInventoryUpdate"]:checked').val();
+	if(isUpdateInventory == undefined || isUpdateInventory == null || isUpdateInventory == ''){
+		isUpdateInventory = 'false';
+	}
+	else{
+		isUpdateInventory = 'true';
+		}
 	if(reason == '' || reason == 'undefined' || reason == null){	
 		$("#reasonForCancellation-error").text("Please enter a reason for cancellation");
 		$("#reasonForCancellation-error").show();
@@ -527,7 +534,7 @@ function cancelThisOrder(){
 	var ctx = $("#contextPath").val();
 	var rowid = $("#rowIdOnModal").val();
 	$.ajax({
-		url : ctx+"/order/cancel/"+rowid+"?reason="+reason,
+		url : ctx+"/order/cancel/"+rowid+"?reason="+reason+"&&isInventoryUpdate="+isUpdateInventory,
 		success : function(responseText) {
 			location.reload();
 		},

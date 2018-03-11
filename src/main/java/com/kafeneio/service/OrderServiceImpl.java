@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 	@Inject 
 	InventoryService inventoryService;
 	
+	private final Logger logger =
+			LoggerFactory.getLogger(this.getClass());
 	@Override
 	public List<MessageDTO> serve(Long orderId, Long mopId){
 		List<MessageDTO> msgDTOList = null;
@@ -49,7 +53,7 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 			}
 			orderRepository.save(order);
 			// 1. Call inventory service to reduce raw materials corresponding to food items of this order.
-			 msgDTOList = inventoryService.reduceRawMaterials(order);
+			 msgDTOList = inventoryService.settleInventory(order,ApplicationConstant.SUBTRACT);
 			 MessageDTO msgDTO = new MessageDTO();
 			 msgDTO.setMessage("Order "+order.getOrderNo()+" served successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
@@ -81,13 +85,17 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 
 
 	@Override
-	public MessageDTO cancel(Long orderId, String reason) {
+	public MessageDTO cancel(Long orderId, String reason, Boolean isInventoryUpdate) {
 		MessageDTO msgDTO = new MessageDTO();
 		try{
 			Order order = orderRepository.findOne(orderId);
 			OrderStatus cancelledStatus = orderStatusRepository.findByCode(ApplicationConstant.CANCELLED_ORDER);
 			order.setStatus(cancelledStatus);
 			order.setReason(reason);
+			if(isInventoryUpdate){
+				inventoryService.settleInventory(order,ApplicationConstant.SUBTRACT);
+
+			}
 			msgDTO.setMessage("Order "+order.getOrderNo()+" cancelled successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
 		}
@@ -105,7 +113,10 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService{
 			Order order = orderRepository.findOne(orderId);
 			OrderStatus cancelledStatus = orderStatusRepository.findByCode(ApplicationConstant.NEW_ORDER);
 			order.setStatus(cancelledStatus);
-			msgDTO.setMessage("Order "+order.getOrderNo()+" added successfully!");
+			orderRepository.save(order);
+			logger.debug("Gong to update inventory on re Intiate");
+			inventoryService.settleInventory(order,ApplicationConstant.ADD);
+			msgDTO.setMessage("Order "+order.getOrderNo()+" reinitiated successfully!");
 			msgDTO.setStatusCode(HttpStatus.OK.value());
 		}
 		catch(Exception exception){

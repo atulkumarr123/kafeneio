@@ -20,6 +20,10 @@ public class ExpenseType {
 		private String code;
 		@Column(name="description")
 		private String description;
+		
+		@Column(name="status")
+		private String status;
+		
 		public Long getId() {
 			return id;
 		}
@@ -38,5 +42,10 @@ public class ExpenseType {
 		public void setDescription(String description) {
 			this.description = description;
 		}
-		
+		public String getStatus() {
+			return status;
+		}
+		public void setStatus(String status) {
+			this.status = status;
+		}
 }

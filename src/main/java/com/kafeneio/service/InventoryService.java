@@ -5,16 +5,18 @@ import java.util.List;
 import com.kafeneio.DTO.InventoryDto;
 import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.DTO.RawMaterialDto;
+import com.kafeneio.enums.AppConstant;
 import com.kafeneio.exception.KafeneioException;
 import com.kafeneio.model.Order;
+import com.kafeneio.model.RawMaterials;
 
 public interface InventoryService extends BaseService{
 	
 	public MessageDTO saveInventoryItems(List<InventoryDto> inventoryItems);
 	
-	public List<RawMaterialDto> fetchRawMaterial();
+	public List<RawMaterialDto> fetchRawMaterial(RawMaterialDto rawMaterial);
 
-	public List<InventoryDto> fetchInventory();
+	public List<InventoryDto> fetchInventory(Long foodItemId, Long rawMaterialId);
 
 	public MessageDTO updateRawMaterial(RawMaterialDto rawMaterialDto);
 
@@ -24,6 +26,10 @@ public interface InventoryService extends BaseService{
 
 	MessageDTO deleteRawMaterial(Long id);
 
-	public List<MessageDTO> reduceRawMaterials(Order order) throws KafeneioException;
+	MessageDTO deleteInvRule(Long id);
+	
+	public List<MessageDTO> settleInventory(Order order,String mode) throws KafeneioException;
+
+	public List<RawMaterials> fetchRawMaterials();
 
 }

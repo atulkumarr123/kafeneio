@@ -189,8 +189,22 @@ function searchAndEditRawMaterial(){
 	
 	waitingDialog.show('Please wait...');
 	
+	var rawMaterial={};
+	rawMaterial["rawMaterialCode"] = $("#rawMaterialCode").val();
+	rawMaterial["rawMaterialDesc"]= $("#rawMaterialDesc").val();
+	rawMaterial["unitValue"] = $("#unit").val();
+	rawMaterial["quantity"] = $("#quantity").val();
+	rawMaterial["lowerLimit"] = $("#lowerLimit").val();
+	rawMaterial["remarks"] = $("#remarks").val();
+	
+	//alert(JSON.stringify(rawMaterial));
+
 	$.ajax({
 		url :$("#contextPath").val()+"/rawMaterialList",
+		 type: "POST",
+	      contentType : 'application/json; charset=utf-8',
+	      data: JSON.stringify(rawMaterial),
+	      dataType : 'json',
 		success : function(responseText) {
 			//alert(JSON.stringify(responseText));
 			editRawMaterial(responseText);
@@ -360,20 +374,79 @@ function adjustTotalExpense(){
 
 function removeRawMaterial(rowid){
 	
-	$.ajax({
-		url : $("#contextPath").val()+"/deleteRawMaterial/"+rowid,
-		success : function(responseText) {
-			$(function(){
-				new PNotify({ type:'success', title: 'Success', text: responseText.message});
-				$('#searchAndEditRawMaterialGrid').jqGrid('delRowData',rowid);
-			});
+	swal({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+		  if (result.value) {
+			  $.ajax({
+					url : $("#contextPath").val()+"/deleteRawMaterial/"+rowid,
+					success : function(responseText) {
+						$(function(){
+							   swal(
+									      'Deleted!',
+									      'Your file has been deleted.',
+									      'success'
+									    )
+							$('#searchAndEditRawMaterialGrid').jqGrid('delRowData',rowid);
+						});
+						
+					},
+					error:function(responseText) {
+						$(function(){
+							new PNotify({ type:'error', title: 'Error', text: responseText.message});
+						});
+					}	
+				});
+		  }
+		})
+	
+	
+	
+	
+	
+	
+/*	swal({
+		  title: "Are you sure?",
+		  text: "You will not be able to recover this imaginary file!",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it!",
+		  cancelButtonText: "No, cancel plx!",
+		  closeOnConfirm: true,
+		  closeOnCancel: true
 		},
-		error:function(responseText) {
-			$(function(){
-				new PNotify({ type:'error', title: 'Error', text: responseText.message});
-			});
-		}	
-	});
+		function(isConfirm) {
+			alert("check "+isConfirm);
+		  if (isConfirm) {
+			  
+				$.ajax({
+					url : $("#contextPath").val()+"/deleteRawMaterial/"+rowid,
+					success : function(responseText) {
+						$(function(){
+						    swal("Deleted!", "Your imaginary file has been deleted.", "success");	
+							$('#searchAndEditRawMaterialGrid').jqGrid('delRowData',rowid);
+						});
+					},
+					error:function(responseText) {
+						$(function(){
+							new PNotify({ type:'error', title: 'Error', text: responseText.message});
+						});
+					}	
+				});
+			  
+		  } else {
+		    swal("Cancelled", "Your imaginary file is safe :)", "info");
+		  }
+		});
+*/	
+
 	
 }
 

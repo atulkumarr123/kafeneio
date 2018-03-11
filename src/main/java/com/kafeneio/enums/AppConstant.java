@@ -28,6 +28,7 @@ public enum AppConstant {
 	WARNING("warning"),
 	ERROR("error");
 	
+	
 	private  int intValue=0;
 	private  String stringValue=null;
 

@@ -1,11 +1,11 @@
 
 
 $( document ).ready(function() {
-    $("#unitsGrid").jqGrid({
+    $("#expenseTypeGrid").jqGrid({
         colModel: [
         	{ name: "id", label: "id",hidden:true},
-        	{ name: "code", label: "Units Code",  align: "center"},
-            { name: "description", label: "Units Description",  align: "center" },
+        	{ name: "code", label: "Expense Type Code",  align: "center"},
+            { name: "description", label: "Expense Type Description",  align: "center" },
             { name: "status", label: "Status",  align: "center",hidden:true },
             { name: "statusVisible", label: "Status",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
@@ -25,7 +25,7 @@ $( document ).ready(function() {
         rownumbers: false,
         sortname: "invdate",
         sortorder: "desc",
-        caption: "Add Unit",       
+        caption: "Add Expense Type",       
         height: 'auto',
         onCellSelect: function (rowid,iCol,cellcontent,e) {
             if (iCol >= firstButtonColumnIndex) {
@@ -33,7 +33,7 @@ $( document ).ready(function() {
             }
         }
     });
-    grid = $("#unitsGrid"),
+    grid = $("#expenseTypeGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
         var cm = grid.jqGrid('getGridParam','colModel');
         for (var i=0,l=cm.length; i<l; i++) {
@@ -48,25 +48,24 @@ $( document ).ready(function() {
 
 
 $( document ).ready(function() {
-	$('#addUnitsbutton').click(function() {
-		var isFormFilled = $("#unitForm").valid();
+	$('#addExpenseTypeButton').click(function() {
+		var isFormFilled = $("#expenseTypeForm").valid();
 		if(isFormFilled){	
-		addUnits();
-
+		addExpenseTypes();
 
 		}
 	});
 });
 
 
-function addUnits(){
+function addExpenseType(){
 	
-	$('#gbox_unitsGrid').show();
-	$('#gbox_editUnitsGrid').hide();
+	$('#gbox_expenseTypeGrid').show();
+	$('#gbox_editExpenseTypeGrid').hide();
 	
-	var id = $("#unitsGrid").jqGrid("getGridParam", "data").length;
-	var unitCode = $("#unitCode").val();
-	var unitDesc = $("#unitDesc").val();
+	var id = $("#expenseTypeGrid").jqGrid("getGridParam", "data").length;
+	var expenseTypeCode = $("#expenseTypeCode").val();
+	var expenseTypeDesc = $("#expenseTypeDesc").val();
 	var status = $("#status").val();
 	if(status == '1'){
 		status = true;
@@ -76,25 +75,25 @@ function addUnits(){
 		status = false;
 		statusVisible = 'Inactive';
 	}
-	$("#unitsGrid").jqGrid("addRowData",id , { code : unitCode, description : unitDesc, statusVisible : statusVisible, status : status}, "last");
-	$('#saveUnitButton').show();
+	$("#expenseTypeGrid").jqGrid("addRowData",id , { code : expenseTypeCode, description : expenseTypeDesc, statusVisible : statusVisible, status : status}, "last");
+	$('#saveExpenseTypeButton').show();
 }
 
-function saveUnits() {
+function saveExpenseType() {
 
-	if(!validateUnit()){
+	if(!validateExpenseType()){
 		return false;
 	}
 
 	else
 	{
 		var ctx = $("#contextPath").val();
-		var allData = $("#unitsGrid").jqGrid("getGridParam", "data");
+		var allData = $("#expenseTypeGrid").jqGrid("getGridParam", "data");
 		$.ajax({
 			type: "POST",
 			contentType : 'application/json; charset=utf-8',
 			dataType : 'json',
-			url : ctx+"/addUnits",
+			url : ctx+"/addExpenseType",
 			data: JSON.stringify(allData),
 			success :function(result) {
 				if(result.statusCode == '200'){
@@ -113,39 +112,39 @@ function saveUnits() {
 }
 
 function removeItem(rowid){
-	$('#unitsGrid').jqGrid('delRowData',rowid);
+	$('#expenseTypeGrid').jqGrid('delRowData',rowid);
 }
 
 function reloadGrid(){
-	$("#unitsGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	$("#expenseTypeGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
 }
 
 
 
 $( document ).ready(function() {
-	$('#searchUnitsbutton').click(function() {
-	$('#gbox_unitsGrid').hide();
-	$('#gbox_editUnitsGrid').show();
+	$('#searchExpenseTypebutton').click(function() {
+	$('#gbox_expenseTypeGrid').hide();
+	$('#gbox_editExpenseTypeGrid').show();
 	searchAndEdit();
 	});
    
-   $('#gbox_unitsGrid').hide();
-	$('#gbox_editUnitsGrid').hide();
+   $('#gbox_expenseTypeGrid').hide();
+	$('#gbox_editExpenseTypeGrid').hide();
 });
 
-function searchAndEditUnits(){
-	$('#saveUnitButton').hide();
-	$("#editUnitsGrid").jqGrid('GridUnload');	
+function searchAndEditExpenseType(){
+	$('#saveExpenseTypeButton').hide();
+	$("#editExpenseTypeGrid").jqGrid('GridUnload');	
 		
 	var ctx = $("#contextPath").val();
 	
 	waitingDialog.show('Please wait...');
 	
 	$.ajax({
-		url : ctx+"/searchUnits",
+		url : ctx+"/searchExpenseType",
 		success : function(responseText) {
 			//alert(JSON.stringify(responseText));
-			editUnits(responseText);
+			editExpenseType(responseText);
 			//$('#outputLabel').text(JSON.stringify(responseText));
 		},
 		error:function(responseText) {
@@ -156,7 +155,7 @@ function searchAndEditUnits(){
 	
 }
 
-function editUnits(data){
+function editExpenseType(data){
 	for (var i in data) {
 		var row = data[i];
 		//alert(row.status);
@@ -167,20 +166,20 @@ function editUnits(data){
 			//status = false;
 			row.status = 'Inactive';
 		}
-		$("#editUnitsGrid").jqGrid("addRowData",row.id , {id : row.id, code : row.code, description : row.description , status : row.status}, "last");
+		$("#editExpenseTypeGrid").jqGrid("addRowData",row.id , {id: row.id, code:row.code, description:row.description , status : row.status}, "last");
 	}
 	
 }
-function searchAndEdit(units){
-	$("#editUnitsGrid").jqGrid({
+function searchAndEdit(expenseType){
+	$("#editExpenseTypeGrid").jqGrid({
 		//url :  $("#contextPath").val()+"/report/expenseList?fromDate="+fromDate+"&&toDate="+toDate,
 		//datatype : "json",
 		datatype : "local",
 		//mtype : 'POST',
 		colModel: [
 			{ name: "id", label: "id",hidden:true},
-        	{ name: "code", label: "Units Code",  align: "center"},
-            { name: "description", label: "Units Description",  align: "center" },
+        	{ name: "code", label: "Expense Type Code",  align: "center"},
+            { name: "description", label: "Expense Type Description",  align: "center" },
             { name: "status", label: "Status",  align: "center" },
           //  { name: "statusVisible", label: "Status",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
@@ -201,7 +200,6 @@ function searchAndEdit(units){
 			guiStyle: "bootstrap",
 			iconSet: "fontAwesome",
 			pager: '#pager',
-			//sortname: 'orderNo',
 			viewrecords: true,
 			sortorder: "desc",
 			autowidth: true,
@@ -219,13 +217,13 @@ function searchAndEdit(units){
 				}
 
 			},
-			caption: "Searched Units",
+			caption: "Searched Expense Types",
 			/*loadComplete:function() {
 				//adjustTotalExpense();
 			}*/
 	});
 	
-	grid = $("#editUnitsGrid"),
+	grid = $("#editExpenseTypeGrid"),
 	 getColumnIndexByName = function(grid,columnName) {
        var cm = grid.jqGrid('getGridParam','colModel');
        for (var i=0,l=cm.length; i<l; i++) {
@@ -243,15 +241,15 @@ function searchAndEdit(units){
 
 
 
-function updateUnit(){
+function updateExpenseType(){
 	//alert("in update");
 	
-	 var rowId= $("#unitRowId").val();
+	 var rowId= $("#expenseTypeRowId").val();
 		var ctx = $("#contextPath").val();
 		// alert(rowId);
-	 	var rowData = $("#editUnitsGrid").jqGrid("getRowData", rowId);
-	 	rowData.code = $('#code').val();
-	 	rowData.description = $('#description').val();
+	 	var rowData = $("#editExpenseTypeGrid").jqGrid("getRowData", rowId);
+	 	rowData.code = $('#expenseTypeCodeModal').val();
+	 	rowData.description = $('#expenseTypeDescriptionModal').val();
 	 	//alert($('#status').val());
 	 	var statusVal = $('#statusModal').val();
 	 
@@ -274,17 +272,17 @@ function updateUnit(){
 		      type: "POST",
 		      contentType : 'application/json; charset=utf-8',
 		      dataType : 'json',
-		      url : ctx+"/updateUnit",
+		      url : ctx+"/updateExpenseType",
 		      data: JSON.stringify(rowData),
 		      success :function(result) {
 		    	  rowData.status= statusVisible;
-		    	  $("#editUnitsGrid").jqGrid("setRowData", rowId, rowData);
+		    	  $("#editExpenseTypeGrid").jqGrid("setRowData", rowId, rowData);
 		    	  new PNotify({
 	    			  type:'success',
 	    			  title: 'Success',
 	    			  text: result.message
 		    	  });
-		    	  $( "#cancelUnitButton").click();
+		    	  $( "#cancelExpenseTypeButton").click();
 		    	  
 		     },
 		   error:function(result) {
@@ -301,11 +299,11 @@ function updateUnit(){
 
 
 function openPopup(rowid){
-	$('#unitsModal').modal('show');
-	var rowData = $("#editUnitsGrid").jqGrid("getRowData", rowid);
-	$("#unitRowId").val(rowid);
-	$('#code').val(rowData.code);
-	$('#description').val(rowData.description);
+	$('#expenseTypeModal').modal('show');
+	var rowData = $("#editExpenseTypeGrid").jqGrid("getRowData", rowid);
+	$("#expenseTypeRowId").val(rowid);
+	$('#expenseTypeCodeModal').val(rowData.code);
+	$('#expenseTypeDescriptionModal').val(rowData.description);
 	//alert(rowData.status);
 	var status = rowData.status;
 	if(status == 'Active'){
@@ -322,16 +320,16 @@ function openPopup(rowid){
 	
 } 
 
-function reloadUnitGrid(){
-	$("#editUnitsGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
-	$("#editUnitsGrid").jqGrid('setCaption','');
+function reloadExpenseTypeGrid(){
+	$("#editExpenseTypeGrid").jqGrid("clearGridData", true).trigger("reloadGrid");
+	$("#editExpenseTypeGrid").jqGrid('setCaption','');
 
 }
 
 
 
-function validateUnit(){
-	var rowCount=jQuery('#unitsGrid').jqGrid('getGridParam', 'reccount');
+function validateExpenseType(){
+	var rowCount=jQuery('#expenseTypeGrid').jqGrid('getGridParam', 'reccount');
 	  if(rowCount!=0){
 		  return true;
 	  }
@@ -340,7 +338,7 @@ function validateUnit(){
    		   new PNotify({
    			   type:'error',
    			   title: 'Error',
-   		      text: 'Please add atleast one Unit!'
+   		      text: 'Please add atleast one Type of Expense!'
    		   });
    		});
 	  return false;

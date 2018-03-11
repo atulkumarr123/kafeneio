@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kafeneio.DTO.FoodItemsDto;
@@ -22,6 +23,7 @@ import com.kafeneio.DTO.MessageDTO;
 import com.kafeneio.DTO.RawMaterialDto;
 import com.kafeneio.constants.ApplicationConstant;
 import com.kafeneio.exception.KafeneioException;
+import com.kafeneio.model.RawMaterials;
 import com.kafeneio.model.Units;
 import com.kafeneio.service.FoodItemsService;
 import com.kafeneio.service.InventoryService;
@@ -30,7 +32,6 @@ import com.kafeneio.service.UnitsService;
 
 @RestController
 public class InventoryController {
-
 
 	@Inject
 	InventoryService inventoryService;
@@ -51,15 +52,16 @@ public class InventoryController {
 		return msgDTO;
 	}
 	
-	@RequestMapping(value = "/rawMaterialList")
-	public List<RawMaterialDto> fetchRawMaterials() {
-		List<RawMaterialDto> rawMaterials = inventoryService.fetchRawMaterial(); 
+	@RequestMapping(value = "/rawMaterialList", method = RequestMethod.POST)
+	public List<RawMaterialDto> fetchRawMaterials(@RequestBody RawMaterialDto rawMaterial) {
+		List<RawMaterialDto> rawMaterials = inventoryService.fetchRawMaterial(rawMaterial); 
 		return rawMaterials;
 	}
 	
 	@RequestMapping(value = "/inventoryList")
-	public List<InventoryDto> fetchInventory() {
-		List<InventoryDto> inventoryDtoList= inventoryService.fetchInventory(); 
+	public List<InventoryDto> fetchInventory(@RequestParam(value="foodItem") Long foodItemId,
+			@RequestParam(value="rawMaterial") Long rawMaterialId) {
+		List<InventoryDto> inventoryDtoList= inventoryService.fetchInventory(foodItemId,rawMaterialId); 
 		return inventoryDtoList;
 	}
 	
@@ -83,9 +85,14 @@ public class InventoryController {
 		return msgDTO ;
 	}
 	
-
+	@RequestMapping(value = "/deleteInvRule/{id}")
+	public MessageDTO deleteInvRule(@PathVariable Long id) {
+		MessageDTO msgDTO = inventoryService.deleteInvRule(id); 
+		return msgDTO ;
+	}
+	
+	
 }
-
 
 @Controller
 class InventoryLoaderController{
@@ -137,9 +144,9 @@ class InventoryLoaderController{
 		modelMap.put("unitList",unitList);
 		Units units = new Units();
 		modelMap.put("inventory", units);
-		List<RawMaterialDto> rawMaterialsList = inventoryService.fetchRawMaterial();
+		List<RawMaterials> rawMaterialsList = inventoryService.fetchRawMaterials();
 		modelMap.put("rawMaterialList",rawMaterialsList );
-		RawMaterialDto rawMaterial = new RawMaterialDto();
+		RawMaterials rawMaterial = new RawMaterials();
 		modelMap.put("inventory", rawMaterial);
 		
 		List<FoodItemsDto> foodItemsList = foodItemsService.fetchFoodItems();
@@ -147,7 +154,7 @@ class InventoryLoaderController{
 		FoodItemsDto foodItems = new FoodItemsDto();
 		modelMap.put("inventory", foodItems);
 		
-		String url = "/inventory/inventory"; 
+		String url = "/inventory/inventoryRules"; 
 		return url;
 	}
 }

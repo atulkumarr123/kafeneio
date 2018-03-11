@@ -374,20 +374,37 @@ function adjustTotalExpense(){
 
 function removeExpense(rowid){
 	
-	$.ajax({
-		url : $("#contextPath").val()+"/deleteExpense/"+rowid,
-		success : function(responseText) {
-			$(function(){
-				new PNotify({ type:'success', title: 'Success', text: responseText.message});
-				$('#searchAndEditExpensesGrid').jqGrid('delRowData',rowid);
-			});
-		},
-		error:function(responseText) {
-			$(function(){
-				new PNotify({ type:'error', title: 'Error', text: responseText.message});
-			});
-		}	
-	});
+	swal({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+		  if (result.value) {
+			  $.ajax({
+					url : $("#contextPath").val()+"/deleteExpense/"+rowid,
+					success : function(responseText) {
+						$(function(){
+							swal(
+									'Deleted!',
+									'Your file has been deleted.',
+									'success'
+							)
+							$('#searchAndEditExpensesGrid').jqGrid('delRowData',rowid);
+						});
+					},
+					error:function(responseText) {
+						$(function(){
+							new PNotify({ type:'error', title: 'Error', text: responseText.message});
+						});
+					}	
+				});
+		  }
+		})
+	
 	
 }
 

@@ -284,24 +284,10 @@ function saveOrder(mopId){
 	      data: JSON.stringify(order),
 	      success :function(result) {
 	    	  //alert(JSON.stringify(result));
-		   	   $.print("#printGrid");
-	    	  if(result.statusCode == '208'){
-	    		  $(function(){
-		    		  new PNotify({ type:'info', title: 'Info', text: result.message});
-		    	  });
-	    	  }
-	    	  else if(result.statusCode == '200'){
-	    		  $(function(){
-		    		  new PNotify({ type:'success', title: 'Success', text: result.message});
-		    	  });
-	    	  }
-	    	  else{
-	    		   $(function(){
-	    			  new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
-	    		  });
-	    	  }
-	    
-			  reloadGrid();
+	    	  		notifications(result);
+	    	  		if(result.statusCode == '200'){
+		   	  	  	reloadGrid();
+	    	  		}
 				 $( "#closeButton").click();
 			 
 	     },
@@ -313,6 +299,32 @@ function saveOrder(mopId){
 
 }
 
+function notifications(result){
+	if(result.statusCode == '507'){
+		swal({
+			type: 'error',
+			title: 'Oops...',
+			html: result.message,
+			footer: '<a href>Why do I have this issue?</a>',
+		});
+	}
+	else if(result.statusCode == '208'){
+		$(function(){
+			new PNotify({ type:'info', title: 'Info', text: result.message});
+		});
+	}
+	else if(result.statusCode == '200'){
+		$(function(){
+			new PNotify({ type:'success', title: 'Success', text: result.message});
+			$.print("#printGrid");
+		});
+	}
+	else{
+		$(function(){
+			new PNotify({ type:'error', title: 'Error', text: 'Some Error!'});
+		});
+	}
+}
 function validateOrder(){
 	var rowCount=jQuery('#invoiceGrid').jqGrid('getGridParam', 'reccount');
 	  if(rowCount!=0){

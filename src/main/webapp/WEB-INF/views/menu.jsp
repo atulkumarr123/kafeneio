@@ -1,5 +1,6 @@
 <script  src="static/JSlib/kafeneioCommons.js"></script>
 <script src="static/JSlib/twitter-bootstrap/waitingfor.js"></script>
+<script src="static/JSlib/sweetalert2.all.js" /></script>
 
 
 <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"/>
@@ -33,13 +34,14 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/addMenuItems"
 							id="menuStore" style="color:white">Setup Menu Store</a></li>
-							<li ><a href="${pageContext.request.contextPath}/units"
+						<%-- <li><a href="${pageContext.request.contextPath}/addExpenseType"
+							id="expenseType" style="color:white">Setup Expense Type</a></li>
+						 --%><li ><a href="${pageContext.request.contextPath}/units"
 							id="units" style="color:white">Setup Units</a></li>
-							<li><a href="${pageContext.request.contextPath}/rawMaterial"
-							id="rawMaterial" style="color: white">Raw Material</a></li>
+						<li><a href="${pageContext.request.contextPath}/rawMaterial"
+							id="rawMaterial" style="color: white">Inventory</a></li>
 						 <li><a href="${pageContext.request.contextPath}/inventoryRules"
 							id="inventory" style="color: white">Inventory Rules</a></li> 
-						
 					</ul>
 				</li>
 				

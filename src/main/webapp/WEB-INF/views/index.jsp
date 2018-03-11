@@ -31,7 +31,6 @@
 <script src="static/JSlib/bootstrap-datetimepicker-4.17.37.min.js"></script>
 <script src="static/JSlib/jQuery.print.js"></script>
 <script src="static/JSlib/pnotify.custom.js" /></script>
-<script src="static/JSlib/sweetalert2.all.js" /></script>
 <script  src="static/JSlib/home.js"></script>
 </head>
 <body>
@@ -138,6 +137,11 @@
 										class="form-control" id="reasonForCancellation" required></textarea>
 										<label id="reasonForCancellation-error" style="color:red" for="reasonForCancellation"></label>
 								</div>
+								
+								<div class="col-md-12">
+										<input type="checkbox" id="isInventoryUpdate" name="isInventoryUpdate" /> 
+										<label for="isInventoryUpdate"><span></span>Update Inventory</label>
+									</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default"  id= "updateReasonButton" onclick="cancelThisOrder()">OK</button>

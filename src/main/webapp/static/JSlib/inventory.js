@@ -34,9 +34,9 @@ $( document ).ready(function() {
         	{ name: "foodItemsDesc", label: "Food Items",  align: "center"},
             { name: "rawMaterialId", label: "Raw Material",  align: "center", hidden : true },
             { name: "rawMaterialDesc", label: "Raw Material",  align: "center" },
-            { name: "unitsDesc", label: "Unit",  align: "center" },
+          /*  { name: "unitsDesc", label: "Unit",  align: "center" },
             { name: "unitsId", label: "Unit",  align: "center", hidden:true},
-            { name: "quantity", label: "Quantity",  align: "center" },
+          */  { name: "quantity", label: "Quantity",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
             { name: 'decrease', label:"", sortable: false, search: false, align: "center",
             	  formatter:function(){
@@ -101,12 +101,12 @@ function addInventory(){
 	var foodItemsDesc = $("#foodItems").find("option:selected").text();
 	var rawMaterialId = $("#rawMaterialonInv").val();
 	var rawMaterialDesc = $("#rawMaterialonInv").find("option:selected").text();
-	var unitsDesc = $("#unitsOnInv").find("option:selected").text();
-	var quantity = $("#quantity").val();	
+/*	var unitsDesc = $("#unitsOnInv").find("option:selected").text();
+*/	var quantity = $("#quantity").val();	
 	var remarks = $("#remarks").val();
-	var unitsId = $("#unitsOnInv").val();
-	//var date = $("#datetimepicker3").find("input").val();
-	$("#inventoryGrid").jqGrid("addRowData",33 , { rawMaterialId: rawMaterialId, rawMaterialDesc: rawMaterialDesc, foodItemsId: foodItemsId, foodItemsDesc: foodItemsDesc, unitsDesc : unitsDesc, unitsId : unitsId, quantity : quantity, remarks:remarks}, "last");
+/*	var unitsId = $("#unitsOnInv").val();
+*/	//var date = $("#datetimepicker3").find("input").val();
+	$("#inventoryGrid").jqGrid("addRowData",33 , { rawMaterialId: rawMaterialId, rawMaterialDesc: rawMaterialDesc, foodItemsId: foodItemsId, foodItemsDesc: foodItemsDesc, quantity : quantity, remarks:remarks}, "last");
 	}
 
 function saveInventory() {
@@ -193,10 +193,18 @@ function searchAndEditInventory(){
 //	$("#rawMaterialGrid").jqGrid('GridUnload');
 	$("#searchAndEditInventoryGrid").jqGrid('GridUnload');	
 	
+//	var foodItem = $("#foodItems").find("option:selected").text();
+//	var rawMaterial = $("#rawMaterialonInv").find("option:selected").text();
+//	
+	var foodItem = $("#foodItems").val();
+	var rawMaterial = $("#rawMaterialonInv").val();
+	
+	//alert(foodItem);
+	
 	waitingDialog.show('Please wait...');
 	
 	$.ajax({
-		url :$("#contextPath").val()+"/inventoryList",
+		url :$("#contextPath").val()+"/inventoryList?foodItem="+foodItem+"&rawMaterial="+rawMaterial,
 		success : function(responseText) {
 			//alert(JSON.stringify(responseText));
 			editInventory(responseText);
@@ -221,9 +229,9 @@ function editInventory(inventoryData){
         	{ name: "foodItemsDesc", label: "Food Items",  align: "center"},
             { name: "rawMaterialId", label: "Raw Material",  align: "center", hidden : true },
             { name: "rawMaterialDesc", label: "Raw Material",  align: "center" },
-            { name: "unitsDesc", label: "Unit",  align: "center" },
+          /*  { name: "unitsDesc", label: "Unit",  align: "center" },
             { name: "unitsId", label: "Unit",  align: "center", hidden:true},
-            { name: "quantity", label: "Quantity",  align: "center" },
+          */  { name: "quantity", label: "Quantity",  align: "center" },
             { name: "remarks", label: "Remarks",  align: "center" },
 			{ name: 'editButton', label:"Edit", width: 80, sortable: false, search: false, align: "center",
 				formatter:function(){
@@ -249,7 +257,7 @@ function editInventory(inventoryData){
 			loadonce: true,
 			 onCellSelect: function (rowid,iCol,cellcontent,e) {
 		            if (iCol >= firstButtonColumnIndex) {
-		                removeInventory(rowid);
+		            	removeInventoryRule(rowid);
 		            }
 			
 		            else if (iCol == editButton) {
@@ -288,8 +296,8 @@ function editInventory(inventoryData){
 	 	 $("#inventoryRowId").val(rowid);
 	 	 $('#rawMaterialModalInv').val(rowData.rawMaterialId);
 	 	$('#foodItemModalInv').val(rowData.foodItemsId);
-	 	$('#unitsModalInv').val(rowData.unitsId);
-	 	$('#quantityModalInv').val(rowData.quantity);
+	 	/*$('#unitsModalInv').val(rowData.unitsId);
+	 	*/$('#quantityModalInv').val(rowData.quantity);
 	 	$('#remarksModalInv').val(rowData.remarks);
  } 
  
@@ -303,9 +311,9 @@ function editInventory(inventoryData){
 	 	rowData.rawMaterialDesc = $("#rawMaterialModalInv").find("option:selected").text();
 	 	rowData.foodItemsId = $('#foodItemModalInv').val();
 	 	rowData.foodItemsDesc = $("#foodItemModalInv").find("option:selected").text();
-	 	rowData.unitsId = $('#unitsModalInv').val();
+	 /*	rowData.unitsId = $('#unitsModalInv').val();
 		rowData.unitsDesc = $("#unitsModalInv").find("option:selected").text();
-	 	rowData.quantity = $('#quantityModalInv').val();
+	*/ 	rowData.quantity = $('#quantityModalInv').val();
 	 	rowData.remarks = $('#remarksModalInv').val();
 	   $.ajax({
 		      type: "POST",
@@ -363,22 +371,47 @@ function adjustTotalExpense(){
 
 */
 
-function removeRawMaterial(rowid){
+function removeInventoryRule(rowid){
 	
-	$.ajax({
-		url : $("#contextPath").val()+"/deleteRawMaterial/"+rowid,
-		success : function(responseText) {
-			$(function(){
-				new PNotify({ type:'success', title: 'Success', text: responseText.message});
-				$('#searchAndEditRawMaterialGrid').jqGrid('delRowData',rowid);
-			});
-		},
-		error:function(responseText) {
-			$(function(){
-				new PNotify({ type:'error', title: 'Error', text: responseText.message});
-			});
-		}	
-	});
+
+
+	
+	swal({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+		  if (result.value) {
+				$.ajax({
+					url : $("#contextPath").val()+"/deleteInvRule/"+rowid,
+					success : function(responseText) {
+						$(function(){
+								   swal(
+										      'Deleted!',
+										      'Your file has been deleted.',
+										      'success'
+										    )
+										    $('#searchAndEditInventoryGrid').jqGrid('delRowData',rowid);
+						});
+					},
+					error:function(responseText) {
+						$(function(){
+							new PNotify({ type:'error', title: 'Error', text: responseText.message});
+						});
+					}	
+				});
+		  }
+		})
+	
+	
+	
 	
 }
+
+
+
 

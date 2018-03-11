@@ -33,10 +33,10 @@ public class InventoryRules extends BaseEntity {
 	 @JoinColumn(name = "rawmaterial_id")
 	private RawMaterials rawMaterial;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+/*	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="units_id")
  	private Units unit;
-
+*/
 	@Column(name = "quantity")
 	private BigDecimal quantity;
 
@@ -90,12 +90,12 @@ public class InventoryRules extends BaseEntity {
 		return serialVersionUID;
 	}
 
-	public Units getUnit() {
+/*	public Units getUnit() {
 		return unit;
 	}
 
 	public void setUnit(Units unit) {
 		this.unit = unit;
 	}
-
+*/
 }

@@ -66,7 +66,6 @@
 						<div class="col-md-6">
 								<label for="prepended-input" class="control-label">Units</label>
 								<form:select path="id" class="form-control" id="unit" required="required">
-									<option value="0">SELECT</option>
 									<form:options items="${unitList}" itemValue="id" itemLabel="description" />
 								</form:select>
 							</div>

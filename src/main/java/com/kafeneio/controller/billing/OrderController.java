@@ -34,8 +34,8 @@ public class OrderController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/cancel/{orderId}")
-	public MessageDTO cancel(@PathVariable Long orderId,@RequestParam(value = "reason" , required = true) String reason) {
-		MessageDTO msgDTO = orderService.cancel(orderId,reason);
+	public MessageDTO cancel(@PathVariable Long orderId,@RequestParam(value = "reason" , required = true) String reason, @RequestParam(value = "isInventoryUpdate" , required = true) Boolean isInventoryUpdate) {
+		MessageDTO msgDTO = orderService.cancel(orderId,reason, isInventoryUpdate);
 		return msgDTO;
 	}
 	
