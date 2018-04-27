@@ -34,9 +34,9 @@
 					<ul class="dropdown-menu">
 						<li><a href="${pageContext.request.contextPath}/addMenuItems"
 							id="menuStore" style="color:white">Setup Menu Store</a></li>
-						<%-- <li><a href="${pageContext.request.contextPath}/addExpenseType"
+						 <li><a href="${pageContext.request.contextPath}/addExpenseType"
 							id="expenseType" style="color:white">Setup Expense Type</a></li>
-						 --%><li ><a href="${pageContext.request.contextPath}/units"
+						 <li ><a href="${pageContext.request.contextPath}/units"
 							id="units" style="color:white">Setup Units</a></li>
 						<li><a href="${pageContext.request.contextPath}/rawMaterial"
 							id="rawMaterial" style="color: white">Inventory</a></li>
